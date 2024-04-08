@@ -6,7 +6,7 @@ services:
     labels:
       svc: backoffice_auth
     restart: always
-    build: 
+    build:
       dockerfile: ./Dockerfile
     volumes:
       - .:/app
