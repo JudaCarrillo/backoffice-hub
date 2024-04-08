@@ -47,7 +47,10 @@ DJANGO_APPS = [
 ]
 
 PROJECT_APPS = [
-    # 'apps.'
+    'apps.user',
+    'apps.user_profile',
+    'apps.permission',
+    'apps.privilege',
 ]
 
 THIRD_PARTY_APPS = [
