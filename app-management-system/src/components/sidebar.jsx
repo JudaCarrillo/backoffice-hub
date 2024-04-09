@@ -66,7 +66,7 @@ export function Sidebar({sidebarOpen,setSidebarOpen}) {
 
 
             {secundaryLinksArray.map(({icon,label,to})=>(
-                <div className="LinkContainer" key="label">
+                <div className="LinkContainer salirbutton" key="label">
                     <NavLink to={to} className={({isActive})=>`Links${isActive?` active`:``}`}>
                         <div className="LinkIcon">
                             {icon}
@@ -153,7 +153,7 @@ const secundaryLinksArray = [
             display: flex;
             justify-content: center;
             align-items: center;
-            padding-bottom: ${v.lgSpacing};
+            padding-bottom: 144px;
             gap:20px;
             .imgContent{
                 display: flex;
@@ -175,7 +175,7 @@ const secundaryLinksArray = [
         .LinkContainer{
             margin: 30px 0;
             padding: 0 15%;
-            
+                
                 :hover{
                     background: ${(props)=>props.theme.bg3};
                 }
@@ -211,6 +211,11 @@ const secundaryLinksArray = [
                         }
                     }
                 }
+                
+        }
+        .salirbutton{
+            position: relative;
+            top: 200px;
         }
         .ThemeContent{
             padding: ${({ isOpen }) => (isOpen ? `10% 10%` : `60px 0px 40px`)};
@@ -303,7 +308,8 @@ const secundaryLinksArray = [
 const Divider = styled.div`
     height: 1px;
     width: 100%;
-    background: ${(props)=>props.theme.bg3}
+    background: ${(props)=>props.theme.bg3};
+    margin-bottom: 40px;
 
 `;
 // #ENDREGION
