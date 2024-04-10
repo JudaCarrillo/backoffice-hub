@@ -216,7 +216,7 @@ const secundaryLinksArray = [
         .salirbutton{
             position: relative;
             top: 20px;
-            left: 10px;
+            left: 1px;
         }
         .ThemeContent{
             padding: ${({ isopen }) => (isopen ? `10% 10%` : `60px 0px 40px`)};

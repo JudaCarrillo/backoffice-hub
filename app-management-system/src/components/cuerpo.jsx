@@ -20,10 +20,11 @@ width: 90%;
 height: 550px;
 left: 80px;
 margin: -10px;
-border-radius: 1rem; 
+border-radius: 2rem; 
 box-shadow: .3rem .5rem .4rem #00000040;
     .table_body{
         width: 100%;
+        border-radius: 2rem;
         height: 100%;
         padding: 20px; 
         background-color: ${(props)=>props.theme.bg};
