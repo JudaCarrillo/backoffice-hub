@@ -5,7 +5,7 @@ from apps.permission.models import Permission
 
 
 class PermissionAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'description', 'id_profile', 'id_privilege')
+    list_display = ('id', 'name', 'id_profile', 'id_privilege')
 
 
 admin.site.register(Permission, PermissionAdmin)
