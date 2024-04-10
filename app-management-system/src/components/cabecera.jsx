@@ -45,5 +45,7 @@ const Container = styled.div`
     .button_lado{
         display: flex;
         gap: 20px;
+        
     }
+    
 `;

@@ -21,7 +21,7 @@ export function Productos() {
     return (
         <Container>
             <Cabecera title={'Productos'}>
-                <ButtonHead name={'Descargar'}/>
+                <ButtonHead name={'Descargar'} buttonColor="#969593"/>
                 <ButtonHead name={'Nuevo Producto'}/>
             </Cabecera>
             <Cuerpo columns={columns} data={data}/>
@@ -30,4 +30,5 @@ export function Productos() {
 }
 
 const Container = styled.div`
-height:100vh;`;
+height:100vh;
+`;

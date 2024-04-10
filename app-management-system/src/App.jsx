@@ -2,28 +2,47 @@ import { BrowserRouter } from "react-router-dom"
 import { MyRoutes } from "./routers/routes"
 import styled from "styled-components"
 import { Sidebar } from "./components/sidebar"
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { Dark, Light } from "./styles/theme"
 import {ThemeProvider} from 'styled-components'
+import { Login } from "./pages/login"
 
 export const ThemeContext = React.createContext(null);
+
 function App() {
+
   const [theme, setTheme] = useState("light");
-  const themeStyle=theme==="light" ? Light:Dark;
-  
-  const [sidebarOpen,setSidebarOpen] = useState(true);
+  const themeStyle = theme === "light" ? Light : Dark;
+
+  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(max-width: 1300px)");
+
+    const handleMediaChange = (e) => {
+      setSidebarOpen(!e.matches); 
+    };
+
+    mediaQuery.addEventListener("change", handleMediaChange);
+
+    return () => mediaQuery.removeEventListener("change", handleMediaChange);
+  }, []);
+  const handleLoginSuccess = () => {
+    setIsLoggedIn(true);
+  };
   return (
     <>
     <ThemeContext.Provider value={{setTheme,theme}}>
       <ThemeProvider theme={themeStyle}>
         <BrowserRouter>
-          <Container className={sidebarOpen?"sidebarState active" : ""}>
-              <Sidebar sidebarOpen=
-              {sidebarOpen}
-              setSidebarOpen=
-              {setSidebarOpen}/>
-              <MyRoutes />
-          </Container>
+          {isLoggedIn ? (
+                <Container className={sidebarOpen ? "sidebarState active" : ""}>
+                  <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+                  <MyRoutes />
+                </Container>
+              ) : (<Login setIsLoggedIn={setIsLoggedIn} onLoginSuccess={handleLoginSuccess} />)
+          }
         </BrowserRouter>
       </ThemeProvider>
     </ThemeContext.Provider>
