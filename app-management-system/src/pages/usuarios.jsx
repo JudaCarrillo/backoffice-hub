@@ -1,9 +1,13 @@
 import styled from "styled-components"
+import { Cabecera } from "../components/cabecera";
+import { ButtonHead } from "../components/button";
 
 export function Usuarios() {
     return (
         <Container>
-            <h1>Usuarios</h1>
+            <Cabecera title={'Usuarios'}>
+                <ButtonHead name={'Nuevo Usuarios'}/>
+            </Cabecera>
         </Container>
     );
 }

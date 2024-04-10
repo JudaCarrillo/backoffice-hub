@@ -4,7 +4,6 @@ import { Categoria } from '../pages/categorias';
 import { Login } from '../pages/login';
 import { Proveedores } from '../pages/proveedores';
 import { Usuarios } from '../pages/usuarios';
-import { Sidebar } from '../components/sidebar';
 export function MyRoutes() {
     return (
             <Routes>

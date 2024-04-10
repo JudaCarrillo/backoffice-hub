@@ -1,9 +1,13 @@
 import styled from "styled-components"
+import { Cabecera } from "../components/cabecera";
+import { ButtonHead } from "../components/button";
 
 export function Proveedores() {
     return (
         <Container>
-            <h1>Proveedores</h1>
+            <Cabecera title={'Proveedores'}>
+                <ButtonHead name={'Nuevo Proveedor'}/>
+            </Cabecera>
         </Container>
     );
 }

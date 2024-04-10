@@ -19,7 +19,7 @@ export function Sidebar({sidebarOpen,setSidebarOpen}) {
         "light" ? "dark" : "light"));
     };
     return (
-        <Container isOpen = {sidebarOpen} themeUse={theme}>
+        <Container isopen = {sidebarOpen} themeuse={theme}>
             <button className="sidebarButton" onClick={ModSidebarOpen}>
                 <AiOutlineLeft />
             </button>
@@ -121,7 +121,7 @@ const secundaryLinksArray = [
         color: ${(props)=>props.theme.text};
         background: ${(props)=>props.theme.bg};
         position: sticky;
-        padding-top: ${({ isOpen }) => (isOpen ? `30%` : `100px`)};
+        padding-top: ${({ isopen }) => (isopen ? `30%` : `100px`)};
         .sidebarButton{
             position: absolute;
             top: 10px;
@@ -143,7 +143,7 @@ const secundaryLinksArray = [
             justify-content: center;
             cursor: pointer;
             transition: all 0.3s;
-            transform: ${({ isOpen }) => (isOpen ? `initial` : `rotate(180deg)`)};
+            transform: ${({ isopen }) => (isopen ? `initial` : `rotate(180deg)`)};
                 svg{
                     font-size: 30px
                 }
@@ -153,7 +153,7 @@ const secundaryLinksArray = [
             display: flex;
             justify-content: center;
             align-items: center;
-            padding-bottom: 144px;
+            padding-bottom: 90px;
             gap:20px;
             .imgContent{
                 display: flex;
@@ -164,11 +164,11 @@ const secundaryLinksArray = [
                 }
                 cursor: pointer;
                 transition: all 0.3s;
-                transform: ${({ isOpen }) => (isOpen ? `scale(1.9)` : `scale(1.9)`)};
+                transform: ${({ isopen }) => (isopen ? `scale(1.9)` : `scale(1.9)`)};
                 
             }
             h2 {
-                display: ${({ isOpen }) => (isOpen ? `block` : `none`)};
+                display: ${({ isopen }) => (isopen ? `block` : `none`)};
             }
         }
 
@@ -215,10 +215,11 @@ const secundaryLinksArray = [
         }
         .salirbutton{
             position: relative;
-            top: 200px;
+            top: 20px;
+            left: 10px;
         }
         .ThemeContent{
-            padding: ${({ isOpen }) => (isOpen ? `10% 10%` : `60px 0px 40px`)};
+            padding: ${({ isopen }) => (isopen ? `10% 10%` : `60px 0px 40px`)};
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -226,13 +227,13 @@ const secundaryLinksArray = [
                     display: block;
                     padding: 10px;
                     font-weight: 700;
-                    opacity: ${({isOpen})=>(isOpen?`1`:`0`)};
+                    opacity: ${({isopen})=>(isopen?`1`:`0`)};
                     transition: all 0.3s;
                     white-space: nowrap;
                     overflow:hidden;
                 }
                 .toggleContent{
-                    margin: ${({isOpen})=>(isOpen?`auto 40px`:`auto 15px`)};
+                    margin: ${({isopen})=>(isopen?`auto 40px`:`auto 15px`)};
                     width: 36px;
                     height: 20px;
                     border-radius: 10px;
@@ -276,7 +277,7 @@ const secundaryLinksArray = [
                                 left: 0;
                                 right: 0;
                                 bottom: 5px;
-                                background: ${({themeUse})=>(themeUse==="light" ? v.lightbackground : v.checkbox)};
+                                background: ${({themeuse})=>(themeuse==="light" ? v.lightbackground : v.checkbox)};
                                 transition: 0.3s;
                                 &::before{
                                     position: absolute;

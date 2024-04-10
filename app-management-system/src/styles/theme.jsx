@@ -18,7 +18,8 @@ export const Light = {
     bgAlpha: "rgba(250,250,250,.3)",
     bg2: "rgb(245,245,245)",
     bg3: "rgb(230,230,230)",
-    text: "rgb(45,45,45)",
+    bgbtton: "#F0F5FA",
+  
     primary: "rgb(52, 131, 235)",
     bg4:"#9247FC",
     bgtotal:"#EDF3FB",
@@ -69,7 +70,7 @@ export const Dark = {
     bgAlpha: "rgba(0,0,0,.3)",
     bg2: "rgb(30,30,30)",
     bg3: "rgb(50,50,50)",
-    text: "rgb(210,210,210)",
+    bgbtton: "#8B0000",
     primary: "rgb(52, 131, 235)",
     bg4:"#9247FC",
     bgtotal:"#21252B",
@@ -77,7 +78,7 @@ export const Dark = {
 
     gray900: "#000000",
     gray800: "#1f1f1f",
-    gray700: "#2e2e2e",
+    gray700: "#f1f1f1",
     gray600: "#313131",
     gray500: "#969593",
     gray400: "#a6a6a6",
