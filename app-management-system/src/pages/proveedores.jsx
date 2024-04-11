@@ -12,7 +12,7 @@ export function Proveedores() {
         const cargartabla = async () => {
             try {
                 const baseurl = 'http://localhost:8000/api/';
-                const api = 'user';
+                const api = '';
                 const respuesta = await fetch(`${baseurl}${api}`);
                 const { success, data: { items }, message } = await respuesta.json();
                 if (!success) {

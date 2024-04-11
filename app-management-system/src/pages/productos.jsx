@@ -3,21 +3,7 @@ import { Cabecera } from "../components/cabecera";
 import { ButtonHead } from "../components/button";
 import { Cuerpo } from "../components/cuerpo";
 import { useEffect, useState } from "react";
-/* const columns = [
-    { field: 'id', headerName: 'ID' },
-    { field: 'name', headerName: 'Name' },
-    { field: 'age', headerName: 'Age' },
 
-];
-
-const data = [
-    { id: 1, name: 'John Doe', age: 25 },
-    { id: 2, name: 'Jane Doe', age: 30 },
-    { id: 3, name: 'Alice', age: 20 },
-
-];
-
- */
 export function Productos() {
     const [pro, setPro] = useState ([])
     const [columns, setColumns] = useState([]); 
@@ -25,8 +11,8 @@ export function Productos() {
     useEffect(() => {
         const cargartabla = async () => {
             try {
-                const baseurl = 'http://localhost:8000/api/';
-                const api = 'user';
+                const baseurl = 'http://localhost:8000/doc/';
+                const api = 'api/';
                 const respuesta = await fetch(`${baseurl}${api}`);
                 const { success, data: { items }, message } = await respuesta.json();
                 if (!success) {
