@@ -12,21 +12,19 @@ export function Usuarios() {
     useEffect(() => {
         const cargarTabla = async () => {
             try {
-                const respuesta = getUsuarios();
-                console.log(respuesta)
-                /* const { success, data: { items }, message } = await respuesta.json();
+                const respuesta = await getUsuarios();
+                
+                const { success, data: { items }, message } = respuesta;
                 if (!success) {
                     throw new Error(message);
+                } else {
+                    setUser(items);
                 }
-                else{
-                    console.log(items)
-                }
-                setUser(items); */
-            } catch (error) {
-                console.error('Error al cargar la tabla:', error);
-                // Podrías mostrar un mensaje de error al usuario aquí
-            }
-        };
+        } catch (error) {
+            console.error('Error al cargar la tabla:', error);
+            // Podrías mostrar un mensaje de error al usuario aquí
+        }
+    };
 
         cargarTabla();
     }, []);

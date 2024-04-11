@@ -11,8 +11,7 @@ export function Categoria() {
     useEffect(() => {
         const cargartabla = async () => {
             try {
-                const baseurl = 'http://localhost:8000/api/';
-                const api = 'user';
+                
                 const respuesta = await fetch(`${baseurl}${api}`);
                 const { success, data: { items }, message } = await respuesta.json();
                 if (!success) {
