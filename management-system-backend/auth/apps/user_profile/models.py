@@ -9,3 +9,6 @@ class UserProfile(models.Model):
     name = models.CharField(max_length=255)
     is_active = models.BooleanField(default=True, db_index=True)
     created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self) -> str:
+        return self.name
