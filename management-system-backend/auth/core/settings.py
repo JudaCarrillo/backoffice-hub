@@ -33,7 +33,6 @@ DEBUG = os.environ.get('DEBUG')
 
 HOST_DEV = os.environ.get('HOST_DEV')
 ALLOWED_HOSTS = [HOST_DEV]
-CORS_ORIGIN_ALLOW_ALL = True
 
 # Application definition
 
@@ -44,6 +43,7 @@ DJANGO_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'corsheaders'
 ]
 
 PROJECT_APPS = [
@@ -68,8 +68,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
-
+CORS_ORIGIN_ALLOW_ALL = True
 ROOT_URLCONF = 'core.urls'
 
 TEMPLATES = [
