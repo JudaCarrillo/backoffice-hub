@@ -33,7 +33,7 @@ DEBUG = os.environ.get('DEBUG')
 
 HOST_DEV = os.environ.get('HOST_DEV')
 ALLOWED_HOSTS = [HOST_DEV]
-
+CORS_ORIGIN_ALLOW_ALL = True
 
 # Application definition
 
