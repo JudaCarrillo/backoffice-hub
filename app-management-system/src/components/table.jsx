@@ -8,7 +8,7 @@ export function TableComponent({ columns, data }) {
             <thead className='table_head'>
                 <tr className='tr_table'>
                     {columns.map(column => (
-                        <th key={column.field}>{column.headerName}</th>
+                        <th key={column.field}>{column.id}</th>
                     ))}
                     <th>Acciones</th>
                 </tr>
@@ -17,7 +17,7 @@ export function TableComponent({ columns, data }) {
                 {data.map(row => (
                     <tr key={row.id} className='tr_table'>
                         {columns.map(column => (
-                                <td className='td_table' key={`${row.id}-${column.field}`}>
+                                <td className='td_table'>
                                     {row[column.field]}
                                     
                                 </td>  
