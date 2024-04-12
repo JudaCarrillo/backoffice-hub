@@ -50,6 +50,6 @@ urlpatterns = [
 
     path('admin/', admin.site.urls),
     path(f'{VERSION}/category/', include('apps.category.urls')),
-    # path(f'{VERSION}/product/', include('apps.product.urls')),
+    path(f'{VERSION}/product/', include('apps.product.urls')),
     path(f'{VERSION}/vendor/', include('apps.vendor.urls')),
 ]
