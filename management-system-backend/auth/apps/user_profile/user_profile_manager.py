@@ -7,7 +7,7 @@ class UserProfileManager:
         payload = {}
 
         try:
-            users = UserProfile.objects.all()
+            users = UserProfile.objects.filter(is_active=True)
 
             if not users:
                 raise UserProfile.DoesNotExist

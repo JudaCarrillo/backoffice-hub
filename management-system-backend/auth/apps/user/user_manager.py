@@ -73,11 +73,6 @@ class UserManager:
                 raise User.DoesNotExist
 
             serializer = UserSerializer(users, many=True)
-            data = serializer.data
-        
-            id_profile = data['id_profile']
-                
-
             payload = {'success': True,
                        'data': {'items': serializer.data},
                        'message': 'Users found'}
