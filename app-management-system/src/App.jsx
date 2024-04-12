@@ -1,35 +1,74 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { BrowserRouter,Route  } from "react-router-dom"
+import { MyRoutes } from "./routers/routes"
+import styled from "styled-components"
+import { Sidebar } from "./components/sidebar"
+import React, { useEffect, useState } from "react"
+import { Dark, Light } from "./styles/theme"
+import {ThemeProvider} from 'styled-components'
+import { Login } from "./pages/login"
+
+export const ThemeContext = React.createContext(null);
 
 function App() {
-  const [count, setCount] = useState(0)
 
+  const [theme, setTheme] = useState("light");
+  const themeStyle = theme === "light" ? Light : Dark;
+
+  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(max-width: 1300px)");
+
+    const handleMediaChange = (e) => {
+      setSidebarOpen(!e.matches); 
+    };
+
+    mediaQuery.addEventListener("change", handleMediaChange);
+
+    return () => mediaQuery.removeEventListener("change", handleMediaChange);
+  }, []);
+  useEffect(() => {
+    // Verificar el estado de inicio de sesión almacenado en localStorage
+    const loggedInState = localStorage.getItem('isLoggedIn');
+    if (loggedInState === 'true') {
+      setIsLoggedIn(true);
+    }
+  }, []);
+  const handleLoginSuccess = () => {
+    setIsLoggedIn(true);
+    // Almacenar el estado de inicio de sesión en localStorage
+    localStorage.setItem('isLoggedIn', 'true');
+  };
+
+  
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+    <ThemeContext.Provider value={{setTheme,theme}}>
+      <ThemeProvider theme={themeStyle}>
+        <BrowserRouter>
+          {isLoggedIn ? (
+                <Container className={sidebarOpen ? "sidebarState active" : ""}>
+                  <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} setIsLoggedIn={setIsLoggedIn} />
+                  <MyRoutes />
+                </Container>
+              ) : (<Login setIsLoggedIn={setIsLoggedIn} onLoginSuccess={handleLoginSuccess} />)
+          }
+        </BrowserRouter>
+      </ThemeProvider>
+    </ThemeContext.Provider>
     </>
   )
 }
-
+const Container = styled.div`
+  display:grid;
+  grid-template-columns:90px 1fr;
+  background:${({theme})=>theme.bgtotal};
+  transition: 0.2s;
+  &.active{
+    grid-template-columns:300px auto;
+  }
+  // para cambiar el fondo a elección
+  // color: ${({theme})=>theme.text}
+`;
 export default App

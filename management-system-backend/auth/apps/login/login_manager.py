@@ -14,15 +14,15 @@ class LoginManager:
 
         enabled = user['is_active']
         if not enabled:
-            self.handlerError('User not enabled')
+            return {'success': False, 'data': None, 'message': 'User not enabled'}
 
         id_profile = user['id_profile']
         if not id_profile:
-            self.handlerError('User Profile not found')
+            return {'success': False, 'data': None, 'message': 'User Profile not found'}
 
         permissions = Permission.objects.filter(id_profile=id_profile)
         if not permissions:
-            self.handlerError('User Profile permissions not found')
+            return {'success': False, 'data': None, 'message': 'User Profile permissions not found'}
         permission_serializer = PermissionSerializer(permissions, many=True)
 
         data = permission_serializer.data
@@ -30,7 +30,7 @@ class LoginManager:
 
         privileges = Privilege.objects.filter(id__in=id_privileges)
         if not privileges:
-            self.handlerError('User Profile privileges not found')
+            return {'success': False, 'data': None, 'message': 'User Profile privileges not found'}
         privilege_serializer = PrivilegeSerializer(privileges, many=True)
 
         payload = {
@@ -43,6 +43,3 @@ class LoginManager:
             'message': 'Login successful'
         }
         return payload
-
-    def handlerError(self, error):
-        return {'success': False, 'data': None, 'message': error}
