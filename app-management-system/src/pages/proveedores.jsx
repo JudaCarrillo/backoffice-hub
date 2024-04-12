@@ -3,38 +3,32 @@ import { Cabecera } from "../components/cabecera";
 import { ButtonHead } from "../components/button";
 import { useEffect, useState } from "react";
 import { Cuerpo } from "../components/cuerpo";
+import { getVendors } from "../api/usuarios";
+import { Preloader } from "./preloader";
 
 export function Proveedores() {
     const [prov, setProv] = useState ([])
     const [columns, setColumns] = useState([]); 
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const cargartabla = async () => {
             try {
-                const baseurl = 'http://localhost:8000/api/';
-                const api = '';
-                const respuesta = await fetch(`${baseurl}${api}`);
-                const { success, data: { items }, message } = await respuesta.json();
-                if (!success) {
+                const respuesta = await getVendors();
+                const { success, data, message } = respuesta.data;
+                if (success) {
+                    const userKeys = Object.keys(data[0]);
+                    const nuevasColumnas = userKeys.map(key => ({
+                        title: key.charAt(0).toUpperCase() + key.slice(1),
+                        data: key,
+                        key: key,
+                    }));
+                    setColumns(nuevasColumnas);
+                    setProv(data);
+                    setLoading(false); // Indicar que los datos se han cargado
+                } else {
                     throw new Error(message);
                 }
-                const allKeys = items.reduce((keys, item) => {
-                    Object.keys(item).forEach(key => {
-                        if (!keys.includes(key)) {
-                            keys.push(key);
-                        }
-                    });
-                    return keys;
-                }, []);
-
-                const newColumns = allKeys.map(key => ({
-                    title: key.charAt(0).toUpperCase() + key.slice(1),
-                    dataIndex: key,
-                    key: key,
-                }));
-
-                setColumns(newColumns);
-                setProv(items);
             } catch (error) {
                 console.error('Error al cargar la tabla:', error);
             }
@@ -42,17 +36,21 @@ export function Proveedores() {
 
         cargartabla();
     }, []);
+
     return (
         <Container>
-            <Cabecera title={'Proveedores'}>
-                <ButtonHead name={'Nuevo Proveedor'}/>
+            <Cabecera title={'Vendors'}>
+                <ButtonHead name={'Nuevo Vendor'}/>
             </Cabecera>
-            <Cuerpo columns={columns} data={prov} />
+            {loading ? (
+                <Preloader/> // Mostrar indicador de carga
+            ) : (
+                <Cuerpo columns={columns} data={prov} />
+            )}
         </Container>
     );
 }
 
 const Container = styled.div`
-height:100vh;
-
+    height: 100vh;
 `;

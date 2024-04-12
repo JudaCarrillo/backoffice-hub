@@ -3,38 +3,33 @@ import { Cabecera } from "../components/cabecera";
 import { ButtonHead } from "../components/button";
 import { Cuerpo } from "../components/cuerpo";
 import { useEffect, useState } from "react";
+import { getProducts } from "../api/usuarios";
+import { Preloader } from "./preloader";
+import { ModalProductos } from "../components/modals/CrearModales/modalProductos";
 
 export function Productos() {
     const [pro, setPro] = useState ([])
-    const [columns, setColumns] = useState([]); 
+    const [columns, setColumns] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const cargartabla = async () => {
             try {
-                const baseurl = 'http://localhost:8000/doc/';
-                const api = 'api/';
-                const respuesta = await fetch(`${baseurl}${api}`);
-                const { success, data: { items }, message } = await respuesta.json();
-                if (!success) {
+                const respuesta = await getProducts();
+                const { success, data, message } = respuesta.data;
+                if (success) {
+                    const userKeys = Object.keys(data[0]);
+                    const nuevasColumnas = userKeys.map(key => ({
+                        title: key.charAt(0).toUpperCase() + key.slice(1),
+                        data: key,
+                        key: key,
+                    }));
+                    setColumns(nuevasColumnas);
+                    setPro(data);
+                    setLoading(false);
+                } else {
                     throw new Error(message);
                 }
-                const allKeys = items.reduce((keys, item) => {
-                    Object.keys(item).forEach(key => {
-                        if (!keys.includes(key)) {
-                            keys.push(key);
-                        }
-                    });
-                    return keys;
-                }, []);
-
-                const newColumns = allKeys.map(key => ({
-                    title: key.charAt(0).toUpperCase() + key.slice(1),
-                    dataIndex: key,
-                    key: key,
-                }));
-
-                setColumns(newColumns);
-                setPro(items);
             } catch (error) {
                 console.error('Error al cargar la tabla:', error);
             }
@@ -42,13 +37,18 @@ export function Productos() {
 
         cargartabla();
     }, []);
+
     return (
         <Container>
-            <Cabecera title={'Productos'}>
-                <ButtonHead name={'Descargar'} buttonColor="#969593"/>
-                <ButtonHead name={'Nuevo Producto'}/>
+            <Cabecera title={'products'}>
+                <ButtonHead name={'Descargar'}  buttonColor="#969593"/>
+                <ModalProductos modalName={'Nueva producto'} title={'Crear producto'}/>
             </Cabecera>
-            <Cuerpo columns={columns} data={pro}/>
+            {loading ? (
+                <Preloader/> // Mostrar indicador de carga
+            ) : (
+                <Cuerpo columns={columns} data={pro} />
+            )}
         </Container>
     );
 }
