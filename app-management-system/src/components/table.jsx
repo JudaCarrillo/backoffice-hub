@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from "styled-components"
+import { ButtonsTable } from './buttons_action/buttons';
 
 export function TableComponent({ columns, data }) {
     return (
@@ -9,16 +10,19 @@ export function TableComponent({ columns, data }) {
                     {columns.map(column => (
                         <th key={column.field}>{column.headerName}</th>
                     ))}
+                    <th>Acciones</th>
                 </tr>
             </thead>
             <tbody className='table_bd'>
                 {data.map(row => (
                     <tr key={row.id} className='tr_table'>
                         {columns.map(column => (
-                            <td className='td_table' key={`${row.id}-${column.field}`}>
-                                {row[column.field]}
-                            </td>
+                                <td className='td_table' key={`${row.id}-${column.field}`}>
+                                    {row[column.field]}
+                                    
+                                </td>  
                         ))}
+                        <ButtonsTable/>
                     </tr>
                 ))}
             </tbody>

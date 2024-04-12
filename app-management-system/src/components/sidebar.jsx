@@ -6,10 +6,12 @@ import { BiCategory } from "react-icons/bi";
 import { FaPeopleCarryBox } from "react-icons/fa6";
 import { FaRegUser } from "react-icons/fa";
 import { ImExit } from "react-icons/im";
-import { NavLink } from "react-router-dom";
+import { NavLink,useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { ThemeContext } from "../App";
-export function Sidebar({sidebarOpen,setSidebarOpen}) {
+
+export function Sidebar({sidebarOpen,setSidebarOpen,setIsLoggedIn }) {
+    const navigate = useNavigate();
     const ModSidebarOpen=()=>{
         setSidebarOpen(!sidebarOpen)
     };
@@ -17,6 +19,12 @@ export function Sidebar({sidebarOpen,setSidebarOpen}) {
     const cambiarTheme = () =>{
         setTheme((theme)=>(theme===
         "light" ? "dark" : "light"));
+    };
+
+    const salir = () => {
+        setIsLoggedIn(false);
+        localStorage.removeItem('isLoggedIn');
+        window.location.href = '/';
     };
     return (
         <Container isopen = {sidebarOpen} themeuse={theme}>
@@ -32,8 +40,8 @@ export function Sidebar({sidebarOpen,setSidebarOpen}) {
                 </h2>
             </div>
             {linksArray.map(({icon,label,to})=>(
-                <div className="LinkContainer" key="label">
-                    <NavLink to={to} className={({isActive})=>`Links${isActive?` active`:``}`}>
+                <div className="LinkContainer" key={label} >
+                    <NavLink to={to}  className={({isActive})=>`Links${isActive?` active`:``}`}>
                         <div className="LinkIcon">
                             {icon}
                         </div>
@@ -66,8 +74,8 @@ export function Sidebar({sidebarOpen,setSidebarOpen}) {
 
 
             {secundaryLinksArray.map(({icon,label,to})=>(
-                <div className="LinkContainer salirbutton" key="label">
-                    <NavLink to={to} className={({isActive})=>`Links${isActive?` active`:``}`}>
+                <div className="LinkContainer salirbutton" key={label}>
+                    <NavLink to={to} onClick={salir} className={({isActive})=>`Links${isActive?` active`:``}`}>
                         <div className="LinkIcon">
                             {icon}
                         </div>
@@ -117,7 +125,6 @@ const secundaryLinksArray = [
 
 // #REGION STYLED CONTAINER
     const Container = styled.div`
-
         color: ${(props)=>props.theme.text};
         background: ${(props)=>props.theme.bg};
         position: sticky;
@@ -216,7 +223,7 @@ const secundaryLinksArray = [
         .salirbutton{
             position: relative;
             top: 20px;
-            left: 10px;
+            left: 1px;
         }
         .ThemeContent{
             padding: ${({ isopen }) => (isopen ? `10% 10%` : `60px 0px 40px`)};
@@ -300,7 +307,10 @@ const secundaryLinksArray = [
                         }
                     }
                     
-                }
+               }
+        }
+        @media (max-width: 1300px) {
+            padding-top: ${({ isopen }) => (isopen ? `30%` : `100px`)};
         }
     `;
 // #ENDREGION

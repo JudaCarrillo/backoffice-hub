@@ -41,7 +41,10 @@ export const Light = {
     olive500: "#e3ffa8",
   
     white: "#ffffff",
-  
+    btnColor: "#E59866",
+    btnColor2: "#EA5C5C",
+    reverse: "#000000",
+    reverse2: "#ffffff",
     textprimary: "#2a2828",
     textsecondary: "#f1f1f1",
     texttertiary: "#969593",
@@ -89,8 +92,12 @@ export const Dark = {
     green500: "#F9516E",
     olive500: "#e3ffa8",
   
+    btnColor2: "#C8C8C8",
+    btnColor: "#616A6B",
     white: "#ffffff",
-  
+    reverse: "#ffffff",
+    reverse2: "#000000",
+
     textprimary: "#ffffff",
     textsecondary: "#f1f1f1",
     texttertiary: "#969593",
