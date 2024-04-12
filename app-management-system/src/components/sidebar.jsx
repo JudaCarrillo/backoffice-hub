@@ -10,8 +10,8 @@ import { NavLink,useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { ThemeContext } from "../App";
 
-export function Sidebar({sidebarOpen,setSidebarOpen}) {
-    
+export function Sidebar({sidebarOpen,setSidebarOpen,setIsLoggedIn }) {
+    const navigate = useNavigate();
     const ModSidebarOpen=()=>{
         setSidebarOpen(!sidebarOpen)
     };
@@ -22,9 +22,9 @@ export function Sidebar({sidebarOpen,setSidebarOpen}) {
     };
 
     const salir = () => {
-        // Aquí cambias el estado de inicio de sesión a false
-        // Suponiendo que tienes acceso a la función setIsLoggedIn en tu componente padre
         setIsLoggedIn(false);
+        localStorage.removeItem('isLoggedIn');
+        window.location.href = '/';
     };
     return (
         <Container isopen = {sidebarOpen} themeuse={theme}>

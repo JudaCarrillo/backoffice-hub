@@ -1,4 +1,4 @@
-import { BrowserRouter } from "react-router-dom"
+import { BrowserRouter,Route  } from "react-router-dom"
 import { MyRoutes } from "./routers/routes"
 import styled from "styled-components"
 import { Sidebar } from "./components/sidebar"
@@ -28,9 +28,20 @@ function App() {
 
     return () => mediaQuery.removeEventListener("change", handleMediaChange);
   }, []);
+  useEffect(() => {
+    // Verificar el estado de inicio de sesión almacenado en localStorage
+    const loggedInState = localStorage.getItem('isLoggedIn');
+    if (loggedInState === 'true') {
+      setIsLoggedIn(true);
+    }
+  }, []);
   const handleLoginSuccess = () => {
     setIsLoggedIn(true);
+    // Almacenar el estado de inicio de sesión en localStorage
+    localStorage.setItem('isLoggedIn', 'true');
   };
+
+  
   return (
     <>
     <ThemeContext.Provider value={{setTheme,theme}}>
@@ -38,7 +49,7 @@ function App() {
         <BrowserRouter>
           {isLoggedIn ? (
                 <Container className={sidebarOpen ? "sidebarState active" : ""}>
-                  <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+                  <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} setIsLoggedIn={setIsLoggedIn} />
                   <MyRoutes />
                 </Container>
               ) : (<Login setIsLoggedIn={setIsLoggedIn} onLoginSuccess={handleLoginSuccess} />)
@@ -51,7 +62,7 @@ function App() {
 }
 const Container = styled.div`
   display:grid;
-  grid-template-columns:90px auto;
+  grid-template-columns:90px 1fr;
   background:${({theme})=>theme.bgtotal};
   transition: 0.2s;
   &.active{

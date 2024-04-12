@@ -9,7 +9,6 @@ export function MyRoutes() {
         <Routes>
                 <Route exact path='/'  element ={<Productos/>}/>
                 <Route path='/categoria'  element ={<Categoria/>} />
-                <Route path='/login'  element = {<Login/>} />
                 <Route path='/proveedores'  element ={<Proveedores/>} />
                 <Route path='/usuarios'  element ={<Usuarios/>} />           
         </Routes>

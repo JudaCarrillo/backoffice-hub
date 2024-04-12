@@ -23,7 +23,7 @@ const Container = styled.div`
         display: flex;
         justify-content: center;
         align-items: center;
-        background: ${(props) => props.buttonColor || props.theme.bgbtton}; // Usa buttonColor si está definido, de lo contrario usa el color del tema
+        background: ${(props) => props.buttonColor || props.theme.bgbtton};
         cursor: pointer;
         border: none;
         border-radius: 1rem;
