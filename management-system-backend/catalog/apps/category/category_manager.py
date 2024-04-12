@@ -37,12 +37,11 @@ class CategoryManager:
             return {'success': False, 'data': None, 'message': 'Category not found'}
 
     def update(self, id, **extra_fields):
-
-        try :
+        try:
             category = Category.objects.get(id=id)
         except Category.DoesNotExist:
             return {'success': False, 'data': None, 'message': 'Category not found'}
-        
+
         serializer = CustomCategorySerializer(
             category, data=extra_fields, partial=True)
 

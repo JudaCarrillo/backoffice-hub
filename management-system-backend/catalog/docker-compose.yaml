@@ -2,9 +2,9 @@ version: "3.8"
 services:
   # Django app
   main:
-    container_name: backoffice_category
+    container_name: backoffice_catalog
     labels:
-      svc: backoffice_category
+      svc: backoffice_catalog
     restart: always
     build:
       dockerfile: ./Dockerfile
