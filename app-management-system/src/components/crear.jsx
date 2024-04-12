@@ -124,6 +124,7 @@ const ModalContainer = styled.div`
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999; // Asegura que el modal esté por encima de otros elementos
 `;
 
 const ModalContent = styled.div`
