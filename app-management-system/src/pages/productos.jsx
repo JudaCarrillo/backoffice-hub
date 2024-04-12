@@ -5,6 +5,7 @@ import { Cuerpo } from "../components/cuerpo";
 import { useEffect, useState } from "react";
 import { getProducts } from "../api/usuarios";
 import { Preloader } from "./preloader";
+import { ModalProductos } from "../components/modals/CrearModales/modalProductos";
 
 export function Productos() {
     const [pro, setPro] = useState ([])
@@ -41,7 +42,7 @@ export function Productos() {
         <Container>
             <Cabecera title={'products'}>
                 <ButtonHead name={'Descargar'}  buttonColor="#969593"/>
-                <ButtonHead name={'Nuevo Product'} className={'NuevoProduc'}/>
+                <ModalProductos modalName={'Nueva producto'} title={'Crear producto'}/>
             </Cabecera>
             {loading ? (
                 <Preloader/> // Mostrar indicador de carga

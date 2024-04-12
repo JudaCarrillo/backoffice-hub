@@ -1,20 +1,12 @@
 import styled from "styled-components";
-import CrearProducto from "./crear";
-import { useState } from "react";
 
-export function ButtonHead({ name, buttonColor }) {
-  const [modalOpen, setModalOpen] = useState(false);
-  const toggleModal = () => setModalOpen(!modalOpen)
+export function ButtonHead({ name, buttonColor, className, id }) {
   
   return (
-    <Container buttonColor={buttonColor}>
-      <div className="button_head" onClick={toggleModal}>
+    <Container>
+      <button className={`button_head ${className}`} buttonColor={buttonColor} id={id}>
         {name}
-      </div>
-      { modalOpen  &&
-        <CrearProducto isOpen={modalOpen} />
-      }
-
+      </button>
     </Container>
   );
 }

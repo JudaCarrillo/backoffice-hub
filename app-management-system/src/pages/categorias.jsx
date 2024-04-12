@@ -1,17 +1,16 @@
 import styled from "styled-components"
 import { Cabecera } from "../components/cabecera";
-import { ButtonHead } from "../components/button";
 import { Cuerpo } from "../components/cuerpo";
 import { useEffect, useState } from "react";
 import { getCategories } from "../api/usuarios";
 import { Preloader } from "./preloader";
+import Modal from "../components/modals/CrearModales/modalCategoria";
 
 export function Categoria() {
 
     const [cat, setCat] = useState ([])
     const [columns, setColumns] = useState([]);
     const [loading, setLoading] = useState(true);
-    
 
     useEffect(() => {
         const cargartabla = async () => {
@@ -38,21 +37,23 @@ export function Categoria() {
 
         cargartabla();
     }, []);
-
-
+    
     return (
         <Container>
-            <Cabecera title={'Categoria'}>
-                <ButtonHead name={'Nueva categoria'}/>
+             <Cabecera title={'Categoria'}>
+                {/* Paso el onClick a ButtonHead y también capturo su ID */}
+            
+                <Modal modalName={'Nueva Categoria'} title={'Crear categoria'}/>
             </Cabecera>
             {loading ? (
-                <Preloader/> // Mostrar indicador de carga
+                <Preloader />
             ) : (
                 <Cuerpo columns={columns} data={cat} />
             )}
         </Container>
     );
 }
+
 
 const Container = styled.div`
     height:100vh;
