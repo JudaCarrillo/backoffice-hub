@@ -3,38 +3,34 @@ import { Cabecera } from "../components/cabecera";
 import { ButtonHead } from "../components/button";
 import { Cuerpo } from "../components/cuerpo";
 import { useEffect, useState } from "react";
+import { getCategories } from "../api/usuarios";
+import { Preloader } from "./preloader";
 
 export function Categoria() {
 
     const [cat, setCat] = useState ([])
-    const [columns, setColumns] = useState([]); 
+    const [columns, setColumns] = useState([]);
+    const [loading, setLoading] = useState(true);
+    
 
     useEffect(() => {
         const cargartabla = async () => {
             try {
-                
-                const respuesta = await fetch(`${baseurl}${api}`);
-                const { success, data: { items }, message } = await respuesta.json();
-                if (!success) {
+                const respuesta = await getCategories();
+                const { success, data, message } = respuesta.data;
+                if (success) {
+                    const userKeys = Object.keys(data[0]);
+                    const nuevasColumnas = userKeys.map(key => ({
+                        title: key.charAt(0).toUpperCase() + key.slice(1),
+                        data: key,
+                        key: key,
+                    }));
+                    setColumns(nuevasColumnas);
+                    setCat(data);
+                    setLoading(false); // Indicar que los datos se han cargado
+                } else {
                     throw new Error(message);
                 }
-                const allKeys = items.reduce((keys, item) => {
-                    Object.keys(item).forEach(key => {
-                        if (!keys.includes(key)) {
-                            keys.push(key);
-                        }
-                    });
-                    return keys;
-                }, []);
-
-                const newColumns = allKeys.map(key => ({
-                    title: key.charAt(0).toUpperCase() + key.slice(1),
-                    dataIndex: key,
-                    key: key,
-                }));
-
-                setColumns(newColumns);
-                setCat(items);
             } catch (error) {
                 console.error('Error al cargar la tabla:', error);
             }
@@ -43,12 +39,17 @@ export function Categoria() {
         cargartabla();
     }, []);
 
+
     return (
         <Container>
             <Cabecera title={'Categoria'}>
                 <ButtonHead name={'Nueva categoria'}/>
             </Cabecera>
-            {/* <Cuerpo columns={columns} data={cat} /> */}
+            {loading ? (
+                <Preloader/> // Mostrar indicador de carga
+            ) : (
+                <Cuerpo columns={columns} data={cat} />
+            )}
         </Container>
     );
 }
