@@ -49,7 +49,5 @@ urlpatterns = [
          cache_timeout=0), name='schema-redoc'),
 
     path('admin/', admin.site.urls),
-    # path(f'{VERSION}/users/', include('apps.user.urls')),
-    # path(f'{VERSION}/user_profiles/', include('apps.user_profile.urls')),
-    # path(f'{VERSION}/login/', include('apps.login.urls')),
+    path(f'{VERSION}/category/', include('apps.category.urls'))
 ]
