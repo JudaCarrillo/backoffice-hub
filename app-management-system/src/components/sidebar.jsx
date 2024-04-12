@@ -6,12 +6,12 @@ import { BiCategory } from "react-icons/bi";
 import { FaPeopleCarryBox } from "react-icons/fa6";
 import { FaRegUser } from "react-icons/fa";
 import { ImExit } from "react-icons/im";
-import { NavLink,useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { useContext } from "react";
 import { ThemeContext } from "../App";
 
 export function Sidebar({sidebarOpen,setSidebarOpen,setIsLoggedIn }) {
-    const navigate = useNavigate();
+
     const ModSidebarOpen=()=>{
         setSidebarOpen(!sidebarOpen)
     };

@@ -1,10 +1,10 @@
 import styled from "styled-components";
 
-export function ButtonHead({ name, buttonColor }) {
+export function ButtonHead({ name, buttonColor,className }) {
   return (
-    <Container buttonColor={buttonColor}>
+    <Container buttonColor={buttonColor} className={className}>
       <div className="button_head">
-        {name}
+        {name}  
       </div>
     </Container>
   );

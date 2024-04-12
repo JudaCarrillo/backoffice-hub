@@ -45,8 +45,8 @@ export function Productos() {
     return (
         <Container>
             <Cabecera title={'Productos'}>
-                <ButtonHead name={'Descargar'} buttonColor="#969593"/>
-                <ButtonHead name={'Nuevo Producto'}/>
+                <ButtonHead name={'Descargar'}  buttonColor="#969593"/>
+                <ButtonHead name={'Nuevo Producto'} className={'NuevoProduc'}/>
             </Cabecera>
             <Cuerpo columns={columns} data={pro}/>
         </Container>
