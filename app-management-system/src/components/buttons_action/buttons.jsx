@@ -2,14 +2,14 @@ import React from 'react';
 import styled from "styled-components"
 import { MdDeleteForever, MdEditSquare  } from "react-icons/md";
 
-export function ButtonsTable(){
+export function ButtonsTable({id}){
     return(
         <>
             <Container>
                 <ul className="container-wrapper">
                     {buttoms.map(({icon,label}) => (
                         <li key={label}>
-                            <button type="submit" className={label === "Editar" ? "editar-button" : "eliminar-button"}>
+                            <button type="submit" id={`${id}`}  className={label === "Editar" ? "editar-button" : "eliminar-button"}>
                                 {icon}
                                 {label}    
                             </button>
@@ -33,7 +33,7 @@ const buttoms = [
 ]
 
 const Container = styled.td`
-    width: 250px;    
+    width: 250px;
     .container-wrapper{
         display:flex;
         justify-content: center;

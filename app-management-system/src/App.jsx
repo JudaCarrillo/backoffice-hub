@@ -62,7 +62,7 @@ function App() {
 }
 const Container = styled.div`
   display:grid;
-  grid-template-columns:90px auto;
+  grid-template-columns:90px 1fr;
   background:${({theme})=>theme.bgtotal};
   transition: 0.2s;
   &.active{

@@ -23,6 +23,29 @@ const Container = styled.div`
     top: 20px;
     padding: 10px 40px 10px 40px;
     margin: 10px;
+    transition: width 0.5s ease;
+    @media screen and (max-width: 1200px) {
+        width: 100%;
+    }
+    
+    @media screen and (max-width: 1000px) {
+        width: 85vw;
+    }
+
+    @media screen and (max-width: 900px) {
+        width: 80vw;
+    }
+
+    @media screen and (max-width: 800px) {
+        width: 73vw;
+        .Headboard {
+            display: flex;
+            justify-content: flex-start;
+            position: relative;
+            gap: 5%; /* Cambia el valor de gap según lo necesites */
+        }
+    }
+
     
     .Headboard{
         
@@ -39,7 +62,6 @@ const Container = styled.div`
         .Headboard-title{
             color: ${(props)=>props.theme.text};
         }
-
     }
     
     .button_lado{
