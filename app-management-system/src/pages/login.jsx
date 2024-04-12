@@ -89,13 +89,15 @@ export function Login({ onLoginSuccess }) {
 
     try {
       const response = await axios.post(url, data);
-      console.log(response)
       const {success, data: {privileges }} = response.data
       if(!success){
         console.log(success)
       }
       onLoginSuccess(); // Si la solicitud es exitosa, llama a la función onLoginSuccess
-      localStorage.setItem('user', privileges);
+      
+      const Privileges = [...privileges]
+      localStorage.setItem('user', JSON.stringify(Privileges));
+      
     } catch (error) {
       console.error('Error al realizar la petición:', error);
       alert("Credenciales incorrectas"); // Muestra una alerta si hay un error en la solicitud

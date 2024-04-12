@@ -1,16 +1,13 @@
 import styled from "styled-components"
 import logo from "../assets/logo.png"
 import { v } from "../styles/variables";
-import { AiOutlineLeft,AiOutlineApartment } from "react-icons/ai";
-import { BiCategory } from "react-icons/bi";
-import { FaPeopleCarryBox } from "react-icons/fa6";
-import { FaRegUser } from "react-icons/fa";
+import { AiOutlineLeft } from "react-icons/ai";
 import { ImExit } from "react-icons/im";
 import { NavLink } from "react-router-dom";
 import { useContext } from "react";
 import { ThemeContext } from "../App";
 
-export function Sidebar({sidebarOpen,setSidebarOpen,setIsLoggedIn }) {
+export function Sidebar({sidebarOpen,setSidebarOpen,setIsLoggedIn, linksArray}) {
 
     const ModSidebarOpen=()=>{
         setSidebarOpen(!sidebarOpen)
@@ -39,8 +36,8 @@ export function Sidebar({sidebarOpen,setSidebarOpen,setIsLoggedIn }) {
                     Logo
                 </h2>
             </div>
-            {linksArray.map(({icon,label,to})=>(
-                <div className="LinkContainer" key={label} >
+            {linksArray.map(({id,icon,label,to})=>(
+                <div className="LinkContainer" key={id} >
                     <NavLink to={to}  className={({isActive})=>`Links${isActive?` active`:``}`}>
                         <div className="LinkIcon">
                             {icon}
@@ -89,28 +86,7 @@ export function Sidebar({sidebarOpen,setSidebarOpen,setIsLoggedIn }) {
     );
 }
 // #REGION DATA LINKS
-    const linksArray = [
-    {
-        label: "Productos",
-        icon: <AiOutlineApartment />,
-        to: "/"
-    },
-    {
-        label: "Categoria",
-        icon: <BiCategory />,
-        to: "/categoria"
-    },
-    {
-        label: "Proveedores",
-        icon: <FaPeopleCarryBox />,
-        to: "/proveedores"
-    },
-    {
-        label: "Usuarios",
-        icon: <FaRegUser />,
-        to: "/usuarios"
-    }
-]
+    
 // #ENDREGION
 
 // #REGION DATA LINKS SECUNDARY

@@ -3,7 +3,6 @@ import { Cabecera } from "../components/cabecera";
 import { ButtonHead } from "../components/button";
 import { Cuerpo } from "../components/cuerpo";
 import { useEffect, useState } from "react";
-import CrearProducto from "../components/crear";
 
 export function Categoria() {
 
@@ -49,7 +48,7 @@ export function Categoria() {
             <Cabecera title={'Categoria'}>
                 <ButtonHead name={'Nueva categoria'}/>
             </Cabecera>
-            <Cuerpo columns={columns} data={cat} />
+            {/* <Cuerpo columns={columns} data={cat} /> */}
         </Container>
     );
 }
