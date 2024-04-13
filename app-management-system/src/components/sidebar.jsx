@@ -6,6 +6,7 @@ import { ImExit } from "react-icons/im";
 import { NavLink } from "react-router-dom";
 import { useContext } from "react";
 import { ThemeContext } from "../App";
+import { StyleSheetManager } from 'styled-components';
 
 export function Sidebar({sidebarOpen,setSidebarOpen,setIsLoggedIn, linksArray}) {
 
@@ -24,65 +25,65 @@ export function Sidebar({sidebarOpen,setSidebarOpen,setIsLoggedIn, linksArray}) 
         window.location.href = '/';
     };
     return (
-        <Container isopen = {sidebarOpen} themeuse={theme}>
-            <button className="sidebarButton" onClick={ModSidebarOpen}>
-                <AiOutlineLeft />
-            </button>
-            <div className="LogoContent">
-                <div className="imgContent">
-                    <img src={logo} alt="Logo de la aplicación"/>
+        <StyleSheetManager shouldForwardProp={prop => prop !== 'isopen'}>
+            <Container isopen={sidebarOpen} themeuse={theme}>
+                <button className="sidebarButton" onClick={ModSidebarOpen}>
+                    <AiOutlineLeft />
+                </button>
+                <div className="LogoContent">
+                    <div className="imgContent">
+                        <img src={logo} alt="Logo de la aplicación"/>
+                    </div>
+                    <h2>
+                        Logo
+                    </h2>
                 </div>
-                <h2>
-                    Logo
-                </h2>
-            </div>
-            {linksArray.map(({id,icon,label,to})=>(
-                <div className="LinkContainer" key={id} >
-                    <NavLink to={to}  className={({isActive})=>`Links${isActive?` active`:``}`}>
-                        <div className="LinkIcon">
-                            {icon}
-                        </div>
-                        {sidebarOpen && (
-                            <span>{label}</span>
-                        )}
-                    </NavLink>
-                </div>
-            ))}
-            <Divider/>
+                {linksArray.map(({icon,label,to})=>(
+                    <div className="LinkContainer" key={label} >
+                        <NavLink to={to}  className={({isActive})=>`Links${isActive?` active`:``}`}>
+                            <div className="LinkIcon">
+                                {icon}
+                            </div>
+                            {sidebarOpen && (
+                                <span>{label}</span>
+                            )}
+                        </NavLink>
+                    </div>
+                ))}
+                <Divider/>
 
-            <div className="ThemeContent">
-                {sidebarOpen && 
-                <span className="titleTheme">Dark Mode</span>
-                }
-                <div className="toggleContent">
-                    <div className="grid theme-container">
-                        <div className="content">
-                            <div className="demo">
-                                <label className="switch">
-                                    <input type="checkbox" className="theme-swither"
-                                    onClick={cambiarTheme}></input>
-                                    <span className="slider round"></span>
-                                </label>
+                <div className="ThemeContent">
+                    {sidebarOpen && 
+                    <span className="titleTheme">Dark Mode</span>
+                    }
+                    <div className="toggleContent">
+                        <div className="grid theme-container">
+                            <div className="content">
+                                <div className="demo">
+                                    <label className="switch">
+                                        <input type="checkbox" className="theme-swither"
+                                        onClick={cambiarTheme}></input>
+                                        <span className="slider round"></span>
+                                    </label>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-
-
-            {secundaryLinksArray.map(({icon,label,to})=>(
-                <div className="LinkContainer salirbutton" key={label}>
-                    <NavLink to={to} onClick={salir} className={({isActive})=>`Links${isActive?` active`:``}`}>
-                        <div className="LinkIcon">
-                            {icon}
-                        </div>
-                        {sidebarOpen && (
-                            <span>{label}</span>
-                        )}
-                    </NavLink>
-                </div>
-            ))}
-        </Container>
+                {secundaryLinksArray.map(({icon,label,to})=>(
+                    <div className="LinkContainer salirbutton" key={label}>
+                        <NavLink to={to} onClick={salir} className={({isActive})=>`Links${isActive?` active`:``}`}>
+                            <div className="LinkIcon">
+                                {icon}
+                            </div>
+                            {sidebarOpen && (
+                                <span>{label}</span>
+                            )}
+                        </NavLink>
+                    </div>
+                ))}
+            </Container>
+        </StyleSheetManager>
     );
 }
 // #REGION DATA LINKS

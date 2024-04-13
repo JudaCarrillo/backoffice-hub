@@ -39,7 +39,6 @@ function App() {
     if (loggedInState === 'true') {
       const Privileges = localStorage.getItem('user');
       const privilegesObject = JSON.parse(Privileges);
-      console.log(privilegesObject)
       setUserPrivileges(privilegesObject); // Almacena los privilegios en el estado del componente
       setIsLoggedIn(true);
       

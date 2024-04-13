@@ -4,7 +4,7 @@ export function ButtonHead({ name, buttonColor, className, id }) {
   
   return (
     <Container>
-      <button className={`button_head ${className}`} buttonColor={buttonColor} id={id}>
+      <button className={`button_head ${className}`} buttoncolor={buttonColor} id={id}>
         {name}
       </button>
     </Container>
@@ -25,7 +25,7 @@ const Container = styled.div`
         display: flex;
         justify-content: center;
         align-items: center;
-        background: ${(props) => props.buttonColor || props.theme.bgbtton};
+        background: ${(props) => props.buttoncolor || props.theme.bgbtton};
         cursor: pointer;
         border: none;
         border-radius: 1rem;

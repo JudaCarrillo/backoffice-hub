@@ -37,6 +37,16 @@ export function Categoria() {
 
         cargartabla();
     }, []);
+    // Función de edición
+    const handleEdit = (id) => {
+        console.log('Editar categoría con ID:', id);
+    };
+
+    // Función de eliminación
+    const handleDelete = (id) => {
+        console.log('Eliminar categoría con ID:', id);
+    };
+
     
     return (
         <Container>
@@ -48,7 +58,7 @@ export function Categoria() {
             {loading ? (
                 <Preloader />
             ) : (
-                <Cuerpo columns={columns} data={cat} />
+                <Cuerpo columns={columns} data={cat} handleEdit={handleEdit} handleDelete={handleDelete} />
             )}
         </Container>
     );
