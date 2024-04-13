@@ -1,4 +1,4 @@
-import { BrowserRouter,Route  } from "react-router-dom"
+import { BrowserRouter } from "react-router-dom"
 import { MyRoutes } from "./routers/routes"
 import styled from "styled-components"
 import { Sidebar } from "./components/sidebar"
@@ -46,7 +46,7 @@ function App() {
   }, []);
 
   const handleLoginSuccess = () => {
-    setIsLoggedIn(true); // redirecciona
+    setIsLoggedIn(true); // redireccionar al usuario a la página principal
     // Almacenar el estado de inicio de sesión en localStorage
     localStorage.setItem('isLoggedIn', 'true');
     window.location.reload('/product');
@@ -62,7 +62,7 @@ function App() {
       case "FaRegUser":
         return <FaRegUser />;
       default:
-        return null; // Devuelve null si no se encuentra el icono
+        return null;
     }
   };
   const linksArray = useMemo(() => {
