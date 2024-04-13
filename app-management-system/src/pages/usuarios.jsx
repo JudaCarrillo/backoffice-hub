@@ -37,6 +37,27 @@ export function Usuarios() {
         cargartabla();
     }, []);
 
+    const handleEdit = (id) => {
+        console.log('Editar categoría con ID:', id);
+    };
+
+    // Función de eliminación
+    const handleDelete = async (id) => {
+        try {
+            const respuesta = await deleteUser(id);
+            const { success, data, message } = respuesta.data;
+            if (success) {
+                setUser(user.filter(users => users.id !== id));
+            } else {
+                throw new Error(message);
+            }
+        } catch (error) {
+            console.error('Error al eliminar la categoría:', error);
+         }
+    }
+
+
+
     return (
         <Container>
             <Cabecera title={'Usuarios'}>
@@ -45,7 +66,7 @@ export function Usuarios() {
             {loading ? (
                 <Preloader/> // Mostrar indicador de carga
             ) : (
-                <Cuerpo columns={columns} data={user} />
+                <Cuerpo columns={columns} data={user} handleEdit={handleEdit} handleDelete={handleDelete} />
             )}
         </Container>
     );

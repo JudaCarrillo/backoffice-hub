@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { exportCategoriesToCsv } from "../api/categories";
+import { deleteCategory, exportCategoriesToCsv } from "../api/categories";
 import { getCategories } from "../api/usuarios";
 import { ButtonHead } from "../components/button";
 import { Cabecera } from "../components/cabecera";
@@ -45,10 +45,22 @@ export function Categoria() {
     };
 
     // Función de eliminación
-    const handleDelete = (id) => {
-        console.log('Eliminar categoría con ID:', id);
+    const handleDelete = async (id) => {
+        try {
+            const respuesta = await deleteCategory(id);
+            const { success, data, message } = respuesta.data;
+            if (success) {
+                setCat(cat.filter(categoria => categoria.id !== id));
+            } else {
+                throw new Error(message);
+            }
+        } catch (error) {
+            console.error('Error al eliminar la categoría:', error);
+         }
+    }
+    const handleReceiveRows = async (data) => {
+      setCat(data);
     };
-
     
     return (
         <Container>
@@ -61,7 +73,7 @@ export function Categoria() {
           buttonColor="#969593"
         />
             
-                <Modal modalName={'Nueva Categoria'} title={'Crear categoria'}/>
+                <Modal modalName={'Nueva Categoria'} title={'Crear categoria'} onReceiveRows={handleReceiveRows} />
             </Cabecera>
             {loading ? (
                 <Preloader />

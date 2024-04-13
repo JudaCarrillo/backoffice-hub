@@ -8,3 +8,6 @@ export const exportProductsToCsv = () => {
     return axios.get(`${url_base}${apiVersion}${subject}export`, { responseType: 'blob' })
 }
 
+export const deleteProduct = (id) => {
+    return axios.delete(`${url_base}${apiVersion}${subject}delete/${id}`)
+}
