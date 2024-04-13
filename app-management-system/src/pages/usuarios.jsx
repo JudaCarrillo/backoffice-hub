@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { Cuerpo } from "../components/cuerpo";
 import { getUsuarios } from "../api/usuarios";
 import { Preloader } from "./preloader";
+import { ModalUsuario } from "../components/modals/CrearModales/modalUsuario";
 
 export function Usuarios() {
     const [user, setUser] = useState([]);
@@ -40,7 +41,7 @@ export function Usuarios() {
     return (
         <Container>
             <Cabecera title={'Usuarios'}>
-                <ButtonHead name={'Nuevo Usuarios'}/>
+                <ModalUsuario modalName={'Nuevo Usuarios'} title={'Crear nuevo usuario'}/>
             </Cabecera>
             {loading ? (
                 <Preloader/> // Mostrar indicador de carga

@@ -3,7 +3,7 @@ import React from 'react';
 export function ButtonModal({ name, onClick }) {
     return (
         <Container>
-            <button role="button"  onClick={onClick} class="button-name">{name}</button>
+            <button role="button"  onClick={onClick} className="button-name">{name}</button>
         </Container>
     );
 }

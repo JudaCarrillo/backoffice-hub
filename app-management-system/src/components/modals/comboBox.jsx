@@ -20,10 +20,15 @@ export default ComboBox;
 
 const Container = styled.div`
     margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
 `;
 
 const Select = styled.select`
-    width: 100%;
+    display: flex;
+    width: 230px;
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -35,4 +40,5 @@ const Select = styled.select`
     &:focus {
         border-color: #007bff;
     }
+    
 `;

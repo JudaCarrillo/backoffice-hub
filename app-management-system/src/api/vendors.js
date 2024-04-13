@@ -7,4 +7,3 @@ const subject = 'vendor/'
 export const exportVendorsToCsv = () => {
     return axios.get(`${url_base}${apiVersion}${subject}export`, { responseType: 'blob' })
 }
-

@@ -2,36 +2,43 @@ import styled from 'styled-components';
 import React, { useState } from 'react';
 import { InputComponent } from '../input';
 import { ModalCompleto } from '../modalCompleto';
-import { createVendors} from '../../../api/proveedor';
+import {ComboBox} from '../comboBox';
+
 export function ModalProveedor({modalName, title}) {
     const [showModal, setShowModal] = useState(false);
 
     const toggleModal = () => setShowModal(!showModal);
-    
-    const handleCreateVendor = async () => {
-        try {
-            // Lógica para crear un proveedor utilizando la función createVendors
-            await createVendors(); // Puedes pasar los datos del proveedor como argumento si es necesario
-        } catch (error) {
-            console.error('Error al crear el proveedor:', error);
-        }
-    };
+
     return (
         /* Reutilizar todo para los demas modales y cambiar los nombres */
         <Container>
             <button className="button_head" onClick={toggleModal}>{modalName}</button>
             {showModal && (
-                <ModalCompleto
+                <ModalCompleto 
                     title={title}
                     showModalContent={(handleCloseModal) => (
-                        <>
-                            <InputComponent name={"name"} label={"Nombre"} type={"text"} id={"nombre"} />
+                        <>  
+                        <ComboBox
+                            name={"id"}
+                            label={"ID"}
+                            options={[
+                                { value: 'seleccat', label: 'Seleccionar' },
+                                { value: 'option1', label: '1' },
+                                { value: 'option2', label: '2' },
+                                { value: 'option3', label: '3' }
+                            ]}
+                        />
+                            <InputComponent name={"name"} label={"Nombre"} type={"text"} id={"nombre"}/>
                             <InputComponent name={"email"} label={"E-mail"} type={"email"} id={"email"} />
                             <InputComponent name={"address"} label={"Dirección"} type={"text"} id={"direccion"} />
                             <InputComponent name={"phone"} label={"Teléfono"} type={"number"} id={"telefono"} />
+                            <InputComponent name={"created_date"} label={"Fecha de creación"} type={"date"} id={"fecha"} />
                         </>
+                        
                     )}
+                    
                     onClose={toggleModal}
+                    
                 />
             )}
         </Container>

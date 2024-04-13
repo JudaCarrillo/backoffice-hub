@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { InputComponent } from '../input';
 import { ModalCompleto } from '../modalCompleto';
 import {ComboBox} from '../comboBox';
+
 export function ModalProductos({modalName, title}) {
   const [showModal, setShowModal] = useState(false);
 
@@ -33,7 +34,7 @@ export function ModalProductos({modalName, title}) {
                         {/* crear combobox para id categoria y id vendor */}
                     </>
                 )}
-                onClose={toggleModal}
+                onClose={toggleModal} 
             />
         )}
     </Container>
@@ -63,3 +64,5 @@ width: 170px;
     }
  
 `;
+
+

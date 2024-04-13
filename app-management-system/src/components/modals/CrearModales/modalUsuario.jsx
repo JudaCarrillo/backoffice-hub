@@ -16,13 +16,13 @@ export function ModalUsuario({modalName, title}) {
                     title={title}
                     showModalContent={(handleCloseModal) => (
                         <>
-                            <InputComponent name={"name"} label={"Nombre"} type={"text"} id={"nombre"} />
+                            <InputComponent name={"username"} label={"Usuario"} type={"text"} id={"usuario"} />
                             <InputComponent name={"email"} label={"E-mail"} type={"email"} id={"email"} />
-                            <InputComponent name={"address"} label={"Dirección"} type={"text"} id={"direccion"} />
-                            <InputComponent name={"phone"} label={"Teléfono"} type={"number"} id={"telefono"} />
+                            <InputComponent name={"password"} label={"Contraseña"} type={"password"} id={"contrasena"} />
                         </>
                     )}
                     onClose={toggleModal}
+                    
                 />
             )}
         </Container>

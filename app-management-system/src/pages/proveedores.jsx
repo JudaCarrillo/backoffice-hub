@@ -7,6 +7,7 @@ import { Cabecera } from "../components/cabecera";
 import { Cuerpo } from "../components/cuerpo";
 import { getCsv } from "../utils/logic";
 import { Preloader } from "./preloader";
+import ModalProveedor from "../components/modals/CrearModales/modalProveedor";
 
 export function Proveedores() {
   const [prov, setProv] = useState([]);
@@ -49,7 +50,7 @@ export function Proveedores() {
           }
           buttonColor="#969593"
         />
-        <ButtonHead name={"Nuevo Vendor"} />
+        <ModalProveedor modalName={"Nuevo Vendor"} title={'Crear vendor'}/>
       </Cabecera>
       {loading ? (
         <Preloader /> // Mostrar indicador de carga
