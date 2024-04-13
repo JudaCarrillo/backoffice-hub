@@ -114,7 +114,7 @@ export function Input({ label, type, name, placeholder, value, onChange }) {
       )}
     </div>
   );
-}
+}  
 
 const ModalContainer = styled.div`
   display: ${(props) => (props.isOpen ? 'block' : 'none')};

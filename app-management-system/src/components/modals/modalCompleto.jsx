@@ -61,7 +61,7 @@ const Container = styled.div`
         flex-direction: column;
         align-items: center;
         width: 300px;
-        height: 400px;
+        height: 560px;
         position: relative;
         justify-content: center;
         .cabeza{

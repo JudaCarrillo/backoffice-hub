@@ -7,6 +7,7 @@ import { Cabecera } from "../components/cabecera";
 import { Cuerpo } from "../components/cuerpo";
 import { getCsv } from "../utils/logic";
 import { Preloader } from "./preloader";
+import ModalProveedor from "../components/modals/CrearModales/modalProveedor";
 
 export function Proveedores() {
   const [prov, setProv] = useState([]);
