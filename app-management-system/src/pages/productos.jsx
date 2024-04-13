@@ -1,58 +1,66 @@
-import styled from "styled-components";
-import { Cabecera } from "../components/cabecera";
-import { ButtonHead } from "../components/button";
-import { Cuerpo } from "../components/cuerpo";
 import { useEffect, useState } from "react";
+import styled from "styled-components";
+import { exportProductsToCsv } from "../api/products";
 import { getProducts } from "../api/usuarios";
-import { Preloader } from "./preloader";
+import { ButtonHead } from "../components/button";
+import { Cabecera } from "../components/cabecera";
+import { Cuerpo } from "../components/cuerpo";
 import { ModalProductos } from "../components/modals/CrearModales/modalProductos";
+import { getCsv } from "../utils/logic";
+import { Preloader } from "./preloader";
 
 export function Productos() {
-    const [pro, setPro] = useState ([])
-    const [columns, setColumns] = useState([]);
-    const [loading, setLoading] = useState(true);
+  const [pro, setPro] = useState([]);
+  const [columns, setColumns] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        const cargartabla = async () => {
-            try {
-                const respuesta = await getProducts();
-                const { success, data, message } = respuesta.data;
-                if (success) {
-                    const userKeys = Object.keys(data[0]);
-                    const nuevasColumnas = userKeys.map(key => ({
-                        title: key.charAt(0).toUpperCase() + key.slice(1),
-                        data: key,
-                        key: key,
-                    }));
-                    setColumns(nuevasColumnas);
-                    setPro(data);
-                    setLoading(false);
-                } else {
-                    throw new Error(message);
-                }
-            } catch (error) {
-                console.error('Error al cargar la tabla:', error);
-            }
-        };
+  useEffect(() => {
+    const cargartabla = async () => {
+      try {
+        const respuesta = await getProducts();
+        const { success, data, message } = respuesta.data;
+        if (success) {
+          const userKeys = Object.keys(data[0]);
+          const nuevasColumnas = userKeys.map((key) => ({
+            title: key.charAt(0).toUpperCase() + key.slice(1),
+            data: key,
+            key: key,
+          }));
+          setColumns(nuevasColumnas);
+          setPro(data);
+          setLoading(false);
+        } else {
+          throw new Error(message);
+        }
+      } catch (error) {
+        console.error("Error al cargar la tabla:", error);
+      }
+    };
 
-        cargartabla();
-    }, []);
+    cargartabla();
+  }, []);
 
-    return (
-        <Container>
-            <Cabecera title={'products'}>
-                <ButtonHead name={'Descargar'}  buttonColor="#969593"/>
-                <ModalProductos modalName={'Nueva producto'} title={'Crear producto'}/>
-            </Cabecera>
-            {loading ? (
-                <Preloader/> // Mostrar indicador de carga
-            ) : (
-                <Cuerpo columns={columns} data={pro} />
-            )}
-        </Container>
-    );
+  return (
+    <Container>
+      <Cabecera title={"products"}>
+        <ButtonHead
+          name={"Descargar"}
+          onClick={() =>
+            getCsv({ callback: exportProductsToCsv, name: "products_data" })
+          }
+          buttonColor="#969593"
+        />
+        <ModalProductos modalName={"Nueva producto"} title={"Crear producto"} />
+      </Cabecera>
+      {loading ? (
+        <Preloader /> // Mostrar indicador de carga
+      ) : (
+        <Cuerpo columns={columns} data={pro} />
+      )}
+    </Container>
+  );
 }
 
 const Container = styled.div`
-height:100vh;
+  height: 100vh;
 `;

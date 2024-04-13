@@ -1,7 +1,6 @@
-import {BrowserRouter,Routes,Route} from 'react-router-dom'
+import {Routes,Route} from 'react-router-dom'
 import { Productos } from '../pages/productos';
 import { Categoria } from '../pages/categorias';
-import {Login} from '../pages/login' ;
 import { Proveedores } from '../pages/proveedores';
 import { Usuarios } from '../pages/usuarios';
 export function MyRoutes() {

@@ -3,15 +3,15 @@ import styled from "styled-components";
 import { ButtonsTable } from './buttons_action/buttons';
 
 
-export function Cuerpo({ columns, data }) {
+export function Cuerpo({ columns, data, handleEdit, handleDelete }) {
     return (
         <Container>
             <div className="table_body">
                 <Table>
                     <thead className='table_head'>
-                        <tr className='tr_table'>
+                        <tr key="head" className='tr_table'>
                             {columns.map(column => (
-                                <th key={column.field}>{column.title}</th>
+                                <th key={column.data} >{column.title}</th>
                             ))}
                             <th>Acciones</th>
                         </tr>
@@ -20,11 +20,15 @@ export function Cuerpo({ columns, data }) {
                         {data.map(user => (
                             <tr key={user.id} className='tr_table'>
                                 {columns.map(column => (
-                                    <td key={column.field} className='td_table'>
+                                    <td key={column.data} className='td_table'>
                                         {renderCell(column, user)}
                                     </td>
                                 ))}
-                                    <ButtonsTable id={user.id} />
+                                    <ButtonsTable  
+                                        key={`buttons_${user.data}`}
+                                        onEdit={() => handleEdit(user.id)} 
+                                        onDelete={() => handleDelete(user.id)} 
+                                    />
                             </tr>
                         ))}
                     </tbody>

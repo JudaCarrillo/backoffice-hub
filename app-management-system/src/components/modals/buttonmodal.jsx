@@ -12,12 +12,12 @@ const Container = styled.div`
 .button-name {
     align-items: center;
     appearance: none;
-    background-color: #FCFCFD;
+    background-color: ${(props) => props.theme.reverse};
     border-radius: 4px;
     border-width: 0;
     box-shadow: rgba(45, 35, 66, 0.2) 0 2px 4px,rgba(45, 35, 66, 0.15) 0 7px 13px -3px,#D6D6E7 0 -3px 0 inset;
     box-sizing: border-box;
-    color: #36395A;
+    color: ${(props) => props.theme.reverse2};
     cursor: pointer;
     display: inline-flex;
     font-family: "JetBrains Mono",monospace;

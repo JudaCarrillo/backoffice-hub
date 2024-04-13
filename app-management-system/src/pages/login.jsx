@@ -122,6 +122,7 @@ export function Login({ onLoginSuccess }) {
           <InputContainer>
             <LoginInput
               type="text"
+              autoComplete="username"
               placeholder="Usuario"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
@@ -131,6 +132,7 @@ export function Login({ onLoginSuccess }) {
             <LoginInput
               type={showPassword ? "text" : "password"}
               placeholder="Contraseña"
+              autoComplete="current-password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />

@@ -7,4 +7,5 @@ urlpatterns = [
     path('create', create, name='create'),
     path('delete/<int:id>', delete, name='delete'),
     path('update/<int:id>', update, name='update'),
+    path('export', export_to_csv, name='export_to_csv'),
 ]

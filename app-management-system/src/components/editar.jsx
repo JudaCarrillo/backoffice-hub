@@ -9,7 +9,7 @@ const Editar = () => {
 
   return (
     <div>
-      <button onClick={openModal}>Abrir Modal</button>
+      <button onClick={false}>Abrir Modal</button>
       <CrearProducto isOpen={modalOpen} onClose={closeModal} />
     </div>
   );
