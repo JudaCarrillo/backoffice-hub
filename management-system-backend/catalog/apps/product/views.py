@@ -1,5 +1,6 @@
-from django.shortcuts import render
-from django.shortcuts import render
+from django.http import HttpResponse
+
+import csv
 
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -7,6 +8,7 @@ from rest_framework.response import Response
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
 
+from .models import Product
 from .product_manager import ProductManager
 from .serializers import ProductSerializer
 vendor = ProductManager()
@@ -53,3 +55,23 @@ def update(request, id):
 @api_view(['DELETE'])
 def delete(request, id):
     return Response(vendor.delete(id))
+
+
+@api_view(['GET'])
+def export_to_csv(request):
+    product = Product.objects.all()
+    serializer = ProductSerializer(product, many=True)
+    headers = ['id', 'name', 'price', 'stock', 'description',
+               'created_at', 'updated_at', 'id_category', 'id_vendor']
+    filename = "product_data.csv"
+
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = f'attachment; filename="{filename}"'
+
+    writer = csv.DictWriter(response, fieldnames=headers)
+    writer.writeheader()
+
+    for row in serializer.data:
+        writer.writerow({header: row[header] for header in headers})
+
+    return response
