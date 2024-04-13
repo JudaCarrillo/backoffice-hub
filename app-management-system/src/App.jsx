@@ -1,4 +1,4 @@
-import { BrowserRouter,Route  } from "react-router-dom"
+import { BrowserRouter } from "react-router-dom"
 import { MyRoutes } from "./routers/routes"
 import styled from "styled-components"
 import { Sidebar } from "./components/sidebar"
