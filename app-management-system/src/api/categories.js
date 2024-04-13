@@ -8,3 +8,9 @@ export const exportCategoriesToCsv = () => {
     return axios.get(`${url_base}${apiVersion}${subject}export`, {responseType: 'blob'})
 }
 
+export const deleteCategory = (id) => {
+    return axios.delete(`${url_base}${apiVersion}${subject}delete/${id}`)
+}
+export const createCategory = (data) => {
+    return axios.post(`${url_base}${apiVersion}${subject}create`, data)
+}

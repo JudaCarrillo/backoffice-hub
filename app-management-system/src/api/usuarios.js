@@ -17,3 +17,7 @@ export const getCategories = () => {
 export const getVendors = () => {
     return axios.get(`${url_base}${apiVersion}vendor/`)
 }
+
+export const deleteUser = (id) => {
+    return axios.delete(`${url_base}${apiVersion}user/delete/${id}`)
+}

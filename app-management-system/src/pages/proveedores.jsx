@@ -40,6 +40,27 @@ export function Proveedores() {
     cargartabla();
   }, []);
 
+  const handleEdit = (id) => {
+    console.log('Editar categoría con ID:', id);
+};
+
+// Función de eliminación
+const handleDelete = async (id) => {
+    try {
+        const respuesta = await deleteVendor(id);
+        const { success, data, message } = respuesta.data;
+        if (success) {
+            setProv(prov.filter( vendors => vendors.id !== id));
+        } else {
+            throw new Error(message);
+        }
+    } catch (error) {
+        console.error('Error al eliminar la categoría:', error);
+     }
+}
+
+
+
   return (
     <Container>
       <Cabecera title={"Vendors"}>
@@ -50,12 +71,12 @@ export function Proveedores() {
           }
           buttonColor="#969593"
         />
-        <ModalProveedor modalName={"Nuevo Vendor"} title={'Crear vendor'}/>
+        <ButtonHead name={"Nuevo Vendor"}  />
       </Cabecera>
       {loading ? (
         <Preloader /> // Mostrar indicador de carga
       ) : (
-        <Cuerpo columns={columns} data={prov} />
+        <Cuerpo columns={columns} data={prov} handleEdit={handleEdit} handleDelete={handleDelete}   />
       )}
     </Container>
   );

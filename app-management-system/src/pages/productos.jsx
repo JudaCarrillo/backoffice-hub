@@ -40,6 +40,27 @@ export function Productos() {
     cargartabla();
   }, []);
 
+  const handleEdit = (id) => {
+    console.log('Editar categoría con ID:', id);
+};
+
+// Función de eliminación
+const handleDelete = async (id) => {
+    try {
+        const respuesta = await deleteProduct(id);
+        const { success, data, message } = respuesta.data;
+        if (success) {
+            setPro(pro.filter(products => products.id !== id));
+        } else {
+            throw new Error(message);
+        }
+    } catch (error) {
+        console.error('Error al eliminar la categoría:', error);
+     }
+}
+
+
+
   return (
     <Container>
       <Cabecera title={"products"}>
@@ -55,7 +76,7 @@ export function Productos() {
       {loading ? (
         <Preloader /> // Mostrar indicador de carga
       ) : (
-        <Cuerpo columns={columns} data={pro} />
+        <Cuerpo columns={columns} data={pro} handleEdit={handleEdit} handleDelete={handleDelete} />
       )}
     </Container>
   );

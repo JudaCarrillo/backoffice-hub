@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 import React from 'react';
-export function ButtonModal({ name, onClick }) {
+export function ButtonModal({ name, onClick, type }) {
     return (
         <Container>
-            <button role="button"  onClick={onClick} className="button-name">{name}</button>
+            <button role="button" type={type}  onClick={onClick} className="button-name">{name}</button>
         </Container>
     );
 }

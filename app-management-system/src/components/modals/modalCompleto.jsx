@@ -1,38 +1,43 @@
 import styled from 'styled-components';
-import { useState } from 'react';
 import { ButtonModal } from './buttonmodal';
-export function ModalCompleto({ title, showModalContent, onClose  }) {
-    const [showModal, setShowModal] = useState(false);
-    const toggleModal = () => setShowModal(!showModal);
 
+export function ModalCompleto({ title, showModalContent, onClose, onCreate }) {
     const handleCloseModal = () => {
         onClose();
-        setShowModal(false);
     };
+
+    const handleCreate = async (e) => {
+        e.preventDefault(); // Evitar el envío del formulario
+        await onCreate(); // Esperar a que se cree la categoría
+        onClose(); // Cierra el modal después de crear la categoría
+    };
+
     return (
         <Container>
-        <div className="modal-overlay">
-          <div className="modal">
-            <div className="cabeza">
-                <h2>{  title}</h2>
+            <div className="modal-overlay">
+                <form onSubmit={handleCreate}>
+                    <div className="modal">
+                        <div className="cabeza">
+                            <h2>{title}</h2>
+                        </div>
+                        {showModalContent(handleCloseModal)}
+                        <div className="separacion">
+                            <ul>
+                                <li>
+                                    <ButtonModal type="button" onClick={handleCloseModal} name="cerrar" />
+                                </li>
+                                <li>
+                                    <ButtonModal type="submit" name="Crear" />
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </form>
             </div>
-                {showModalContent( handleCloseModal)}
-            <div className="separacion">
-                <ul>
-                    <li>
-                    <ButtonModal onClick={handleCloseModal} name={"cerrar"} />
-                    
-                    </li>
-                    <li>
-                    <ButtonModal onClick={() => { toggleModal(); }} name={"Crear"} />
-                    </li>
-                </ul>
-            </div>
-          </div>
-        </div>
         </Container>
     );
 }
+
 const Container = styled.div`
 
    
