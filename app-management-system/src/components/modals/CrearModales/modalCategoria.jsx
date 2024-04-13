@@ -6,22 +6,21 @@ function Modal({modalName, title}) {
   const [showModal, setShowModal] = useState(false);
 
   const toggleModal = () => setShowModal(!showModal);
-
   return (
     <Container>
-        <button className="button_head" onClick={toggleModal}>{modalName}</button>
-        {showModal && (
-            <ModalCompleto
-                title={title}
-                showModalContent={(handleCloseModal) => (
-                    <>
-                        <InputComponent name={"nombre"} label={"Nombre"} type={"text"} id={"nombre"} />
-                        <InputComponent name="descripcion" label="Descripción" type="text" id="descripcion" />
-                    </>
-                )}
-                onClose={toggleModal}
-            />
-        )}
+    <button className="button_head" onClick={toggleModal}>{modalName}</button>
+    {showModal && (
+        <ModalCompleto
+            title={title}
+            showModalContent={(handleCloseModal) => (
+                <>
+                    <InputComponent name={"nombre"} label={"Nombre"} type={"text"} id={"nombre"} />
+                    <InputComponent name="descripcion" label="Descripción" type="text" id="descripcion" />
+                </>
+            )}
+            onClose={toggleModal}
+        />
+    )}
     </Container>
   );
 }

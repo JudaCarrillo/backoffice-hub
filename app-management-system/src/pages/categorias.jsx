@@ -9,6 +9,7 @@ import Modal from "../components/modals/CrearModales/modalCategoria";
 import { getCsv } from "../utils/logic";
 import { Preloader } from "./preloader";
 
+
 export function Categoria() {
   const [cat, setCat] = useState([]);
   const [columns, setColumns] = useState([]);

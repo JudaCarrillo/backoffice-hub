@@ -2,11 +2,11 @@ import styled from 'styled-components';
 import React, { useState } from 'react';
 import { InputComponent } from '../input';
 import { ModalCompleto } from '../modalCompleto';
+import {ComboBox} from '../comboBox';
 export function ModalProductos({modalName, title}) {
   const [showModal, setShowModal] = useState(false);
 
   const toggleModal = () => setShowModal(!showModal);
-
   return (
     /* Reutilizar todo para los demas modales y cambiar los nombres */
     <Container>
@@ -20,6 +20,16 @@ export function ModalProductos({modalName, title}) {
                         <InputComponent name={"price"} label={"Precio"} type={"number"} id={"price"} />
                         <InputComponent name={"stock"} label={"Stock"} type={"number"} id={"stock"} />
                         <InputComponent name={"description"} label={"Descripción"} type={"text"} id={"description"} />
+                        <ComboBox
+                            name={"category"}
+                            label={"Categoría"}
+                            options={[
+                                { value: 'seleccat', label: 'Seleccionar categoría' },
+                                { value: 'option1', label: 'Opción 1' },
+                                { value: 'option2', label: 'Opción 2' },
+                                { value: 'option3', label: 'Opción 3' }
+                            ]}
+                        />
                         {/* crear combobox para id categoria y id vendor */}
                     </>
                 )}
@@ -29,7 +39,6 @@ export function ModalProductos({modalName, title}) {
     </Container>
   );
 }
-
 const Container = styled.div`
 height: 45px;
 width: 170px;
