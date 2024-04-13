@@ -21,3 +21,6 @@ export const getVendors = () => {
 export const deleteUser = (id) => {
     return axios.delete(`${url_base}${apiVersion}user/delete/${id}`)
 }
+export const createUsers = () => {
+    return axios.get(`${url_base}${apiVersion}create/`, data)
+}

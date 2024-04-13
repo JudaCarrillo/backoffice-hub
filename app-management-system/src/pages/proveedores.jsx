@@ -71,7 +71,7 @@ const handleDelete = async (id) => {
           }
           buttonColor="#969593"
         />
-        <ButtonHead name={"Nuevo Vendor"}  />
+        <ModalProveedor modalName={"Nuevo Vendor"} title={'Crear nuevo usuario'}/>
       </Cabecera>
       {loading ? (
         <Preloader /> // Mostrar indicador de carga

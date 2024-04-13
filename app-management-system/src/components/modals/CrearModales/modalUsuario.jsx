@@ -2,13 +2,41 @@ import styled from 'styled-components';
 import React, { useState } from 'react';
 import { InputComponent } from '../input';
 import { ModalCompleto } from '../modalCompleto';
+import { createUsers } from '../../../api/usuarios';
+import { getUsuarios } from '../../../api/usuarios';
 export function ModalUsuario({modalName, title}) {
     const [showModal, setShowModal] = useState(false);
-
+    const [users, setUsers] = useState({
+        username: '',
+        email:'',
+        password: '',
+    });
+    
     const toggleModal = () => setShowModal(!showModal);
 
+    const handleCrearUser = async () => {
+        try {
+          const data2 = {"username": users.username, "email": users.email, "password": users.password};
+          const response = await createUsers(data2);
+          const { success, data, message } = response.data;
+          if (success) {
+            const rows = await getUsuarios();
+            const {  data } = rows.data;
+            onReceiveRows(data);
+            toggleModal(); 
+          } else {
+            throw new Error(message);
+          }
+        } catch (error) {
+          console.error('Error al crear la categoría:', error);
+        }
+      };
+    
+      const handleChange = (e) => {
+        setUsers({ ...categori, [e.target.name]: e.target.value });
+      };
+
     return (
-        /* Reutilizar todo para los demas modales y cambiar los nombres */
         <Container>
             <button className="button_head" onClick={toggleModal}>{modalName}</button>
             {showModal && (
@@ -16,12 +44,13 @@ export function ModalUsuario({modalName, title}) {
                     title={title}
                     showModalContent={(handleCloseModal) => (
                         <>
-                            <InputComponent name={"username"} label={"Usuario"} type={"text"} id={"usuario"} />
-                            <InputComponent name={"email"} label={"E-mail"} type={"email"} id={"email"} />
-                            <InputComponent name={"password"} label={"Contraseña"} type={"password"} id={"contrasena"} />
+                            <InputComponent name={"username"} label={"Usuario"} type={"text"} id={"usuario"}onChange={handleChange} />
+                            <InputComponent name={"email"} label={"E-mail"} type={"email"} id={"email"} onChange={handleChange}/>
+                            <InputComponent name={"password"} label={"Contraseña"} type={"password"} id={"contrasena"} onChange={handleChange}/>
                         </>
                     )}
                     onClose={toggleModal}
+                    onCreate={handleCrearUser}
                     
                 />
             )}
