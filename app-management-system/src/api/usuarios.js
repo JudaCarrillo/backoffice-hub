@@ -3,7 +3,7 @@ import axios from 'axios'
 const url_base = 'http://localhost:8200/'
 const apiVersion = 'v1/'
 export const getUsuarios = () => {
-    return axios.get("http://localhost:8200/v1/users/")
+    return axios.get("http://localhost:8000/v1/users/")
 }
 
 export const getProducts = () => {
