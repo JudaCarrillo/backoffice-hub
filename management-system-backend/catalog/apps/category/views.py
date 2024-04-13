@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.http import HttpResponse
 
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
@@ -6,7 +6,10 @@ from rest_framework.decorators import api_view
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
 
+import csv
+
 from .category_manager import CategoryManager
+from .models import Category
 from .serializers import CustomCategorySerializer, CategorySerializer
 category = CategoryManager()
 
@@ -52,3 +55,22 @@ def create(request):
 @api_view(['PUT'])
 def update(request, id):
     return Response(category.update(id, **request.data))
+
+
+@api_view(['GET'])
+def export_to_csv(request):
+    categories = Category.objects.all()
+    serializer = CategorySerializer(categories, many=True)
+    headers = ['id', 'name', 'description', 'created_at']
+    filename = "category_data.csv"
+
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = f'attachment; filename="{filename}"'
+
+    writer = csv.DictWriter(response, fieldnames=headers)
+    writer.writeheader()
+
+    for row in serializer.data:
+        writer.writerow({header: row[header] for header in headers})
+
+    return response
