@@ -89,8 +89,15 @@ export function Login({ onLoginSuccess }) {
 
     try {
       const response = await axios.post(url, data);
-      console.log('Respuesta del servidor:', response.data);
+      const {success, data: {privileges }} = response.data
+      if(!success){
+        console.log(success)
+      }
       onLoginSuccess(); // Si la solicitud es exitosa, llama a la función onLoginSuccess
+      
+      const Privileges = [...privileges]
+      localStorage.setItem('user', JSON.stringify(Privileges));
+      
     } catch (error) {
       console.error('Error al realizar la petición:', error);
       alert("Credenciales incorrectas"); // Muestra una alerta si hay un error en la solicitud
@@ -115,6 +122,7 @@ export function Login({ onLoginSuccess }) {
           <InputContainer>
             <LoginInput
               type="text"
+              autoComplete="username"
               placeholder="Usuario"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
@@ -124,6 +132,7 @@ export function Login({ onLoginSuccess }) {
             <LoginInput
               type={showPassword ? "text" : "password"}
               placeholder="Contraseña"
+              autoComplete="current-password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />

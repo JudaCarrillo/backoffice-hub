@@ -2,35 +2,30 @@ import React from 'react';
 import styled from "styled-components"
 import { MdDeleteForever, MdEditSquare  } from "react-icons/md";
 
-export function ButtonsTable({id}){
+export function ButtonsTable({ onEdit, onDelete }){
     return(
         <>
             <Container>
-                <ul className="container-wrapper">
-                    {buttoms.map(({icon,label}) => (
-                        <li key={label}>
-                            <button type="submit" id={`${id}`}  className={label === "Editar" ? "editar-button" : "eliminar-button"}>
-                                {icon}
-                                {label}    
-                            </button>
-                        </li>
-                    ))}
-                </ul>        
+            <ul key="buttons" className="container-wrapper">
+                <li key="edit" >
+                    <button type="submit" className="editar-button" onClick={onEdit}>
+                        <MdEditSquare />
+                        Editar
+                    </button>
+                </li>
+                <li key="delete">
+                    <button type="submit" className="eliminar-button" onClick={onDelete}>
+                        <MdDeleteForever />
+                        Eliminar
+                    </button>
+                </li>
+            </ul>              
             </Container>
         </>
     );
 }
 
-const buttoms = [
-    {
-        label: "Editar",
-        icon: <MdEditSquare />,
-    },
-    {
-        label: "Eliminar",
-        icon: <MdDeleteForever />,
-    },
-]
+
 
 const Container = styled.td`
     width: 250px;

@@ -8,7 +8,7 @@ from drf_yasg.utils import swagger_auto_schema
 
 from apps.user_profile.models import UserProfile
 
-from .serializers import CustomUserSerializer
+from .serializers import CustomUserSerializer, UserSerializer
 from .models import User
 from .user_manager import UserManager
 user = UserManager()
@@ -26,45 +26,25 @@ def get_user(request, id):
 
 @swagger_auto_schema(
     methods=['POST'],
-    request_body=openapi.Schema(
-        type=openapi.TYPE_OBJECT,
-        required=['username', 'email', 'password', 'is_active', 'created_at'],
-        properties={
-            'username': openapi.Schema(type=openapi.TYPE_STRING),
-            'email': openapi.Schema(type=openapi.TYPE_STRING, format=openapi.FORMAT_EMAIL),
-            'password': openapi.Schema(type=openapi.TYPE_STRING),
-            'is_active': openapi.Schema(type=openapi.TYPE_BOOLEAN),
-            'created_at': openapi.Schema(type=openapi.TYPE_STRING, format=openapi.FORMAT_DATETIME),
-            'id_profile': openapi.Schema(type=openapi.TYPE_INTEGER),
-        },
-    ), responses={
+    request_body=UserSerializer,
+    responses={
         200: 'Ok',
         201: 'Created',
         400: 'Bad Request',
     }
 )
 @api_view(['POST'])
-def create_user(request):
-    id_profile = request.data.get('id_profile')
-    profile = __validate_profile(id_profile)
-    password = make_password(request.data['password'])
+def create(request):
+    if request.data.get('password'):
+        password = make_password(request.data['password'])
+        request.data['password'] = password
 
-    request.data['id_profile'] = profile
-    request.data['password'] = password
     return Response(user.create(**request.data))
-
-
-def __validate_profile(id):
-    try:
-        profile = UserProfile.objects.get(id=id)
-        return profile
-    except UserProfile.DoesNotExist:
-        return 'User Profile not found'
 
 
 @swagger_auto_schema(
     methods=['PUT'],
-    request_body=CustomUserSerializer,
+    request_body=UserSerializer,
     responses={
         200: 'Ok',
         201: 'Created',
@@ -78,3 +58,8 @@ def update_user(request, id):
         request.data['password'] = password
 
     return Response(user.update(id, **request.data))
+
+
+@api_view(['POST'])
+def disabled(request, id):
+    return Response(user.disabled(id))

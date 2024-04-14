@@ -1,58 +1,122 @@
-import styled from "styled-components"
-import { Cabecera } from "../components/cabecera";
-import { ButtonHead } from "../components/button";
 import { useEffect, useState } from "react";
+import styled from "styled-components";
+import { getVendors } from "../api/usuarios";
+import { deleteVendor, exportVendorsToCsv } from "../api/vendors";
+import { ButtonHead } from "../components/button";
+import { Cabecera } from "../components/cabecera";
 import { Cuerpo } from "../components/cuerpo";
+import ModalProveedor from "../components/modals/CrearModales/modalProveedor";
+import { UpdateVendorsModal } from "../components/modals/updateModal/updateVendors";
+import { privilegesReport, privilegesWrite } from "../services/privileges";
+import { getCsv } from "../utils/logic";
+import { Preloader } from "./preloader";
 
 export function Proveedores() {
-    const [prov, setProv] = useState ([])
-    const [columns, setColumns] = useState([]); 
+  const [prov, setProv] = useState([]);
+  const [columns, setColumns] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [editVendorId, setVendorId] = useState(null);
 
-    useEffect(() => {
-        const cargartabla = async () => {
-            try {
-                const baseurl = 'http://localhost:8000/api/';
-                const api = '';
-                const respuesta = await fetch(`${baseurl}${api}`);
-                const { success, data: { items }, message } = await respuesta.json();
-                if (!success) {
-                    throw new Error(message);
-                }
-                const allKeys = items.reduce((keys, item) => {
-                    Object.keys(item).forEach(key => {
-                        if (!keys.includes(key)) {
-                            keys.push(key);
-                        }
-                    });
-                    return keys;
-                }, []);
+  useEffect(() => {
+    const cargartabla = async () => {
+      try {
+        const respuesta = await getVendors();
+        const { success, data, message } = respuesta.data;
+        if (success) {
+          data.sort((a, b) => a.id - b.id);
+          const userKeys = Object.keys(data[0]);
+          const nuevasColumnas = userKeys.map((key) => ({
+            title: key.charAt(0).toUpperCase() + key.slice(1),
+            data: key,
+            key: key,
+          }));
+          setColumns(nuevasColumnas);
+          setProv(data);
+          setLoading(false); // Indicar que los datos se han cargado
+        } else {
+          throw new Error(message);
+        }
+      } catch (error) {
+        console.error("Error al cargar la tabla:", error);
+      }
+    };
 
-                const newColumns = allKeys.map(key => ({
-                    title: key.charAt(0).toUpperCase() + key.slice(1),
-                    dataIndex: key,
-                    key: key,
-                }));
+    cargartabla();
+  }, []);
 
-                setColumns(newColumns);
-                setProv(items);
-            } catch (error) {
-                console.error('Error al cargar la tabla:', error);
+  const handleEdit = (id) => {
+    console.log("Editar categoría con ID:", id);
+    setVendorId(id); // Almacena el ID de la categoría a editar
+    setIsEditModalOpen(true);
+  };
+  const handleCloseEditModal = () => {
+    setIsEditModalOpen(false);
+    setVendorId(null);
+  };
+
+  // Función de eliminación
+  const handleDelete = async (id) => {
+    try {
+      const respuesta = await deleteVendor(id);
+      const { success, data, message } = respuesta.data;
+      if (success) {
+        setProv(prov.filter((vendors) => vendors.id !== id));
+      } else {
+        throw new Error(message);
+      }
+    } catch (error) {
+      console.error("Error al eliminar la categoría:", error);
+    }
+  };
+  const handleReceiveRows = async (data) => {
+    data.sort((a, b) => a.id - b.id);
+    setProv(data);
+  };
+
+  return (
+    <Container>
+      <Cabecera title={"Vendors"}>
+        {privilegesReport.length > 0 && (
+          <ButtonHead
+            name={"Descargar"}
+            onClick={() =>
+              getCsv({ callback: exportVendorsToCsv, name: "vendors_data" })
             }
-        };
+            buttonColor="#969593"
+          />
+        )}
+        {privilegesWrite.length > 0 && (
+          <ModalProveedor
+            modalName={"Nuevo Proveedor"}
+            title={"Crear proveedor"}
+          />
+        )}
+      </Cabecera>
+      {loading ? (
+        <Preloader /> // Mostrar indicador de carga
+      ) : (
+        <>
+          <Cuerpo
+            columns={columns}
+            data={prov}
+            handleEdit={handleEdit}
+            handleDelete={handleDelete}
+          />
 
-        cargartabla();
-    }, []);
-    return (
-        <Container>
-            <Cabecera title={'Proveedores'}>
-                <ButtonHead name={'Nuevo Proveedor'}/>
-            </Cabecera>
-            <Cuerpo columns={columns} data={prov} />
-        </Container>
-    );
+          <UpdateVendorsModal
+            open={isEditModalOpen}
+            title={"Editar Proveedor"}
+            onReceiveRows={handleReceiveRows}
+            onClose={handleCloseEditModal}
+            vendorsId={editVendorId}
+          />
+        </>
+      )}
+    </Container>
+  );
 }
 
 const Container = styled.div`
-height:100vh;
-
+  height: 100vh;
 `;

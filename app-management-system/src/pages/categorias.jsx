@@ -1,59 +1,123 @@
-import styled from "styled-components"
-import { Cabecera } from "../components/cabecera";
-import { ButtonHead } from "../components/button";
-import { Cuerpo } from "../components/cuerpo";
 import { useEffect, useState } from "react";
-import CrearProducto from "../components/crear";
+import styled from "styled-components";
+import { deleteCategory, exportCategoriesToCsv } from "../api/categories";
+import { getCategories } from "../api/usuarios";
+import { ButtonHead } from "../components/button";
+import { Cabecera } from "../components/cabecera";
+import { Cuerpo } from "../components/cuerpo";
+import { ProductsModal } from "../components/modals/CrearModales/modalCategoria";
+import { UpdateModal } from "../components/modals/updateModal/updateCategoria";
+import { privilegesReport, privilegesWrite } from "../services/privileges";
+import { getCsv } from "../utils/logic";
+import { Preloader } from "./preloader";
 
 export function Categoria() {
+  const [cat, setCat] = useState([]);
+  const [columns, setColumns] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [editCategoryId, setEditCategoryId] = useState(null);
 
-    const [cat, setCat] = useState ([])
-    const [columns, setColumns] = useState([]); 
+  useEffect(() => {
+    const cargartabla = async () => {
+      try {
+        const respuesta = await getCategories();
+        const { success, data, message } = respuesta.data;
+        if (success) {
+          data.sort((a, b) => a.id - b.id);
+          const userKeys = Object.keys(data[0]);
+          const nuevasColumnas = userKeys.map((key) => ({
+            title: key.charAt(0).toUpperCase() + key.slice(1),
+            data: key,
+            key: key,
+          }));
+          setColumns(nuevasColumnas);
+          setCat(data);
+          setLoading(false);
+        } else {
+          throw new Error(message);
+        }
+      } catch (error) {
+        console.error("Error al cargar la tabla:", error);
+      }
+    };
 
-    useEffect(() => {
-        const cargartabla = async () => {
-            try {
-                
-                const respuesta = await fetch(`${baseurl}${api}`);
-                const { success, data: { items }, message } = await respuesta.json();
-                if (!success) {
-                    throw new Error(message);
-                }
-                const allKeys = items.reduce((keys, item) => {
-                    Object.keys(item).forEach(key => {
-                        if (!keys.includes(key)) {
-                            keys.push(key);
-                        }
-                    });
-                    return keys;
-                }, []);
+    cargartabla();
+  }, []);
+  // Función de edición
+  const handleEdit = (id) => {
+    console.log("Editar categoría con ID:", id);
+    setEditCategoryId(id); // Almacena el ID de la categoría a editar
+    setIsEditModalOpen(true);
+  };
+  const handleCloseEditModal = () => {
+    setIsEditModalOpen(false);
+    setEditCategoryId(null);
+  };
 
-                const newColumns = allKeys.map(key => ({
-                    title: key.charAt(0).toUpperCase() + key.slice(1),
-                    dataIndex: key,
-                    key: key,
-                }));
+  // Función de eliminación
+  const handleDelete = async (id) => {
+    try {
+      const respuesta = await deleteCategory(id);
+      const { success, data, message } = respuesta.data;
+      if (success) {
+        setCat(cat.filter((categoria) => categoria.id !== id));
+      } else {
+        throw new Error(message);
+      }
+    } catch (error) {
+      console.error("Error al eliminar la categoría:", error);
+    }
+  };
+  const handleReceiveRows = async (data) => {
+    data.sort((a, b) => a.id - b.id);
+    setCat(data);
+  };
 
-                setColumns(newColumns);
-                setCat(items);
-            } catch (error) {
-                console.error('Error al cargar la tabla:', error);
+  return (
+    <Container>
+      <Cabecera title={"Categoria"}>
+        {privilegesReport.length > 0 && (
+          <ButtonHead
+            name={"Descargar"}
+            onClick={() =>
+              getCsv({
+                callback: exportCategoriesToCsv,
+                name: "categories_data",
+              })
             }
-        };
-
-        cargartabla();
-    }, []);
-
-    return (
-        <Container>
-            <Cabecera title={'Categoria'}>
-                <ButtonHead name={'Nueva categoria'}/>
-            </Cabecera>
-            <Cuerpo columns={columns} data={cat} />
-        </Container>
-    );
+            buttonColor="#969593"
+          />
+        )}
+        {privilegesWrite.length > 0 && (
+          <ProductsModal
+            modalName={"Nueva Categoria"}
+            title={"Crear categoria"}
+            onReceiveRows={handleReceiveRows}
+          />
+        )}
+      </Cabecera>
+      {loading ? (
+        <Preloader />
+      ) : (
+        <>
+          <Cuerpo
+            columns={columns}
+            data={cat}
+            handleEdit={handleEdit}
+            handleDelete={handleDelete}
+          />
+          <UpdateModal
+            open={isEditModalOpen}
+            onClose={handleCloseEditModal}
+            categoryId={editCategoryId}
+            onReceiveRows={handleReceiveRows}
+          />
+        </>
+      )}
+    </Container>
+  );
 }
-
 const Container = styled.div`
-    height:100vh;
+  height: 100vh;
 `;

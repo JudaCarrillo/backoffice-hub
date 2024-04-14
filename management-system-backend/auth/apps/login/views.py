@@ -1,3 +1,4 @@
+from django.contrib.auth import authenticate
 from django.contrib.auth.hashers import check_password
 
 from rest_framework.decorators import api_view
@@ -29,11 +30,11 @@ def index(request):
 
     user = _get_user(username, raw_password)
     if not user:
-        return {
+        return Response({
             'success': False,
             'data': None,
             'message': 'User not found'
-        }
+        }, status=400)
 
     return Response(login.main(user))
 
