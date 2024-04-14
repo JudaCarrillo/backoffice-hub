@@ -14,3 +14,11 @@ export const deleteCategory = (id) => {
 export const createCategory = (data) => {
     return axios.post(`${url_base}${apiVersion}${subject}create`, data)
 }
+
+export const updateCategory = (id, data) => {
+    return axios.put(`${url_base}${apiVersion}${subject}update/${id}`, data)
+}
+
+export const getCategoriById = (id) => {
+    return axios.get(`${url_base}${apiVersion}${subject}${id}`)
+}

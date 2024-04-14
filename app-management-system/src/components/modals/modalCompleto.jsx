@@ -1,14 +1,17 @@
 import styled from 'styled-components';
 import { ButtonModal } from './buttonmodal';
 
-export function ModalCompleto({ title, showModalContent, onClose, onCreate }) {
+export function ModalCompleto({ title, showModalContent, onClose, onCreate , onUpdate}) {
     const handleCloseModal = () => {
         onClose();
     };
 
     const handleCreate = async (e) => {
         e.preventDefault(); // Evitar el envío del formulario
-        await onCreate(); // Esperar a que se cree la categoría
+        if (onCreate) {
+            await onCreate(); // Esperar a que se cree la categoría (si onCreate está definido)
+        }
+        await onUpdate(); // Esperar a que se cree la categoría
         onClose(); // Cierra el modal después de crear la categoría
     };
 

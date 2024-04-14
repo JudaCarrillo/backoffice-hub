@@ -8,12 +8,16 @@ import { Cuerpo } from "../components/cuerpo";
 import Modal from "../components/modals/CrearModales/modalCategoria";
 import { getCsv } from "../utils/logic";
 import { Preloader } from "./preloader";
+import { UpdateModal } from "../components/modals/updateModal/updateCategoria";
 
 
 export function Categoria() {
   const [cat, setCat] = useState([]);
   const [columns, setColumns] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [editCategoryId, setEditCategoryId] = useState(null); 
+
 
   useEffect(() => {
     const cargartabla = async () => {
@@ -21,6 +25,7 @@ export function Categoria() {
         const respuesta = await getCategories();
         const { success, data, message } = respuesta.data;
         if (success) {
+          data.sort((a, b) => a.id - b.id);
           const userKeys = Object.keys(data[0]);
           const nuevasColumnas = userKeys.map((key) => ({
             title: key.charAt(0).toUpperCase() + key.slice(1),
@@ -29,7 +34,7 @@ export function Categoria() {
           }));
           setColumns(nuevasColumnas);
           setCat(data);
-          setLoading(false); // Indicar que los datos se han cargado
+          setLoading(false);
         } else {
           throw new Error(message);
         }
@@ -42,8 +47,15 @@ export function Categoria() {
   }, []);
     // Función de edición
     const handleEdit = (id) => {
-        console.log('Editar categoría con ID:', id);
+      console.log('Editar categoría con ID:', id);
+      setEditCategoryId(id); // Almacena el ID de la categoría a editar
+      setIsEditModalOpen(true); 
     };
+    const handleCloseEditModal = () => {
+      setIsEditModalOpen(false);
+      setEditCategoryId(null);
+    };
+  
 
     // Función de eliminación
     const handleDelete = async (id) => {
@@ -60,6 +72,7 @@ export function Categoria() {
          }
     }
     const handleReceiveRows = async (data) => {
+      data.sort((a, b) => a.id - b.id);
       setCat(data);
     };
     
@@ -79,7 +92,15 @@ export function Categoria() {
             {loading ? (
                 <Preloader />
             ) : (
+              <>
                 <Cuerpo columns={columns} data={cat} handleEdit={handleEdit} handleDelete={handleDelete} />
+                <UpdateModal
+                  open={isEditModalOpen}
+                  onClose={handleCloseEditModal}
+                  categoryId={editCategoryId}
+                  onReceiveRows={handleReceiveRows}
+                />
+              </>
             )}
         </Container>
     );

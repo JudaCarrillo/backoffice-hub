@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from "styled-components";
 
-export const InputComponent = ({ name, type, onChange, label }) => {
+export const InputComponent = ({ name, type, onChange, label , value }) => {
     return (
     <Container>
         <div className="wave-group">
@@ -11,7 +11,7 @@ export const InputComponent = ({ name, type, onChange, label }) => {
                 className="input"
                 id={name}
                 name={name}
-                
+                value={value}
                 onChange={onChange}
             />
             <span className="bar"></span>

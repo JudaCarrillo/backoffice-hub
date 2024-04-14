@@ -11,6 +11,6 @@ export const deleteVendor = (id) => {
     return axios.delete(`${url_base}${apiVersion}${subject}delete/${id}`)
 }
 
-export const createVendor = () => {
+export const createVendor = ( data) => {
     return axios.post(`${url_base}${apiVersion}${subject}create`,data)
 }

@@ -49,7 +49,9 @@ function App() {
     setIsLoggedIn(true); // redireccionar al usuario a la página principal
     // Almacenar el estado de inicio de sesión en localStorage
     localStorage.setItem('isLoggedIn', 'true');
-    window.location.reload('/product');
+
+      window.location.reload('/product');
+
   };
   const getIconComponent = (iconName) => {
     switch (iconName) {

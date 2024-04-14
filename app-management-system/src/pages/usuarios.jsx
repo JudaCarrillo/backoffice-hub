@@ -1,6 +1,5 @@
 import styled from "styled-components"
 import { Cabecera } from "../components/cabecera";
-import { ButtonHead } from "../components/button";
 import { useEffect, useState } from "react";
 import { Cuerpo } from "../components/cuerpo";
 import { getUsuarios } from "../api/usuarios";
