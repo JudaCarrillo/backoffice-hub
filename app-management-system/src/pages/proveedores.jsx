@@ -6,16 +6,17 @@ import { ButtonHead } from "../components/button";
 import { Cabecera } from "../components/cabecera";
 import { Cuerpo } from "../components/cuerpo";
 import ModalProveedor from "../components/modals/CrearModales/modalProveedor";
+import { UpdateVendorsModal } from "../components/modals/updateModal/updateVendors";
+import { privilegesReport, privilegesWrite } from "../services/privileges";
 import { getCsv } from "../utils/logic";
 import { Preloader } from "./preloader";
-import { UpdateVendorsModal } from "../components/modals/updateModal/updateVendors";
 
 export function Proveedores() {
   const [prov, setProv] = useState([]);
   const [columns, setColumns] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const [editVendorId, setVendorId] = useState(null); 
+  const [editVendorId, setVendorId] = useState(null);
 
   useEffect(() => {
     const cargartabla = async () => {
@@ -45,9 +46,9 @@ export function Proveedores() {
   }, []);
 
   const handleEdit = (id) => {
-    console.log('Editar categoría con ID:', id);
+    console.log("Editar categoría con ID:", id);
     setVendorId(id); // Almacena el ID de la categoría a editar
-    setIsEditModalOpen(true); 
+    setIsEditModalOpen(true);
   };
   const handleCloseEditModal = () => {
     setIsEditModalOpen(false);
@@ -76,17 +77,21 @@ export function Proveedores() {
   return (
     <Container>
       <Cabecera title={"Vendors"}>
-        <ButtonHead
-          name={"Descargar"}
-          onClick={() =>
-            getCsv({ callback: exportVendorsToCsv, name: "vendors_data" })
-          }
-          buttonColor="#969593"
-        />
-        <ModalProveedor
-          modalName={"Nuevo Vendor"}
-          title={"Crear nuevo usuario"}
-        />
+        {privilegesReport.length > 0 && (
+          <ButtonHead
+            name={"Descargar"}
+            onClick={() =>
+              getCsv({ callback: exportVendorsToCsv, name: "vendors_data" })
+            }
+            buttonColor="#969593"
+          />
+        )}
+        {privilegesWrite.length > 0 && (
+          <ModalProveedor
+            modalName={"Nuevo Proveedor"}
+            title={"Crear proveedor"}
+          />
+        )}
       </Cabecera>
       {loading ? (
         <Preloader /> // Mostrar indicador de carga
@@ -106,7 +111,6 @@ export function Proveedores() {
             onClose={handleCloseEditModal}
             vendorsId={editVendorId}
           />
-
         </>
       )}
     </Container>

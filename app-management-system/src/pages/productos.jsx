@@ -5,17 +5,18 @@ import { getProducts } from "../api/usuarios";
 import { ButtonHead } from "../components/button";
 import { Cabecera } from "../components/cabecera";
 import { Cuerpo } from "../components/cuerpo";
+import { ModalProductos } from "../components/modals/CrearModales/modalProductos";
+import { UpdateProductModal } from "../components/modals/updateModal/updateProducts";
+import { privilegesReport, privilegesWrite } from "../services/privileges";
 import { getCsv } from "../utils/logic";
 import { Preloader } from "./preloader";
-import { UpdateProductModal } from "../components/modals/updateModal/updateProducts";
-import {ModalProductos} from "../components/modals/CrearModales/modalProductos";
 
 export function Productos() {
   const [pro, setPro] = useState([]);
   const [columns, setColumns] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const [editProductId, setEditProductId] = useState(null); 
+  const [editProductId, setEditProductId] = useState(null);
 
   useEffect(() => {
     const cargartabla = async () => {
@@ -45,9 +46,9 @@ export function Productos() {
   }, []);
 
   const handleEdit = (id) => {
-    console.log('Editar categoría con ID:', id);
+    console.log("Editar categoría con ID:", id);
     setEditProductId(id); // Almacena el ID de la categoría a editar
-    setIsEditModalOpen(true); 
+    setIsEditModalOpen(true);
   };
   const handleCloseEditModal = () => {
     setIsEditModalOpen(false);
@@ -75,41 +76,42 @@ export function Productos() {
   return (
     <Container>
       <Cabecera title={"products"}>
-        <ButtonHead
-          name={"Descargar"}
-          onClick={() =>
-            getCsv({ callback: exportProductsToCsv, name: "products_data" })
-          }
-          buttonColor="#969593"
-        />
-        <ModalProductos modalName={"Nueva producto"} title={"Crear producto"} />
-        
+        {privilegesReport.length > 0 && (
+          <ButtonHead
+            name={"Descargar"}
+            onClick={() =>
+              getCsv({ callback: exportProductsToCsv, name: "products_data" })
+            }
+            buttonColor="#969593"
+          />
+        )}
+        {privilegesWrite.length > 0 && (
+          <ModalProductos
+            modalName={"Nuevo producto"}
+            title={"Crear producto"}
+          />
+        )}
       </Cabecera>
-      
+
       {loading ? (
         <Preloader /> // Mostrar indicador de carga
       ) : (
         <>
-            <Cuerpo
-              columns={columns}
-              data={pro}
-              handleEdit={handleEdit}
-              handleDelete={handleDelete}
-              
-            />
-            <UpdateProductModal
-              title={"Editar Producto"}
-              productId={editProductId}
-              onReceiveRows={handleReceiveRows}
-              onClose={handleCloseEditModal}
-              open={isEditModalOpen}
-              
-            />
-           
+          <Cuerpo
+            columns={columns}
+            data={pro}
+            handleEdit={handleEdit}
+            handleDelete={handleDelete}
+          />
+          <UpdateProductModal
+            title={"Editar Producto"}
+            productId={editProductId}
+            onReceiveRows={handleReceiveRows}
+            onClose={handleCloseEditModal}
+            open={isEditModalOpen}
+          />
         </>
-        
       )}
-       
     </Container>
   );
 }
