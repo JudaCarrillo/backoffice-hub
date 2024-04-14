@@ -7,13 +7,12 @@ import { ModalUsuario } from "../components/modals/CrearModales/modalUsuario";
 import { Preloader } from "./preloader";
 import { UpdateUserModal } from "../components/modals/updateModal/updateUser";
 
-
 export function Usuarios() {
   const [user, setUser] = useState([]);
   const [columns, setColumns] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const [editUserId, setEditUserId] = useState(null); 
+  const [editUserId, setEditUserId] = useState(null);
 
   const cargartabla = async () => {
     try {
@@ -49,7 +48,6 @@ export function Usuarios() {
   }, []);
 
   const handleEdit = (id) => {
-    console.log("Editar categoría con ID:", id);
     setEditUserId(id); // Almacena el ID de la categoría a editar
     setIsEditModalOpen(true);
   };
@@ -63,9 +61,13 @@ export function Usuarios() {
   const handleDelete = async (id) => {
     try {
       const respuesta = await disabledUser(id);
-      const { success, data: { items }, message } = respuesta.data;
+      const {
+        success,
+        data: { items },
+        message,
+      } = respuesta.data;
       if (success) {
-        setUser(user.filter((items) => items.id !== id));
+        cargartabla();
       } else {
         throw new Error(message);
       }
@@ -78,14 +80,13 @@ export function Usuarios() {
     setUser(items);
   };
 
-
-  // TODO: implements onReceiveRows
   return (
     <Container>
       <Cabecera title={"Usuarios"}>
         <ModalUsuario
           modalName={"Nuevo Usuarios"}
           title={"Crear nuevo usuario"}
+          onReceiveRows={handleReceiveRows}
         />
       </Cabecera>
       {loading ? (

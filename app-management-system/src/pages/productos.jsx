@@ -46,7 +46,6 @@ export function Productos() {
   }, []);
 
   const handleEdit = (id) => {
-    console.log("Editar categoría con ID:", id);
     setEditProductId(id); // Almacena el ID de la categoría a editar
     setIsEditModalOpen(true);
   };
@@ -89,6 +88,7 @@ export function Productos() {
           <ModalProductos
             modalName={"Nuevo producto"}
             title={"Crear producto"}
+            onReceiveRows={handleReceiveRows}
           />
         )}
       </Cabecera>

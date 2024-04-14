@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from "styled-components";
 
-export const InputComponent = ({ name, type, onChange, label , value, is_required=true }) => {
+export const InputComponent = ({ name, type, onChange, label , value, is_required=true, checked=false }) => {
     return (
     <Container>
         <div className="wave-group">
@@ -13,6 +13,7 @@ export const InputComponent = ({ name, type, onChange, label , value, is_require
                 name={name}
                 value={value}
                 onChange={onChange}
+                checked={type === "checkbox" ? checked : undefined}
             />
             <span className="bar"></span>
             <label className="label">

@@ -11,7 +11,7 @@ export const getUsuarios = () => {
 }
 
 export const disabledUser = (id) => {
-    return axios.post(`${url_base}${apiVersion}/${main_subject}/disabled/${id}`)
+    return axios.post(`${url_base}${apiVersion}/${main_subject}disabled/${id}`)
 }
 export const createUsers = (data) => {
     return axios.post(`${url_base}${apiVersion}/${main_subject}create`, data)

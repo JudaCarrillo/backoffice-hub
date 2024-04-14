@@ -4,14 +4,14 @@ import { createVendor, getVendors } from "../../../api/vendors";
 import { InputComponent } from "../input";
 import { ModalCompleto } from "../modalCompleto";
 
-export function ModalProveedor({ modalName, title }) {
+export function ModalProveedor({ modalName, title, onReceiveRows }) {
   const [showModal, setShowModal] = useState(false);
 
   const [vendors, setVendors] = useState({
     id: "",
     name: "",
     email: "",
-    address: "",
+    direction: "",
     phone: "",
   });
   const toggleModal = () => setShowModal(!showModal);
@@ -21,7 +21,7 @@ export function ModalProveedor({ modalName, title }) {
       const data2 = {
         name: vendors.name,
         email: vendors.email,
-        address: vendors.address,
+        direction: vendors.direction,
         phone: vendors.phone,
       };
       const response = await createVendor(data2);
@@ -67,7 +67,7 @@ export function ModalProveedor({ modalName, title }) {
                 onChange={handleChange}
               />
               <InputComponent
-                name="address"
+                name="direction"
                 label="Dirección"
                 type="text"
                 id="direccion"

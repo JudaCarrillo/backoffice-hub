@@ -43,7 +43,7 @@ export function UpdateUserModal({
         setUsers({
           username: items.username,
           email: items.email,
-          password: items.password,
+          password: "",
           is_active: items.is_active,
           id_profile: items.id_profile,
         });
@@ -156,6 +156,7 @@ export function UpdateUserModal({
               label={"Contraseña"}
               type={"password"}
               id={"contrasena"}
+              value={users.password}
               onChange={handleChange}
             />
             <InputComponent
@@ -163,7 +164,7 @@ export function UpdateUserModal({
               name={"is_active"}
               label={"Activo"}
               type={"checkbox"}
-              id={"activo"}
+              id={"is_active"}
               checked={users.is_active}
               onChange={handleChange}
             />

@@ -45,7 +45,6 @@ export function Proveedores() {
   }, []);
 
   const handleEdit = (id) => {
-    console.log("Editar categoría con ID:", id);
     setVendorId(id); // Almacena el ID de la categoría a editar
     setIsEditModalOpen(true);
   };
@@ -89,6 +88,7 @@ export function Proveedores() {
           <ModalProveedor
             modalName={"Nuevo Proveedor"}
             title={"Crear proveedor"}
+            onReceiveRows={handleReceiveRows}
           />
         )}
       </Cabecera>

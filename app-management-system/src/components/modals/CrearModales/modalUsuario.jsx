@@ -48,8 +48,10 @@ export function ModalUsuario({ modalName, title, onReceiveRows }) {
       const { success, data, message } = response.data;
       if (success) {
         const rows = await getUsuarios();
-        const { data } = rows.data;
-        onReceiveRows(data);
+        const {
+          data: { items },
+        } = rows.data;
+        onReceiveRows(items);
         toggleModal();
       } else {
         throw new Error(message);
@@ -60,7 +62,8 @@ export function ModalUsuario({ modalName, title, onReceiveRows }) {
   };
 
   const handleChange = (e) => {
-    const value = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
+    const value =
+      e.target.type === "checkbox" ? e.target.checked : e.target.value;
     setUsers({ ...users, [e.target.name]: value });
   };
 
@@ -100,6 +103,7 @@ export function ModalUsuario({ modalName, title, onReceiveRows }) {
                 name={"is_active"}
                 label={"Activo"}
                 type={"checkbox"}
+                checked={true}
                 id={"activo"}
                 onChange={handleChange}
               />

@@ -54,7 +54,7 @@ export function ModalProductos({ modalName, title, onReceiveRows }) {
       const { success, data, message } = response.data;
       if (success) {
         const rows = await getProducts();
-        const data = rows.data;
+        const { data } = rows.data;
         onReceiveRows(data);
         toggleModal();
       } else {

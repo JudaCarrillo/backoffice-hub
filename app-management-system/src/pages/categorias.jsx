@@ -8,7 +8,7 @@ import {
 import { ButtonHead } from "../components/button";
 import { Cabecera } from "../components/cabecera";
 import { Cuerpo } from "../components/cuerpo";
-import { ProductsModal } from "../components/modals/CrearModales/modalCategoria";
+import { CategoryModal } from "../components/modals/CrearModales/modalCategoria";
 import { UpdateModal } from "../components/modals/updateModal/updateCategoria";
 import { privilegesReport, privilegesWrite } from "../services/privileges";
 import { getCsv } from "../utils/logic";
@@ -49,7 +49,6 @@ export function Categoria() {
   }, []);
   // Función de edición
   const handleEdit = (id) => {
-    console.log("Editar categoría con ID:", id);
     setEditCategoryId(id); // Almacena el ID de la categoría a editar
     setIsEditModalOpen(true);
   };
@@ -93,7 +92,7 @@ export function Categoria() {
           />
         )}
         {privilegesWrite.length > 0 && (
-          <ProductsModal
+          <CategoryModal
             modalName={"Nueva Categoria"}
             title={"Crear categoria"}
             onReceiveRows={handleReceiveRows}
