@@ -49,17 +49,6 @@ export function ModalProveedor({ modalName, title }) {
           title={title}
           showModalContent={(handleCloseModal) => (
             <>
-              <ComboBox
-                name="id"
-                label="ID"
-                options={[
-                  { value: 'seleccat', label: 'Seleccionar' },
-                  { value: 'option1', label: '1' },
-                  { value: 'option2', label: '2' },
-                  { value: 'option3', label: '3' }
-                ]}
-                onChange={handleChange}
-              />
               <InputComponent
                 name="name"
                 label="Nombre"

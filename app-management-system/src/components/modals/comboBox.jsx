@@ -1,19 +1,35 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import axios from 'axios';
 
-export const ComboBox = ({ name, label, options, value, onChange }) => {
+const ComboBox = () => {
+    const [options, setOptions] = useState([]);
+
+    useEffect(() => {
+        axios.get('http://localhost:8200/v1/category/1')
+        .then(response => {
+            const data = response.data; 
+            setOptions(data); 
+        })
+        .catch(error => {
+            console.error('Error al obtener las opciones:', error);
+        });
+    }, []);
+
     return (
         <Container>
             <div>
-                <label htmlFor={name}>{label}</label>
-                <Select name={name} id={name} value={value} onChange={onChange}>
-                    {options.map((option, index) => (
-                        <option key={index} value={option.value}>{option.label}</option>
+                <Select>
+                    {options.map(option => (
+                        <option key={option.id} value={option.id}>
+                        {option.name} {/* Supongamos que cada opción tiene un campo "name" */}
+                        </option>
                     ))}
                 </Select>
             </div>
         </Container>
-    );
+        
+  );
 };
 
 export default ComboBox;

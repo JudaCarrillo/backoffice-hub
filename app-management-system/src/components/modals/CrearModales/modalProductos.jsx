@@ -4,6 +4,7 @@ import { InputComponent } from '../input';
 import { ModalCompleto } from '../modalCompleto';
 import { createProduct } from '../../../api/products'; 
 import { getProducts } from '../../../api/usuarios'; 
+import { ComboBox } from '../comboBox'; 
 
 export function ModalProductos({ modalName, title, onReceiveRows }) { // Asegúrate de pasar onReceiveRows como prop
   const [showModal, setShowModal] = useState(false);
@@ -72,6 +73,17 @@ export function ModalProductos({ modalName, title, onReceiveRows }) { // Asegúr
                 label="Descripción"
                 type="text"
                 id="description"
+                onChange={handleChange}
+              />
+              <ComboBox
+                name="id"
+                label="ID"
+                options={[
+                  { value: '', label: 'Seleccionar' },
+                  { value: 'option1', label: '1' },
+                  { value: 'option2', label: '2' },
+                  { value: 'option3', label: '3' }
+                ]}
                 onChange={handleChange}
               />
             </>
