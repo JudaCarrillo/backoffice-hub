@@ -5,11 +5,10 @@ import { getCategories } from "../api/usuarios";
 import { ButtonHead } from "../components/button";
 import { Cabecera } from "../components/cabecera";
 import { Cuerpo } from "../components/cuerpo";
-import Modal from "../components/modals/CrearModales/modalCategoria";
 import { getCsv } from "../utils/logic";
 import { Preloader } from "./preloader";
 import { UpdateModal } from "../components/modals/updateModal/updateCategoria";
-
+import { ProductsModal } from "../components/modals/CrearModales/modalCategoria";
 
 export function Categoria() {
   const [cat, setCat] = useState([]);
@@ -57,20 +56,20 @@ export function Categoria() {
     };
   
 
-    // Función de eliminación
+  // Función de eliminación
     const handleDelete = async (id) => {
         try {
-            const respuesta = await deleteCategory(id);
-            const { success, data, message } = respuesta.data;
-            if (success) {
-                setCat(cat.filter(categoria => categoria.id !== id));
-            } else {
-                throw new Error(message);
-            }
+          const respuesta = await deleteCategory(id);
+          const { success, data, message } = respuesta.data;
+          if (success) {
+            setCat(cat.filter((categoria) => categoria.id !== id));
+          } else {
+            throw new Error(message);
+          }
         } catch (error) {
-            console.error('Error al eliminar la categoría:', error);
-         }
-    }
+          console.error("Error al eliminar la categoría:", error);
+        }
+    };
     const handleReceiveRows = async (data) => {
       data.sort((a, b) => a.id - b.id);
       setCat(data);
@@ -87,7 +86,7 @@ export function Categoria() {
           buttonColor="#969593"
         />
             
-                <Modal modalName={'Nueva Categoria'} title={'Crear categoria'} onReceiveRows={handleReceiveRows} />
+                <ProductsModal modalName={'Nueva Categoria'} title={'Crear categoria'} onReceiveRows={handleReceiveRows} />
             </Cabecera>
             {loading ? (
                 <Preloader />
@@ -104,7 +103,6 @@ export function Categoria() {
             )}
         </Container>
     );
-
 }
 const Container = styled.div`
   height: 100vh;

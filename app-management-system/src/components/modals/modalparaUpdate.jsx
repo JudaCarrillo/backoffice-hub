@@ -1,22 +1,22 @@
 import styled from 'styled-components';
 import { ButtonModal } from './buttonmodal';
 
-export function ModalCompleto({ title, showModalContent, onClose, onCreate , onUpdate}) {
+
+export function ModalParaUpdate({ title, showModalContent, onClose, onCreate , onUpdate}) {
     const handleCloseModal = () => {
         onClose();
     };
 
-    const handleCreate = async (e) => {
-        e.preventDefault(); // Evitar el envío del formulario
-        await onCreate(); // Esperar a que se cree la categoría (si onCreate está definido)
- // Esperar a que se cree la categoría
-        onClose(); // Cierra el modal después de crear la categoría
+    const handleUpdate = async (e) => {
+        e.preventDefault();
+        await onUpdate();
+        onClose();
     };
 
     return (
         <Container>
             <div className="modal-overlay">
-                <form onSubmit={handleCreate}>
+                <form onSubmit={handleUpdate}>
                     <div className="modal">
                         <div className="cabeza">
                             <h2>{title}</h2>
@@ -28,7 +28,7 @@ export function ModalCompleto({ title, showModalContent, onClose, onCreate , onU
                                     <ButtonModal type="button" onClick={handleCloseModal} name="cerrar" />
                                 </li>
                                 <li>
-                                    <ButtonModal type="submit" name="Crear" />
+                                    <ButtonModal type="submit" name="Actualizar" />
                                 </li>
                             </ul>
                         </div>
@@ -41,7 +41,7 @@ export function ModalCompleto({ title, showModalContent, onClose, onCreate , onU
 
 const Container = styled.div`
 
-   
+
 .modal-overlay {
     position: fixed;
     top: 0;
@@ -54,7 +54,7 @@ const Container = styled.div`
     align-items: center;
     z-index: 999;
     .modal {
-        background-color: ${(props) => props.theme.body};
+        background-color: ${(props) => props.theme.bg};
         padding: 20px;
         border-radius: 2rem;
         display: flex;
@@ -72,8 +72,6 @@ const Container = styled.div`
             justify-content: center;
             align-items: center;
             position: relative;
-            top: 20px;
-            gap: 20px;
             
             h2{
                 color: ${(props) => props.theme.text};
@@ -123,7 +121,6 @@ const Container = styled.div`
         padding: 5px;
       }
   }
-  
   
 
 `;

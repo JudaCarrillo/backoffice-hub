@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { ModalCompleto } from '../modalCompleto';
 import { InputComponent } from '../input';
 import { getCategoriById, updateCategory } from '../../../api/categories';
 import { getCategories } from '../../../api/usuarios';
+import { ModalParaUpdate } from '../modalparaUpdate';
 export function UpdateModal({ open, onClose, categoryId, onReceiveRows }) {
     const [categori, setCategori] = useState({
       name: '',
@@ -64,7 +64,7 @@ export function UpdateModal({ open, onClose, categoryId, onReceiveRows }) {
   
     return (
       <ModalContainer open={open}>
-        <ModalCompleto
+        <ModalParaUpdate
           title="Actualizar Categoría"
           showModalContent={() => (
             <>

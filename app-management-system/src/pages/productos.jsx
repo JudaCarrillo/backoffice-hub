@@ -1,18 +1,21 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { exportProductsToCsv } from "../api/products";
+import { deleteProduct, exportProductsToCsv } from "../api/products";
 import { getProducts } from "../api/usuarios";
 import { ButtonHead } from "../components/button";
 import { Cabecera } from "../components/cabecera";
 import { Cuerpo } from "../components/cuerpo";
-import { ModalProductos } from "../components/modals/CrearModales/modalProductos";
 import { getCsv } from "../utils/logic";
 import { Preloader } from "./preloader";
+import { UpdateProductModal } from "../components/modals/updateModal/updateProducts";
+import {ModalProductos} from "../components/modals/CrearModales/modalProductos";
 
 export function Productos() {
   const [pro, setPro] = useState([]);
   const [columns, setColumns] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [editProductId, setEditProductId] = useState(null); 
 
   useEffect(() => {
     const cargartabla = async () => {
@@ -20,6 +23,7 @@ export function Productos() {
         const respuesta = await getProducts();
         const { success, data, message } = respuesta.data;
         if (success) {
+          data.sort((a, b) => a.id - b.id);
           const userKeys = Object.keys(data[0]);
           const nuevasColumnas = userKeys.map((key) => ({
             title: key.charAt(0).toUpperCase() + key.slice(1),
@@ -42,24 +46,31 @@ export function Productos() {
 
   const handleEdit = (id) => {
     console.log('Editar categoría con ID:', id);
-};
-
-// Función de eliminación
-const handleDelete = async (id) => {
+    setEditProductId(id); // Almacena el ID de la categoría a editar
+    setIsEditModalOpen(true); 
+  };
+  const handleCloseEditModal = () => {
+    setIsEditModalOpen(false);
+    setEditProductId(null);
+  };
+  // Función de eliminación
+  const handleDelete = async (id) => {
     try {
-        const respuesta = await deleteProduct(id);
-        const { success, data, message } = respuesta.data;
-        if (success) {
-            setPro(pro.filter(products => products.id !== id));
-        } else {
-            throw new Error(message);
-        }
+      const respuesta = await deleteProduct(id);
+      const { success, data, message } = respuesta.data;
+      if (success) {
+        setPro(pro.filter((products) => products.id !== id));
+      } else {
+        throw new Error(message);
+      }
     } catch (error) {
-        console.error('Error al eliminar la categoría:', error);
-     }
-}
-
-
+      console.error("Error al eliminar la categoría:", error);
+    }
+  };
+  const handleReceiveRows = async (data) => {
+    data.sort((a, b) => a.id - b.id);
+    setPro(data);
+  };
 
   return (
     <Container>
@@ -72,12 +83,33 @@ const handleDelete = async (id) => {
           buttonColor="#969593"
         />
         <ModalProductos modalName={"Nueva producto"} title={"Crear producto"} />
+        
       </Cabecera>
+      
       {loading ? (
         <Preloader /> // Mostrar indicador de carga
       ) : (
-        <Cuerpo columns={columns} data={pro} handleEdit={handleEdit} handleDelete={handleDelete} />
+        <>
+            <Cuerpo
+              columns={columns}
+              data={pro}
+              handleEdit={handleEdit}
+              handleDelete={handleDelete}
+              
+            />
+            <UpdateProductModal
+              title={"Editar Producto"}
+              productId={editProductId}
+              onReceiveRows={handleReceiveRows}
+              onClose={handleCloseEditModal}
+              open={isEditModalOpen}
+              
+            />
+           
+        </>
+        
       )}
+       
     </Container>
   );
 }

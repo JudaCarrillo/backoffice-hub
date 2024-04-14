@@ -42,6 +42,7 @@ export const InputComponent = ({ name, type, onChange, label , value }) => {
             border: none;
             border-bottom: 1px solid #515151;
             background: transparent;
+            color: ${({ theme }) => theme.reverse};
         }
         
         .wave-group .input:focus {
@@ -68,7 +69,7 @@ export const InputComponent = ({ name, type, onChange, label , value }) => {
         .wave-group .input:valid ~ label .label-char {
             transform: translateY(-20px);
             font-size: 14px;
-            color: #5264AE;
+            color: ${({ theme }) => theme.gray300};
         }
         
         .wave-group .bar {

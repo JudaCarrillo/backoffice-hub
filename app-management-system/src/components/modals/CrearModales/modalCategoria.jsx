@@ -5,7 +5,7 @@ import { ModalCompleto } from '../modalCompleto';
 import { createCategory } from '../../../api/categories';
 import { getCategories } from '../../../api/usuarios';
 
-function Modal({ modalName, title , onReceiveRows }) {
+export function ProductsModal({ modalName, title , onReceiveRows }) {
   const [showModal, setShowModal] = useState(false);
   const [categori, setCategori] = useState({
     name: '',
@@ -59,6 +59,7 @@ function Modal({ modalName, title , onReceiveRows }) {
                 id="description"
                 onChange={handleChange}
               />
+              
             </>
           )}
           onClose={toggleModal}
@@ -69,7 +70,6 @@ function Modal({ modalName, title , onReceiveRows }) {
   );
 }
 
-export default Modal;
 
 const Container = styled.div`
 height: 45px;

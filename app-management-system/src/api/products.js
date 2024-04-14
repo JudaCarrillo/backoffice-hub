@@ -15,3 +15,11 @@ export const deleteProduct = (id) => {
 export const createProduct = (data) => {
     return axios.post(`${url_base}${apiVersion}${subject}create`, data)
 }
+
+export const updateProduct = (id, data) => {
+    return axios.put(`${url_base}${apiVersion}${subject}update/${id}`, data)
+}
+
+export const getProductsId = (id) => {
+    return axios.get(`${url_base}${apiVersion}${subject}${id}`)
+}

@@ -44,7 +44,7 @@ class ProductManager():
             id_category=id_category,
             id_vendor=id_vendor
         )
-        serializer = ProductManager(product)
+        serializer = ProductSerializer(product)
         return {'success': True, 'data': serializer.data, 'message': 'Product created'}
 
     def update(self, id, **kwargs):

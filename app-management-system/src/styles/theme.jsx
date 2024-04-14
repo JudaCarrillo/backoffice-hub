@@ -25,6 +25,7 @@ export const Light = {
     bgtotal:"#EDF3FB",
     bgtgderecha:"#fff",
     barrascroll: "#a8a7a7",
+    badoy: "#bdbbb7",
 
 
     gray900: "#000000",
@@ -91,6 +92,7 @@ export const Dark = {
   
     green500: "#F9516E",
     olive500: "#e3ffa8",
+    badoy: "#202020",
   
     btnColor2: "#C8C8C8",
     btnColor: "#616A6B",

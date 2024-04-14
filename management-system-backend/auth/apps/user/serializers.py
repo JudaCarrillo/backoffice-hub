@@ -7,8 +7,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['id', 'username', 'email', 'is_active',
-                  'created_at', 'updated_at', 'id_profile']
+        fields = '__all__'
 
 
 class CustomUserSerializer(serializers.Serializer):
@@ -30,5 +29,14 @@ class CustomUserSerializer(serializers.Serializer):
         instance.updated_at = validated_data.get(
             'updated_at', instance.updated_at)
         instance.id_profile = validated_data.get('id_profile')
+        instance.save()
+        return instance
+
+class CustomUserDisableSerializer(serializers.Serializer):
+    is_active = serializers.BooleanField()
+
+    def update(self, instance, validated_data):
+        instance.is_active = validated_data.get(
+            'is_active', instance.is_active)
         instance.save()
         return instance
