@@ -4,6 +4,7 @@ import { InputComponent } from '../input';
 import { ModalCompleto } from '../modalCompleto';
 import { createProduct } from '../../../api/products'; 
 import { getProducts } from '../../../api/usuarios'; 
+import ComboBox from '../comboBox';
 
 export function ModalProductos({ modalName, title, onReceiveRows }) { // Asegúrate de pasar onReceiveRows como prop
   const [showModal, setShowModal] = useState(false);
