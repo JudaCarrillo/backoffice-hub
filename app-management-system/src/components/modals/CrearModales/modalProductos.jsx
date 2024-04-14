@@ -1,25 +1,56 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import { InputComponent } from '../input';
-import { ModalCompleto } from '../modalCompleto';
-import { createProduct } from '../../../api/products'; 
-import { getProducts } from '../../../api/usuarios'; 
-import ComboBox from '../comboBox';
+import React, { useState } from "react";
+import styled from "styled-components";
+import { InputComponent } from "../input";
+import { ModalCompleto } from "../modalCompleto";
+import { createProduct } from "../../../api/products";
+import { getProducts } from "../../../api/usuarios";
+import ComboBox from "../comboBox";
+import axios from "axios";
 
-export function ModalProductos({ modalName, title, onReceiveRows }) { // Asegúrate de pasar onReceiveRows como prop
+export function ModalProductos({ modalName, title, onReceiveRows }) {
+  // Asegúrate de pasar onReceiveRows como prop
   const [showModal, setShowModal] = useState(false);
   const [product, setProduct] = useState({
-    name: '',
-    price: 0, 
-    stock: 0, 
-    description: '',
+    name: "",
+    price: 0,
+    stock: 0,
+    description: "",
+    id_category: "",
+    id_vendor: "",
   });
+
+  const getCategories = async () => {
+    const response = await axios.get("http://localhost:8200/v1/category/");
+    const { success, data, message } = response.data;
+    if (success) {
+      return data;
+    } else {
+      throw new Error(message);
+    }
+  };
+
+  const getVendors = async () => {
+    const response = await axios.get("http://localhost:8200/v1/vendor/");
+    const { success, data, message } = response.data;
+    if (success) {
+      return data;
+    } else {
+      throw new Error(message);
+    }
+  };
 
   const toggleModal = () => setShowModal(!showModal);
 
   const handleCrearProduct = async () => {
     try {
-      const data2 = {"name": product.name, "price": product.price, "stock": product.stock, "description": product.description};
+      const data2 = {
+        name: product.name,
+        price: product.price,
+        stock: product.stock,
+        description: product.description,
+        id_category: product.id_category,
+        id_vendor: product.id_vendor,
+      };
       const response = await createProduct(data2);
       const { success, data, message } = response.data;
       if (success) {
@@ -31,7 +62,7 @@ export function ModalProductos({ modalName, title, onReceiveRows }) { // Asegúr
         throw new Error(message);
       }
     } catch (error) {
-      console.error('Error al crear el producto:', error);
+      console.error("Error al crear el producto:", error);
     }
   };
 
@@ -39,9 +70,25 @@ export function ModalProductos({ modalName, title, onReceiveRows }) { // Asegúr
     setProduct({ ...product, [e.target.name]: e.target.value });
   };
 
+  const handleChangeCategory = (selectedCategory) => {
+    setProduct((prevProduct) => ({
+      ...prevProduct,
+      id_category: selectedCategory,
+    }));
+  };
+
+  const handleChangeVendor = (selectedVendor) => {
+    setProduct((prevProduct) => ({
+      ...prevProduct,
+      id_vendor: selectedVendor,
+    }));
+  };
+
   return (
     <Container>
-      <button className="button_head" onClick={toggleModal}>{modalName}</button>
+      <button className="button_head" onClick={toggleModal}>
+        {modalName}
+      </button>
       {showModal && (
         <ModalCompleto
           title={title}
@@ -76,15 +123,16 @@ export function ModalProductos({ modalName, title, onReceiveRows }) { // Asegúr
                 onChange={handleChange}
               />
               <ComboBox
-                name="id"
-                label="ID"
-                options={[
-                  { value: '', label: 'Seleccionar' },
-                  { value: 'option1', label: '1' },
-                  { value: 'option2', label: '2' },
-                  { value: 'option3', label: '3' }
-                ]}
-                onChange={handleChange}
+                name="id_category"
+                label="Seleccione la categoría"
+                onChange={handleChangeCategory}
+                callback={getCategories}
+              />
+              <ComboBox
+                name="id_vendor"
+                label="Seleccione el proveedor"
+                onChange={handleChangeVendor}
+                callback={getVendors}
               />
             </>
           )}

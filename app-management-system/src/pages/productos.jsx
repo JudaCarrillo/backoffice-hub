@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { exportProductsToCsv } from "../api/products";
+import { deleteProduct, exportProductsToCsv } from "../api/products";
 import { getProducts } from "../api/usuarios";
 import { ButtonHead } from "../components/button";
 import { Cabecera } from "../components/cabecera";
@@ -41,25 +41,23 @@ export function Productos() {
   }, []);
 
   const handleEdit = (id) => {
-    console.log('Editar categoría con ID:', id);
-};
+    console.log("Editar categoría con ID:", id);
+  };
 
-// Función de eliminación
-const handleDelete = async (id) => {
+  // Función de eliminación
+  const handleDelete = async (id) => {
     try {
-        const respuesta = await deleteProduct(id);
-        const { success, data, message } = respuesta.data;
-        if (success) {
-            setPro(pro.filter(products => products.id !== id));
-        } else {
-            throw new Error(message);
-        }
+      const respuesta = await deleteProduct(id);
+      const { success, data, message } = respuesta.data;
+      if (success) {
+        setPro(pro.filter((products) => products.id !== id));
+      } else {
+        throw new Error(message);
+      }
     } catch (error) {
-        console.error('Error al eliminar la categoría:', error);
-     }
-}
-
-
+      console.error("Error al eliminar la categoría:", error);
+    }
+  };
 
   return (
     <Container>
@@ -76,7 +74,12 @@ const handleDelete = async (id) => {
       {loading ? (
         <Preloader /> // Mostrar indicador de carga
       ) : (
-        <Cuerpo columns={columns} data={pro} handleEdit={handleEdit} handleDelete={handleDelete} />
+        <Cuerpo
+          columns={columns}
+          data={pro}
+          handleEdit={handleEdit}
+          handleDelete={handleDelete}
+        />
       )}
     </Container>
   );
