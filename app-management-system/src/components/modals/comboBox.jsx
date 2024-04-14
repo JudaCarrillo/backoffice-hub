@@ -1,22 +1,6 @@
-import { useEffect, useState } from "react";
 import styled from "styled-components";
 
-const ComboBox = ({ callback, label, onChange }) => {
-  const [options, setOptions] = useState([]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await callback();
-        setOptions(data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchData();
-  }, []);
-
+const ComboBox = ({ options, label, onChange }) => {
   const handleSelectChange = (e) => {
     const selectedValue = e.target.value;
     onChange(selectedValue);
@@ -27,11 +11,12 @@ const ComboBox = ({ callback, label, onChange }) => {
       <div>
         <Select onChange={handleSelectChange}>
           <option value="">{label}</option>
-          {options.map((option) => (
-            <option key={option.id} value={option.id}>
-              {option.name}{" "}
-            </option>
-          ))}
+          {options &&
+            options.map((option) => (
+              <option key={option.id} value={option.id}>
+                {option.name}{" "}
+              </option>
+            ))}
         </Select>
       </div>
     </Container>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { getCategories } from "../../../api/categories";
 import { createProduct, getProducts } from "../../../api/products";
@@ -9,6 +9,8 @@ import { ModalCompleto } from "../modalCompleto";
 
 export function ModalProductos({ modalName, title, onReceiveRows }) {
   const [showModal, setShowModal] = useState(false);
+  const [categories, setCategories] = useState([]);
+  const [vendors, setVendors] = useState([]);
   const [product, setProduct] = useState({
     name: "",
     price: 0,
@@ -18,25 +20,32 @@ export function ModalProductos({ modalName, title, onReceiveRows }) {
     id_vendor: "",
   });
 
-  const getCategoriesForCreate = async () => {
-    const response = await getCategories();
-    const { success, data, message } = response.data;
-    if (success) {
-      return data;
-    } else {
-      throw new Error(message);
-    }
-  };
+  useEffect(() => {
+    const fetchUserProfiles = async () => {
+      const response = await getCategories();
+      const { success, data, message } = response.data;
+      if (success) {
+        setCategories(data);
+      } else {
+        throw new Error(message);
+      }
+    };
 
-  const getVendorsForCreate = async () => {
-    const response = await getVendors();
-    const { success, data, message } = response.data;
-    if (success) {
-      return data;
-    } else {
-      throw new Error(message);
+    const fetchVendors = async () => {
+      const response = await getVendors();
+      const { success, data, message } = response.data;
+      if (success) {
+        setVendors(data);
+      } else {
+        throw new Error(message);
+      }
+    };
+
+    if (showModal) {
+      fetchUserProfiles();
+      fetchVendors();
     }
-  };
+  }, [showModal]);
 
   const toggleModal = () => setShowModal(!showModal);
 
@@ -125,13 +134,13 @@ export function ModalProductos({ modalName, title, onReceiveRows }) {
                 name="id_category"
                 label="Seleccione la categoría"
                 onChange={handleChangeCategory}
-                callback={getCategoriesForCreate}
+                options={categories}
               />
               <ComboBox
                 name="id_vendor"
                 label="Seleccione el proveedor"
                 onChange={handleChangeVendor}
-                callback={getVendorsForCreate}
+                options={vendors}
               />
             </>
           )}

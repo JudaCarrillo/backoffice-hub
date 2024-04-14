@@ -1,13 +1,14 @@
-import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { createUsers, getUsuarios } from "../../../api/auth";
+import { getUserProfile } from "../../../api/auth";
 import ComboBox from "../comboBox";
 import { InputComponent } from "../input";
 import { ModalCompleto } from "../modalCompleto";
 
 export function ModalUsuario({ modalName, title, onReceiveRows }) {
   const [showModal, setShowModal] = useState(false);
+  const [userProfiles, setUserProfiles] = useState([]);
   const [users, setUsers] = useState({
     username: "",
     email: "",
@@ -16,6 +17,23 @@ export function ModalUsuario({ modalName, title, onReceiveRows }) {
     id_profile: "",
   });
 
+  useEffect(() => {
+    const fetchUserProfiles = async () => {
+      const response = await getUserProfile();
+      const { success, data, message } = response.data;
+      if (success) {
+        setUserProfiles(data);
+      } else {
+        throw new Error(message);
+      }
+    };
+
+    if (showModal) {
+      fetchUserProfiles();
+    }
+
+  }, [showModal]);
+
   const toggleModal = () => setShowModal(!showModal);
 
   const handleChangeProfile = (selectedProfile) => {
@@ -23,16 +41,6 @@ export function ModalUsuario({ modalName, title, onReceiveRows }) {
       ...prevUser,
       id_profile: selectedProfile,
     }));
-  };
-
-  const getProfiles = async () => {
-    const response = await axios.get("http://localhost:8000/v1/user_profiles/");
-    const { success, data, message } = response.data;
-    if (success) {
-      return data;
-    } else {
-      throw new Error(message);
-    }
   };
 
   const handleCrearUser = async () => {
@@ -111,7 +119,7 @@ export function ModalUsuario({ modalName, title, onReceiveRows }) {
                 name="id_profile"
                 label="Seleccione un perfil"
                 onChange={handleChangeProfile}
-                callback={getProfiles}
+                options={userProfiles}
               />
             </>
           )}
