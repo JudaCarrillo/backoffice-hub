@@ -30,7 +30,7 @@ export function UpdateUserModal ({ open, onClose, userId, onReceiveRows,title })
             username: items.username,
             email: items.email,
             password: items.password,
-            is_active: items.is_active == "on" ? true : false, 
+            is_active: items.is_active, 
             id_profile: items.id_profile,
           });
         } catch (error) {
@@ -98,9 +98,9 @@ export function UpdateUserModal ({ open, onClose, userId, onReceiveRows,title })
       });
     };
     const handleChange = (e) => {
+      const value = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
         setUsers({
-          ...users,
-          [e.target.name]: e.target.value,
+          ...users, [e.target.name]: value,
         });
       };
     const handleClose = () => {
@@ -147,6 +147,7 @@ export function UpdateUserModal ({ open, onClose, userId, onReceiveRows,title })
                 onChange={handleChange}
               />
               <InputComponent
+                is_required={false}
                 name={"is_active"}
                 label={"Activo"}
                 type={"checkbox"}

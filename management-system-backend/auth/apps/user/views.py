@@ -35,6 +35,10 @@ def get_user(request, id):
 )
 @api_view(['POST'])
 def create(request):
+    if request.data.get('password'):
+        password = make_password(request.data['password'])
+        request.data['password'] = password
+
     return Response(user.create(**request.data))
 
 
@@ -54,6 +58,7 @@ def update_user(request, id):
         request.data['password'] = password
 
     return Response(user.update(id, **request.data))
+
 
 @api_view(['POST'])
 def disabled(request, id):

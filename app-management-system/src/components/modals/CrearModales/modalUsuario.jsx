@@ -41,7 +41,7 @@ export function ModalUsuario({ modalName, title, onReceiveRows }) {
         username: users.username,
         email: users.email,
         password: users.password,
-        is_active: users.is_active == "on" ? true : false,
+        is_active: users.is_active,
         id_profile: users.id_profile,
       };
       const response = await createUsers(data2);
@@ -60,7 +60,8 @@ export function ModalUsuario({ modalName, title, onReceiveRows }) {
   };
 
   const handleChange = (e) => {
-    setUsers({ ...users, [e.target.name]: e.target.value });
+    const value = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
+    setUsers({ ...users, [e.target.name]: value });
   };
 
   return (
@@ -95,6 +96,7 @@ export function ModalUsuario({ modalName, title, onReceiveRows }) {
                 onChange={handleChange}
               />
               <InputComponent
+                is_required={false}
                 name={"is_active"}
                 label={"Activo"}
                 type={"checkbox"}

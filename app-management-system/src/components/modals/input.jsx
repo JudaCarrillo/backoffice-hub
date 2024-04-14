@@ -1,12 +1,12 @@
 import React from 'react';
 import styled from "styled-components";
 
-export const InputComponent = ({ name, type, onChange, label , value }) => {
+export const InputComponent = ({ name, type, onChange, label , value, is_required=true }) => {
     return (
     <Container>
         <div className="wave-group">
             <input
-                required
+                required={is_required}
                 type={type}
                 className="input"
                 id={name}

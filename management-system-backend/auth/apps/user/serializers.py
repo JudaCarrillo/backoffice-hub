@@ -32,6 +32,7 @@ class CustomUserSerializer(serializers.Serializer):
         instance.save()
         return instance
 
+
 class CustomUserDisableSerializer(serializers.Serializer):
     is_active = serializers.BooleanField()
 
