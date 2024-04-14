@@ -113,7 +113,7 @@ box-shadow: .3rem .5rem .4rem #00000040;
         padding: 20px; 
         background-color: ${(props)=>props.theme.bg};
         overflow-x:auto;
-        overflow-y: hidden;
+        overflow-y: auto;
         
         &::-webkit-scrollbar {
             width: 10px;
