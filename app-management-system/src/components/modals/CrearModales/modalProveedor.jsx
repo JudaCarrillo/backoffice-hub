@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { InputComponent } from '../input';
 import { ModalCompleto } from '../modalCompleto';
-import { ComboBox } from '../comboBox'; 
 import { createVendor } from '../../../api/vendors';
 import { getVendors } from '../../../api/usuarios';
 
