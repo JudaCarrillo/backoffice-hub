@@ -35,7 +35,7 @@ export function Sidebar({sidebarOpen,setSidebarOpen,setIsLoggedIn, linksArray}) 
                         <img src={logo} alt="Logo de la aplicación"/>
                     </div>
                     <h2>
-                        Logo
+                        ROMER
                     </h2>
                 </div>
                 {linksArray.map(({icon,label,to})=>(
@@ -137,7 +137,7 @@ const secundaryLinksArray = [
             display: flex;
             justify-content: center;
             align-items: center;
-            padding-bottom: 90px;
+            padding-bottom: 30px;
             gap:20px;
             .imgContent{
                 display: flex;
@@ -199,11 +199,10 @@ const secundaryLinksArray = [
         }
         .salirbutton{
             position: relative;
-            top: 20px;
             left: 1px;
         }
         .ThemeContent{
-            padding: ${({ isopen }) => (isopen ? `10% 10%` : `60px 0px 40px`)};
+            padding: ${({ isopen }) => (isopen ? `10% 10%` : ``)};
             display: flex;
             align-items: center;
             justify-content: space-between;
