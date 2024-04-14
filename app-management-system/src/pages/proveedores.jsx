@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { getVendors } from "../api/usuarios";
-import { exportVendorsToCsv } from "../api/vendors";
+import { deleteVendor, exportVendorsToCsv } from "../api/vendors";
 import { ButtonHead } from "../components/button";
 import { Cabecera } from "../components/cabecera";
 import { Cuerpo } from "../components/cuerpo";
+import ModalProveedor from "../components/modals/CrearModales/modalProveedor";
 import { getCsv } from "../utils/logic";
 import { Preloader } from "./preloader";
-import ModalProveedor from "../components/modals/CrearModales/modalProveedor";
 
 export function Proveedores() {
   const [prov, setProv] = useState([]);
@@ -41,25 +41,23 @@ export function Proveedores() {
   }, []);
 
   const handleEdit = (id) => {
-    console.log('Editar categoría con ID:', id);
-};
+    console.log("Editar categoría con ID:", id);
+  };
 
-// Función de eliminación
-const handleDelete = async (id) => {
+  // Función de eliminación
+  const handleDelete = async (id) => {
     try {
-        const respuesta = await deleteVendor(id);
-        const { success, data, message } = respuesta.data;
-        if (success) {
-            setProv(prov.filter( vendors => vendors.id !== id));
-        } else {
-            throw new Error(message);
-        }
+      const respuesta = await deleteVendor(id);
+      const { success, data, message } = respuesta.data;
+      if (success) {
+        setProv(prov.filter((vendors) => vendors.id !== id));
+      } else {
+        throw new Error(message);
+      }
     } catch (error) {
-        console.error('Error al eliminar la categoría:', error);
-     }
-}
-
-
+      console.error("Error al eliminar la categoría:", error);
+    }
+  };
 
   return (
     <Container>
@@ -71,12 +69,20 @@ const handleDelete = async (id) => {
           }
           buttonColor="#969593"
         />
-        <ModalProveedor modalName={"Nuevo Vendor"} title={'Crear nuevo usuario'}/>
+        <ModalProveedor
+          modalName={"Nuevo Vendor"}
+          title={"Crear nuevo usuario"}
+        />
       </Cabecera>
       {loading ? (
         <Preloader /> // Mostrar indicador de carga
       ) : (
-        <Cuerpo columns={columns} data={prov} handleEdit={handleEdit} handleDelete={handleDelete}   />
+        <Cuerpo
+          columns={columns}
+          data={prov}
+          handleEdit={handleEdit}
+          handleDelete={handleDelete}
+        />
       )}
     </Container>
   );

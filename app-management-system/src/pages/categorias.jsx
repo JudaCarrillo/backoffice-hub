@@ -9,7 +9,6 @@ import Modal from "../components/modals/CrearModales/modalCategoria";
 import { getCsv } from "../utils/logic";
 import { Preloader } from "./preloader";
 
-
 export function Categoria() {
   const [cat, setCat] = useState([]);
   const [columns, setColumns] = useState([]);
@@ -40,50 +39,58 @@ export function Categoria() {
 
     cargartabla();
   }, []);
-    // Función de edición
-    const handleEdit = (id) => {
-        console.log('Editar categoría con ID:', id);
-    };
+  // Función de edición
+  const handleEdit = (id) => {
+    console.log("Editar categoría con ID:", id);
+  };
 
-    // Función de eliminación
-    const handleDelete = async (id) => {
-        try {
-            const respuesta = await deleteCategory(id);
-            const { success, data, message } = respuesta.data;
-            if (success) {
-                setCat(cat.filter(categoria => categoria.id !== id));
-            } else {
-                throw new Error(message);
-            }
-        } catch (error) {
-            console.error('Error al eliminar la categoría:', error);
-         }
+  // Función de eliminación
+  const handleDelete = async (id) => {
+    try {
+      const respuesta = await deleteCategory(id);
+      const { success, data, message } = respuesta.data;
+      if (success) {
+        setCat(cat.filter((categoria) => categoria.id !== id));
+      } else {
+        throw new Error(message);
+      }
+    } catch (error) {
+      console.error("Error al eliminar la categoría:", error);
     }
-    const handleReceiveRows = async (data) => {
-      setCat(data);
-    };
-    
-    return (
-        <Container>
-             <Cabecera title={'Categoria'}>
-             <ButtonHead
+  };
+  const handleReceiveRows = async (data) => {
+    setCat(data);
+  };
+
+  return (
+    <Container>
+      <Cabecera title={"Categoria"}>
+        <ButtonHead
           name={"Descargar"}
           onClick={() =>
             getCsv({ callback: exportCategoriesToCsv, name: "categories_data" })
           }
           buttonColor="#969593"
         />
-            
-                <Modal modalName={'Nueva Categoria'} title={'Crear categoria'} onReceiveRows={handleReceiveRows} />
-            </Cabecera>
-            {loading ? (
-                <Preloader />
-            ) : (
-                <Cuerpo columns={columns} data={cat} handleEdit={handleEdit} handleDelete={handleDelete} />
-            )}
-        </Container>
-    );
 
+        <Modal
+          modalName={"Nueva Categoria"}
+          title={"Crear categoria"}
+          onReceiveRows={handleReceiveRows}
+        />
+      </Cabecera>
+      {loading ? (
+        <Preloader />
+      ) : (
+        <Cuerpo
+          columns={columns}
+          data={cat}
+          handleEdit={handleEdit}
+          handleDelete={handleDelete}
+        />
+      )}
+    </Container>
+  );
 }
 const Container = styled.div`
   height: 100vh;
