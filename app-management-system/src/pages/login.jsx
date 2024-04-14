@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import styled from "styled-components";
 import { Opulento } from "uvcanvas";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
-import axios from "axios";
+import { login } from "../api/auth";
 
 const LoginContainer = styled.div`
   position: relative;
@@ -44,7 +44,9 @@ const InputContainer = styled.div`
 `;
 
 const LoginInput = styled.input`
-  width: calc(100% - 40px); /* Ajustamos el ancho del input para dejar espacio para el botón */
+  width: calc(
+    100% - 40px
+  ); /* Ajustamos el ancho del input para dejar espacio para el botón */
   padding: 15px; /* Aumentamos el padding */
   border: 1px solid #ccc;
   border-radius: 8px; /* Aumentamos el border-radius */
@@ -82,24 +84,24 @@ export function Login({ onLoginSuccess }) {
   const enviarPeticion = async () => {
     const data = {
       username: username,
-      password: password
+      password: password,
     };
 
-    const url = 'http://localhost:8000/v1/login/';
-
     try {
-      const response = await axios.post(url, data);
-      const {success, data: {privileges }} = response.data
-      if(!success){
-        console.log(success)
+      const response = await login(data);
+      const {
+        success,
+        data: { privileges },
+      } = response.data;
+      if (!success) {
+        console.log(success);
       }
       onLoginSuccess(); // Si la solicitud es exitosa, llama a la función onLoginSuccess
-      
-      const Privileges = [...privileges]
-      localStorage.setItem('user', JSON.stringify(Privileges));
-      
+
+      const Privileges = [...privileges];
+      localStorage.setItem("user", JSON.stringify(Privileges));
     } catch (error) {
-      console.error('Error al realizar la petición:', error);
+      console.error("Error al realizar la petición:", error);
       alert("Credenciales incorrectas"); // Muestra una alerta si hay un error en la solicitud
     }
   };
@@ -117,8 +119,22 @@ export function Login({ onLoginSuccess }) {
     <LoginContainer>
       <OpulentoBackground />
       <LoginFormContainer>
-        <LoginForm onSubmit={handleLogin}> {/* Agregamos el controlador de envío al formulario */}
-          <h1 style={{ marginBottom: "100px", fontSize: "40px", textAlign:"center", fontFamily:"", fontWeight:"700", fontStyle:"normal" }}>Inicio de Sesión</h1> {/* Ajustamos el espacio alrededor del texto de inicio de sesión */}
+        <LoginForm onSubmit={handleLogin}>
+          {" "}
+          {/* Agregamos el controlador de envío al formulario */}
+          <h1
+            style={{
+              marginBottom: "100px",
+              fontSize: "40px",
+              textAlign: "center",
+              fontFamily: "",
+              fontWeight: "700",
+              fontStyle: "normal",
+            }}
+          >
+            Inicio de Sesión
+          </h1>{" "}
+          {/* Ajustamos el espacio alrededor del texto de inicio de sesión */}
           <InputContainer>
             <LoginInput
               type="text"
@@ -136,8 +152,14 @@ export function Login({ onLoginSuccess }) {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
-            <ToggleButton type="button" onClick={togglePasswordVisibility}> {/* Cambiamos el tipo de botón a "button" */}
-              {showPassword ? <FaEyeSlash size={20} /> : <FaEye size={20} />}{" "}
+            <ToggleButton type="button" onClick={togglePasswordVisibility}>
+              {" "}
+              {/* Cambiamos el tipo de botón a "button" */}
+              {showPassword ? (
+                <FaEyeSlash size={20} />
+              ) : (
+                <FaEye size={20} />
+              )}{" "}
               {/* Usamos íconos de React Icons */}
             </ToggleButton>
           </InputContainer>

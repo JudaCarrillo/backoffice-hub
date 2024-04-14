@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { InputComponent } from '../input';
 import { ModalCompleto } from '../modalCompleto';
 import { createCategory } from '../../../api/categories';
-import { getCategories } from '../../../api/usuarios';
+import { getCategories } from '../../../api/categories';
 
 export function ProductsModal({ modalName, title , onReceiveRows }) {
   const [showModal, setShowModal] = useState(false);

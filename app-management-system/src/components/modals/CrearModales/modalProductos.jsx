@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
+import { getCategories } from "../../../api/categories";
+import { createProduct, getProducts } from "../../../api/products";
+import { getVendors } from "../../../api/vendors";
+import ComboBox from "../comboBox";
 import { InputComponent } from "../input";
 import { ModalCompleto } from "../modalCompleto";
-import { createProduct } from "../../../api/products";
-import { getProducts } from "../../../api/usuarios";
-import ComboBox from "../comboBox";
-import axios from "axios";
 
 export function ModalProductos({ modalName, title, onReceiveRows }) {
   const [showModal, setShowModal] = useState(false);
@@ -18,8 +18,8 @@ export function ModalProductos({ modalName, title, onReceiveRows }) {
     id_vendor: "",
   });
 
-  const getCategories = async () => {
-    const response = await axios.get("http://localhost:8200/v1/category/");
+  const getCategoriesForCreate = async () => {
+    const response = await getCategories();
     const { success, data, message } = response.data;
     if (success) {
       return data;
@@ -28,8 +28,8 @@ export function ModalProductos({ modalName, title, onReceiveRows }) {
     }
   };
 
-  const getVendors = async () => {
-    const response = await axios.get("http://localhost:8200/v1/vendor/");
+  const getVendorsForCreate = async () => {
+    const response = await getVendors();
     const { success, data, message } = response.data;
     if (success) {
       return data;
@@ -125,13 +125,13 @@ export function ModalProductos({ modalName, title, onReceiveRows }) {
                 name="id_category"
                 label="Seleccione la categoría"
                 onChange={handleChangeCategory}
-                callback={getCategories}
+                callback={getCategoriesForCreate}
               />
               <ComboBox
                 name="id_vendor"
                 label="Seleccione el proveedor"
                 onChange={handleChangeVendor}
-                callback={getVendors}
+                callback={getVendorsForCreate}
               />
             </>
           )}

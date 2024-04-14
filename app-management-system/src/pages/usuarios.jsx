@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { disabledUser, getUsuarios } from "../api/usuarios";
+import { disabledUser, getUsuarios } from "../api/auth";
 import { Cabecera } from "../components/cabecera";
 import { Cuerpo } from "../components/cuerpo";
 import { ModalUsuario } from "../components/modals/CrearModales/modalUsuario";

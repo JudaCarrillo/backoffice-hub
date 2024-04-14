@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { deleteCategory, exportCategoriesToCsv } from "../api/categories";
-import { getCategories } from "../api/usuarios";
+import {
+  deleteCategory,
+  exportCategoriesToCsv,
+  getCategories,
+} from "../api/categories";
 import { ButtonHead } from "../components/button";
 import { Cabecera } from "../components/cabecera";
 import { Cuerpo } from "../components/cuerpo";

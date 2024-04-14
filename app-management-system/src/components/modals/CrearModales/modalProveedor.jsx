@@ -1,26 +1,29 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import { InputComponent } from '../input';
-import { ModalCompleto } from '../modalCompleto';
-import { createVendor } from '../../../api/vendors';
-import { getVendors } from '../../../api/usuarios';
+import { useState } from "react";
+import styled from "styled-components";
+import { createVendor, getVendors } from "../../../api/vendors";
+import { InputComponent } from "../input";
+import { ModalCompleto } from "../modalCompleto";
 
 export function ModalProveedor({ modalName, title }) {
   const [showModal, setShowModal] = useState(false);
 
-  
   const [vendors, setVendors] = useState({
-    id: '',
-    name: '',
-    email: '',
-    address: '',
-    phone: '',
+    id: "",
+    name: "",
+    email: "",
+    address: "",
+    phone: "",
   });
   const toggleModal = () => setShowModal(!showModal);
 
   const handleCrearVendors = async () => {
     try {
-      const data2 = {"name": vendors.name, "email": vendors.email, "address": vendors.address, "phone": vendors.phone};
+      const data2 = {
+        name: vendors.name,
+        email: vendors.email,
+        address: vendors.address,
+        phone: vendors.phone,
+      };
       const response = await createVendor(data2);
       const { success, data, message } = response.data;
       if (success) {
@@ -30,10 +33,9 @@ export function ModalProveedor({ modalName, title }) {
         toggleModal();
       } else {
         throw new Error(message);
-      } 
-    
+      }
     } catch (error) {
-        console.error('Error al crear nuevo proveedor:', error);
+      console.error("Error al crear nuevo proveedor:", error);
     }
   };
 
@@ -42,7 +44,9 @@ export function ModalProveedor({ modalName, title }) {
   };
   return (
     <Container>
-      <button className="button_head" onClick={toggleModal}>{modalName}</button>
+      <button className="button_head" onClick={toggleModal}>
+        {modalName}
+      </button>
       {showModal && (
         <ModalCompleto
           title={title}
@@ -80,7 +84,6 @@ export function ModalProveedor({ modalName, title }) {
           )}
           onClose={toggleModal}
           onCreate={handleCrearVendors}
-
         />
       )}
     </Container>

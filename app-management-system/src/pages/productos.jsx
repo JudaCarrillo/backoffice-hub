@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { deleteProduct, exportProductsToCsv } from "../api/products";
-import { getProducts } from "../api/usuarios";
+import { getProducts } from "../api/products";
 import { ButtonHead } from "../components/button";
 import { Cabecera } from "../components/cabecera";
 import { Cuerpo } from "../components/cuerpo";

@@ -6,7 +6,7 @@ import {
   getUserProfileById,
   getUsuarios,
   updateUsers,
-} from "../../../api/usuarios";
+} from "../../../api/auth";
 import ComboBox from "../comboBox";
 import { InputComponent } from "../input";
 import { ModalParaUpdate } from "../modalparaUpdate";

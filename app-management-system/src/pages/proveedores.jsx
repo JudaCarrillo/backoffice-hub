@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { getVendors } from "../api/usuarios";
-import { deleteVendor, exportVendorsToCsv } from "../api/vendors";
+import { deleteVendor, exportVendorsToCsv, getVendors } from "../api/vendors";
 import { ButtonHead } from "../components/button";
 import { Cabecera } from "../components/cabecera";
 import { Cuerpo } from "../components/cuerpo";

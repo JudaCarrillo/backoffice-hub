@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 import styled from "styled-components";
-import { createUsers, getUsuarios } from "../../../api/usuarios";
+import { createUsers, getUsuarios } from "../../../api/auth";
 import ComboBox from "../comboBox";
 import { InputComponent } from "../input";
 import { ModalCompleto } from "../modalCompleto";
