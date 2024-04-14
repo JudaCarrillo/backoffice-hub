@@ -6,7 +6,7 @@ export const InputComponent = ({ name, type, onChange, label }) => {
     <Container>
         <div className="wave-group">
             <input
-                required
+                // required
                 type={type}
                 className="input"
                 id={name}

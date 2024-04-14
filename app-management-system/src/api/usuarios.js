@@ -18,9 +18,9 @@ export const getVendors = () => {
     return axios.get(`${url_base}${apiVersion}vendor/`)
 }
 
-export const deleteUser = (id) => {
-    return axios.delete(`${url_base}${apiVersion}user/delete/${id}`)
+export const disabledUser = (id) => {
+    return axios.post(`http://localhost:8000/v1/users/disabled/${id}`)
 }
-export const createUsers = () => {
-    return axios.get(`${url_base}${apiVersion}create/`, data)
-}
+export const createUsers = (data) => {
+    return axios.post(`http://localhost:8000/v1/users/create`, data)
+}   

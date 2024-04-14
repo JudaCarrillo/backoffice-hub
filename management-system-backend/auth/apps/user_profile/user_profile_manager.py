@@ -4,36 +4,14 @@ from .serializers import UserProfileSerializer
 
 class UserProfileManager:
     def get_all(self):
-        payload = {}
-
-        try:
-            users = UserProfile.objects.filter(is_active=True)
-
-            if not users:
-                raise UserProfile.DoesNotExist
-
-            serializer = UserProfileSerializer(users, many=True)
-            payload = {'success': True,
-                       'data': {'items': serializer.data},
-                       'message': 'Users found'}
-
-        except UserProfile.DoesNotExist:
-            payload = {'success': False, 'data': None,
-                       'message': 'There are not user profiles '}
-
-        return payload
+        profiles = UserProfile.objects.filter(is_active=True)
+        serializer = UserProfileSerializer(profiles, many=True)
+        return {'success': True, 'data':  serializer.data, 'message': 'User Profiles found'}
 
     def get_by_id(self, id):
-        payload = {}
         try:
-            user = UserProfile.objects.get(id=id)
-            serializer = UserProfileSerializer(user)
-            payload = {'success': True,
-                       'data': {'items': serializer.data},
-                       'message': 'User found'}
-
-        except UserProfile.DoesNotExist:
-            payload = {'success': False, 'data': None,
-                       'message': 'User Profile not found'}
-
-        return payload
+            product = UserProfile.objects.get(id=id)
+            serializer = UserProfileSerializer(product)
+            return {'success': True, 'data': serializer.data, 'message': 'User Profile found'}
+        except:
+            return {'success': False, 'data': None, 'message': 'User Profile not found'}

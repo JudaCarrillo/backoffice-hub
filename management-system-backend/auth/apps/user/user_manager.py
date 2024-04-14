@@ -1,44 +1,50 @@
 from .models import User
 from .serializers import UserSerializer, CustomUserSerializer
+from apps.user_profile.models import UserProfile
 
-from django.core.exceptions import ValidationError
+import datetime
 
 
 class UserManager:
-    def create(self, username: str, email: str, password: str, is_active: bool, created_at: str, id_profile: int):
+    def disabled(self, id):
+        try:
+            user = User.objects.get(id=id)
+        except User.DoesNotExist:
+            return {'success': False, 'data': None,
+                    'message': 'User not found'}
 
-        payload = {}
+        user.is_active = False
+        user.save()
+
+        serializer = CustomUserSerializer(user)
+        """ serializer = CustomUserSerializer(
+            user, data=, partial=True)
+
+        if not serializer.is_valid():
+            return {'success': False, 'data': None,
+                    'message': 'User not deleted'} """
+
+        return {'success': True, 'data': serializer.data, 'message': 'User disabled'}
+
+    def create(self, username: str, email: str, password: str, is_active: bool, id_profile: int):
+        date = datetime.datetime.now()
 
         try:
-            if User.objects.filter(username=username).exists():
-                raise ValidationError(
-                    'The username is already in use.', code='invalid')
+            id_profile = UserProfile.objects.get(id=id_profile)
+        except UserProfile.DoesNotExist:
+            id_profile = None
 
-            if User.objects.filter(email=email).exists():
-                raise ValidationError(
-                    'The email is already in use.', code='invalid')
+        user = User.objects.create(
+            username=username,
+            email=email,
+            password=password,
+            is_active=is_active,
+            created_at=date,
+            id_profile=id_profile
+        )
 
-            user = User.objects.create(
-                username=username,
-                email=email,
-                password=password,
-                is_active=is_active,
-                created_at=created_at,
-                id_profile=id_profile
-            )
-
-            payload = {'success': True, 'data': {
-                'items': user}, 'message': 'User created'}
-
-        except ValidationError as e:
-            payload = {'success': False, 'data': None,
-                       'message': str(e)}
-
-        except Exception as e:
-            payload = {'success': False, 'data': None,
-                       'message': 'The user was not created. ' + str(e)}
-
-        return payload
+        serializer = CustomUserSerializer(user)
+        return {'success': True, 'data': serializer.data, 'message': 'User created'}
 
     def update(self, id, **extra_fields):
         payload = {}
