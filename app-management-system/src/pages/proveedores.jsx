@@ -77,7 +77,7 @@ export function Proveedores() {
 
   return (
     <Container>
-      <Cabecera title={"Vendors"}>
+      <Cabecera title={"Proveedores"}>
         {privilegesReport.length > 0 && (
           <ButtonHead
             name={"Descargar"}

@@ -77,7 +77,7 @@ export function Productos() {
 
   return (
     <Container>
-      <Cabecera title={"products"}>
+      <Cabecera title={"Productos"}>
         {privilegesReport.length > 0 && (
           <ButtonHead
             name={"Descargar"}

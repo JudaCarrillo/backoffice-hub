@@ -6,8 +6,11 @@ import { login } from "../api/auth";
 
 const LoginContainer = styled.div`
   position: relative;
-  height: 100vh;
-  width: 100vw;
+  min-height: 99.8vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const OpulentoBackground = styled(Opulento)`
@@ -16,41 +19,38 @@ const OpulentoBackground = styled(Opulento)`
   left: 0;
   width: 100%;
   height: 100%;
+  background-size: cover;
+  background-position: center;
 `;
 
 const LoginFormContainer = styled.div`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  position: relative;
   background-color: white;
-  padding: 50px;
+  padding: 3.1rem;
   border-radius: 5%;
-  padding-top: 100px; /* Ajustamos el espacio superior del contenedor del formulario */
-  padding-bottom: 200px; /* Ajustamos el espacio inferior del contenedor del formulario */
+  max-width: 400px;
+  width: 100%;
 `;
 
 const LoginForm = styled.form`
-  width: 300px;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
 `;
 
 const InputContainer = styled.div`
-  margin-bottom: 20px; /* Aumentamos el espacio entre los contenedores de entrada */
+  margin-bottom: 20px;
   width: 100%;
   position: relative;
 `;
 
 const LoginInput = styled.input`
-  width: calc(
-    100% - 40px
-  ); /* Ajustamos el ancho del input para dejar espacio para el botón */
-  padding: 15px; /* Aumentamos el padding */
+  width: 100%;
+  padding: 15px;
   border: 1px solid #ccc;
-  border-radius: 8px; /* Aumentamos el border-radius */
-  font-size: 16px; /* Aumentamos el tamaño del texto */
+  border-radius: 8px;
+  font-size: 16px;
 `;
 
 const ToggleButton = styled.button`
@@ -65,14 +65,14 @@ const ToggleButton = styled.button`
 
 const LoginButton = styled.button`
   width: 100%;
-  margin-top: 50px; /* Aumentamos el espacio entre el último contenedor de entrada y el botón */
-  padding: 15px; /* Aumentamos el padding */
+  margin-top: 50px;
+  padding: 15px;
   border: 1px solid #000;
-  border-radius: 8px; /* Aumentamos el border-radius */
+  border-radius: 8px;
   background-color: #000;
   color: #fff;
-  font-size: 18px; /* Aumentamos el tamaño del texto */
-  font-weight: bold; /* Hacemos el texto en negrita */
+  font-size: 18px;
+  font-weight: bold;
   cursor: pointer;
 `;
 
