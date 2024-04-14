@@ -7,7 +7,7 @@ import { Cabecera } from "../components/cabecera";
 import { Cuerpo } from "../components/cuerpo";
 import { ModalProductos } from "../components/modals/CrearModales/modalProductos";
 import { UpdateProductModal } from "../components/modals/updateModal/updateProducts";
-import { privilegesReport, privilegesWrite } from "../services/privileges";
+import { getPrivileges } from "../services/privileges";
 import { getCsv } from "../utils/logic";
 import { Preloader } from "./preloader";
 
@@ -17,6 +17,9 @@ export function Productos() {
   const [loading, setLoading] = useState(true);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [editProductId, setEditProductId] = useState(null);
+
+  const privilegesReport = getPrivileges("Report");
+  const privilegesWrite = getPrivileges("Write");
 
   useEffect(() => {
     const cargartabla = async () => {

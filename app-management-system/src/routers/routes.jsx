@@ -1,16 +1,17 @@
-import {Routes,Route} from 'react-router-dom'
-import { Productos } from '../pages/productos';
-import { Categoria } from '../pages/categorias';
-import { Proveedores } from '../pages/proveedores';
-import { Usuarios } from '../pages/usuarios';
+import { Routes, Route } from "react-router-dom";
+import { Productos } from "../pages/productos";
+import { Categoria } from "../pages/categorias";
+import { Proveedores } from "../pages/proveedores";
+import { Usuarios } from "../pages/usuarios";
+
 export function MyRoutes() {
-    return (
-        <Routes>
-                <Route exact path='/'  element ={<Productos/>}/>
-                <Route exact path='/product'  element ={<Productos/>}/>
-                <Route path='/categories'  element ={<Categoria/>} />
-                <Route path='/vendors'  element ={<Proveedores/>} />
-                <Route path='/users'  element ={<Usuarios/>} />           
-        </Routes>
-    );
+  return (
+    <Routes>
+      <Route exact path="/" element={<Productos />} />
+      <Route exact path="/product" element={<Productos />} />
+      <Route path="/categories" element={<Categoria />} />
+      <Route path="/vendors" element={<Proveedores />} />
+      <Route path="/users" element={<Usuarios />} />
+    </Routes>
+  );
 }

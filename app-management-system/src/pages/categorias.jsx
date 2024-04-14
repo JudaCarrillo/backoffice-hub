@@ -10,7 +10,7 @@ import { Cabecera } from "../components/cabecera";
 import { Cuerpo } from "../components/cuerpo";
 import { CategoryModal } from "../components/modals/CrearModales/modalCategoria";
 import { UpdateModal } from "../components/modals/updateModal/updateCategoria";
-import { privilegesReport, privilegesWrite } from "../services/privileges";
+import { getPrivileges } from "../services/privileges";
 import { getCsv } from "../utils/logic";
 import { Preloader } from "./preloader";
 
@@ -20,6 +20,9 @@ export function Categoria() {
   const [loading, setLoading] = useState(true);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [editCategoryId, setEditCategoryId] = useState(null);
+
+  const privilegesReport = getPrivileges("Report");
+  const privilegesWrite = getPrivileges("Write");
 
   useEffect(() => {
     const cargartabla = async () => {

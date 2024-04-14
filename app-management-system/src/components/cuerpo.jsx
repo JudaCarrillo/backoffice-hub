@@ -1,9 +1,10 @@
-import React from "react";
 import styled from "styled-components";
+import { getPrivileges } from "../services/privileges";
 import { ButtonsTable } from "./buttons_action/buttons";
-import { privilegesWrite } from "../services/privileges";
 
 export function Cuerpo({ columns, data, handleEdit, handleDelete }) {
+  const privilegesWrite = getPrivileges("Write");
+
   return (
     <Container>
       <div className="table_body">

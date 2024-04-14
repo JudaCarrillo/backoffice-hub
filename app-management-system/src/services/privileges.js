@@ -1,21 +1,9 @@
-export const getPrivilegesReport = () => {
+export const getPrivileges = (name) => {
     const privileges = localStorage.getItem("user");
+    if (!privileges) return [];
     const privilegesObject = JSON.parse(privileges);
     const privilegesReport = privilegesObject.filter((privilege) =>
-        privilege.name.includes("Report")
+        privilege.name.includes(name)
     );
     return privilegesReport;
 };
-
-export const privilegesReport = getPrivilegesReport();
-
-export const getPrivilegesWrite = () => {
-    const privileges = localStorage.getItem("user");
-    const privilegesObject = JSON.parse(privileges);
-    const privilegesWrite = privilegesObject.filter((privilege) =>
-        privilege.name.includes("Write")
-    );
-    return privilegesWrite;
-}
-
-export const privilegesWrite = getPrivilegesWrite()

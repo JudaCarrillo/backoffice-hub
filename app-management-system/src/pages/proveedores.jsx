@@ -6,7 +6,7 @@ import { Cabecera } from "../components/cabecera";
 import { Cuerpo } from "../components/cuerpo";
 import ModalProveedor from "../components/modals/CrearModales/modalProveedor";
 import { UpdateVendorsModal } from "../components/modals/updateModal/updateVendors";
-import { privilegesReport, privilegesWrite } from "../services/privileges";
+import { getPrivileges } from "../services/privileges";
 import { getCsv } from "../utils/logic";
 import { Preloader } from "./preloader";
 
@@ -16,6 +16,9 @@ export function Proveedores() {
   const [loading, setLoading] = useState(true);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [editVendorId, setVendorId] = useState(null);
+
+  const privilegesReport = getPrivileges("Report");
+  const privilegesWrite = getPrivileges("Write");
 
   useEffect(() => {
     const cargartabla = async () => {
