@@ -1,17 +1,13 @@
-from django.contrib.auth import authenticate
-from django.contrib.auth.hashers import check_password
-
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from rest_framework import status
 
-from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
 
 from .serialyzers import LoginSerializer
-from apps.user.models import User
-from .login_manager import LoginManager
+from .login_use_case import LoginUseCase
 
-login = LoginManager()
+login = LoginUseCase()
 
 
 @swagger_auto_schema(
@@ -19,32 +15,22 @@ login = LoginManager()
     request_body=LoginSerializer,
     responses={
         200: 'Ok',
-        201: 'Created',
         400: 'Bad Request',
+        500: 'Internal Server Error',
     }
 )
 @api_view(['POST'])
 def index(request):
-    raw_password = request.data.get('password')
-    username = request.data.get('username')
-
-    user = _get_user(username, raw_password)
-    if not user:
-        return Response({
-            'success': False,
-            'data': None,
-            'message': 'User not found'
-        }, status=400)
-
-    return Response(login.main(user))
-
-
-def _get_user(username: str, raw_password: str):
     try:
-        user = User.objects.get(username=username)
-        if check_password(raw_password, user.password):
-            return user
-        else:
-            return None
-    except User.DoesNotExist:
-        return None
+        raw_password = request.data.get('password')
+        username = request.data.get('username')
+
+        result = login.run(username, raw_password)
+
+        if not result.get('success'):
+            return Response(result, status=status.HTTP_400_BAD_REQUEST)
+
+        return Response(result, status=status.HTTP_200_OK)
+    except Exception as e:
+        error_message = f'Internal Server Error: {e}'
+        return Response({'success': False, 'data': None, 'message': error_message}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

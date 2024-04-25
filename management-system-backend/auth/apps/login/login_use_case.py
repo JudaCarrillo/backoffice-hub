@@ -1,3 +1,6 @@
+from django.contrib.auth.hashers import check_password
+from typing import Union
+
 from apps.permission.models import Permission
 from apps.privilege.models import Privilege
 
@@ -5,10 +8,29 @@ from apps.user.serializers import UserSerializer
 from apps.privilege.serializers import PrivilegeSerializer
 from apps.permission.serializers import PermissionSerializer
 
+from apps.user.models import User
 
-class LoginManager:
 
-    def main(self, user):
+class LoginUseCase:
+
+    def validate_password(self, raw_password: str, user: User):
+        return user and check_password(raw_password, user.password)
+
+    def validate_user(self, username: str, password: str) -> Union[User, None]:
+        user = User.objects.get(username=username)
+
+        if not self.validate_password(password, user):
+            return None
+
+        return user
+
+    def run(self, username: str, password: str) -> dict:
+
+        user = self.validate_user(username, password)
+
+        if not user:
+            return {'success': False, 'data': None, 'message': 'Invalid username or password'}
+
         serializer = UserSerializer(user)
         user = serializer.data
 
@@ -33,7 +55,7 @@ class LoginManager:
             return {'success': False, 'data': None, 'message': 'User Profile privileges not found'}
         privilege_serializer = PrivilegeSerializer(privileges, many=True)
 
-        payload = {
+        return {
             'success': True,
             'data': {
                 'user': user,
@@ -42,4 +64,3 @@ class LoginManager:
             },
             'message': 'Login successful'
         }
-        return payload
