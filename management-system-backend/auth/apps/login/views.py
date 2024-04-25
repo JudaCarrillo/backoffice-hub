@@ -5,7 +5,7 @@ from rest_framework import status
 from drf_yasg.utils import swagger_auto_schema
 
 from .serialyzers import LoginSerializer
-from .login_use_case import LoginUseCase
+from .use_case import LoginUseCase
 
 login = LoginUseCase()
 
