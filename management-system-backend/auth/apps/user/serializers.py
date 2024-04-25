@@ -11,6 +11,7 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class CustomUserSerializer(serializers.Serializer):
+    username = serializers.CharField()
     email = serializers.EmailField()
     password = serializers.CharField()
     is_active = serializers.BooleanField()
@@ -22,6 +23,8 @@ class CustomUserSerializer(serializers.Serializer):
         return User.objects.create(**validated_data)
 
     def update(self, instance, validated_data):
+        instance.username = validated_data.get(
+            'username', instance.username)
         instance.email = validated_data.get('email', instance.email)
         instance.password = validated_data.get('password', instance.password)
         instance.is_active = validated_data.get(
@@ -29,15 +32,5 @@ class CustomUserSerializer(serializers.Serializer):
         instance.updated_at = validated_data.get(
             'updated_at', instance.updated_at)
         instance.id_profile = validated_data.get('id_profile')
-        instance.save()
-        return instance
-
-
-class CustomUserDisableSerializer(serializers.Serializer):
-    is_active = serializers.BooleanField()
-
-    def update(self, instance, validated_data):
-        instance.is_active = validated_data.get(
-            'is_active', instance.is_active)
         instance.save()
         return instance
