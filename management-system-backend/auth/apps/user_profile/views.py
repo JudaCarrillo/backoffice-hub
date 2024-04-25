@@ -1,16 +1,53 @@
-from django.shortcuts import render
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from rest_framework import status
+from drf_yasg.utils import swagger_auto_schema
 
-from .user_profile_manager import UserProfileManager
-user_profiles = UserProfileManager()
+from .services import UserProfileServices
+services = UserProfileServices()
 
 
+@swagger_auto_schema(
+    methods=['GET'],
+    responses={
+        200: 'Ok',
+        400: 'Bad Request',
+        500: 'Internal Server Error',
+    }
+)
 @api_view(['GET'])
 def index(request):
-    return Response(user_profiles.get_all())
+    try:
+        result = services.get_all()
+
+        if not result.get('success'):
+            return Response(result, status=status.HTTP_400_BAD_REQUEST)
+
+        return Response(result, status=status.HTTP_200_OK)
+
+    except Exception as e:
+        error_message = f'Internal Server Error: {e}'
+        return Response({'success': False, 'data': None, 'message': error_message}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
+@swagger_auto_schema(
+    methods=['GET'],
+    responses={
+        200: 'Ok',
+        400: 'Bad Request',
+        500: 'Internal Server Error',
+    }
+)
 @api_view(['GET'])
 def get_profile(request, id):
-    return Response(user_profiles.get_by_id(id))
+    try:
+        result = services.get_by_id(id)
+
+        if not result.get('success'):
+            return Response(result, status=status.HTTP_400_BAD_REQUEST)
+
+        return Response(result, status=status.HTTP_200_OK)
+
+    except Exception as e:
+        error_message = f'Internal Server Error: {e}'
+        return Response({'success': False, 'data': None, 'message': error_message}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

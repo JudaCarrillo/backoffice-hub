@@ -7,12 +7,12 @@ from .serializers import UserSerializer, CustomUserSerializer
 
 class UserServices:
 
-    def get_users(self) -> dict:
+    def get_all(self) -> dict:
         users = User.objects.all()
         serializer = UserSerializer(users, many=True)
         return {'success': True, 'data': serializer.data, 'message': 'Users found'}
 
-    def get_user_by_id(self, id) -> dict:
+    def get_by_id(self, id) -> dict:
         user = self._user_exists(id)
         if not user.get('success'):
             return {'success': False, 'data': None, 'message': 'User not found'}

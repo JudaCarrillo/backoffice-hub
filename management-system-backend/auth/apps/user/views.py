@@ -1,5 +1,3 @@
-from django.contrib.auth.hashers import make_password
-
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
@@ -7,11 +5,9 @@ from rest_framework import status
 from drf_yasg.utils import swagger_auto_schema
 
 from .serializers import UserSerializer
-from .user_manager import UserManager
 from .services import UserServices
 
 services = UserServices()
-user = UserManager()
 
 
 @swagger_auto_schema(
@@ -25,7 +21,7 @@ user = UserManager()
 @api_view(['GET'])
 def index(request):
     try:
-        result = services.get_users()
+        result = services.get_all()
         return Response(result, status=status.HTTP_200_OK)
     except Exception as e:
         error_message = f'Internal Server Error: {e}'
@@ -43,7 +39,7 @@ def index(request):
 @api_view(['GET'])
 def get_user(request, id):
     try:
-        result = services.get_user_by_id(id)
+        result = services.get_by_id(id)
 
         if not result.get('success'):
             return Response(result, status=status.HTTP_400_BAD_REQUEST)
@@ -111,7 +107,7 @@ def update_user(request, id):
         500: 'Internal Server Error',
     }
 )
-@api_view(['POST']) 
+@api_view(['POST'])
 def disabled(request, id):
     try:
         result = services.disabled(id)
