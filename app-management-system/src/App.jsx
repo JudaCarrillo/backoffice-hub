@@ -5,6 +5,7 @@ import { Sidebar } from "./components/sidebar";
 import { Login } from "./pages/login";
 import { MyRoutes } from "./routers/routes";
 import { Dark, Light } from "./styles/theme";
+import { Pruebas } from "./pages/pruebas";
 
 export const ThemeContext = React.createContext(null);
 
@@ -13,7 +14,7 @@ function App() {
   const themeStyle = theme === "light" ? Light : Dark;
 
   const [sidebarOpen, setSidebarOpen] = useState(true);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(max-width: 1300px)");
@@ -40,27 +41,29 @@ function App() {
 
   return (
     <>
-      <ThemeContext.Provider value={{ setTheme, theme }}>
-        <ThemeProvider theme={themeStyle}>
-          <BrowserRouter>
-            {isLoggedIn ? (
-              <Container className={sidebarOpen ? "sidebarState active" : ""}>
-                <Sidebar
-                  sidebarOpen={sidebarOpen}
-                  setSidebarOpen={setSidebarOpen}
+      <Pruebas />
+
+      {/* <ThemeContext.Provider value={{ setTheme, theme }}>
+          <ThemeProvider theme={themeStyle}>
+            <BrowserRouter>
+              {isLoggedIn ? (
+                <Container className={sidebarOpen ? "sidebarState active" : ""}>
+                  <Sidebar
+                    sidebarOpen={sidebarOpen}
+                    setSidebarOpen={setSidebarOpen}
+                    setIsLoggedIn={setIsLoggedIn}
+                  />
+                  <MyRoutes />
+                </Container>
+              ) : (
+                <Login
                   setIsLoggedIn={setIsLoggedIn}
+                  onLoginSuccess={handleLoginSuccess}
                 />
-                <MyRoutes />
-              </Container>
-            ) : (
-              <Login
-                setIsLoggedIn={setIsLoggedIn}
-                onLoginSuccess={handleLoginSuccess}
-              />
-            )}
-          </BrowserRouter>
-        </ThemeProvider>
-      </ThemeContext.Provider>
+              )}
+            </BrowserRouter>
+          </ThemeProvider>
+        </ThemeContext.Provider> */}
     </>
   );
 }

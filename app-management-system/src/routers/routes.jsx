@@ -1,6 +1,6 @@
-import { Routes, Route } from "react-router-dom";
-import { Productos } from "../pages/productos";
+import { Route, Routes } from "react-router-dom";
 import { Categoria } from "../pages/categorias";
+import { Productos } from "../pages/productos";
 import { Proveedores } from "../pages/proveedores";
 import { Usuarios } from "../pages/usuarios";
 
