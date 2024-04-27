@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import logo from "../assets/logo.png"
+import logo from "../assets/logo.webp"
 import { v } from "../styles/variables";
 import { AiOutlineLeft } from "react-icons/ai";
 import { ImExit } from "react-icons/im";
