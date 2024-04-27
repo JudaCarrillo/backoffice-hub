@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from "styled-components";
 
-export const Input = ({ name, type, onChange, label , value, is_required=true, checked=false }) => {
+export const InputComponent = ({ name, type, onChange, label , value, is_required=true, checked=false }) => {
     return (
     <Container>
         <div className="wave-group">
