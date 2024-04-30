@@ -22,10 +22,7 @@ login = LoginUseCase()
 @api_view(['POST'])
 def index(request):
     try:
-        raw_password = request.data.get('password')
-        username = request.data.get('username')
-
-        result = login.run(username, raw_password)
+        result = login.run(**request.data)
 
         if not result.get('success'):
             return Response(result, status=status.HTTP_400_BAD_REQUEST)

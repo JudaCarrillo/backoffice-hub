@@ -6,6 +6,8 @@ from drf_yasg.utils import swagger_auto_schema
 
 from .serializers import UserSerializer
 from .services import UserServices
+from django.core.files.storage import default_storage
+from django.core.files.base import ContentFile
 
 services = UserServices()
 
@@ -24,8 +26,8 @@ def index(request):
         result = services.get_all()
         return Response(result, status=status.HTTP_200_OK)
     except Exception as e:
-        error_message = f'Internal Server Error: {e}'
-        return Response({'success': False, 'data': None, 'message': error_message}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        print(e)
+        return Response({'success': False, 'data': None, 'message': 'Internal Server Error'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 @swagger_auto_schema(
@@ -46,8 +48,8 @@ def get_user(request, id):
 
         return Response(result, status=status.HTTP_200_OK)
     except Exception as e:
-        error_message = f'Internal Server Error: {e}'
-        return Response({'success': False, 'data': None, 'message': error_message}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        print(e)
+        return Response({'success': False, 'data': None, 'message': 'Internal Server Error'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 @swagger_auto_schema(
@@ -67,11 +69,18 @@ def create(request):
         if not response.get('success'):
             return Response(response, status=status.HTTP_400_BAD_REQUEST)
 
+        if 'photo' in request.FILES:
+            photo = request.FILES['photo']
+            file_path = f'files/users/{photo.name}'
+            file_path = default_storage.save(
+                file_path, ContentFile(photo.read()))
+            response['data']['photo'] = file_path
+
         return Response(response, status=status.HTTP_201_CREATED)
 
     except Exception as e:
-        error_message = f'Internal Server Error: {e}'
-        return Response({'success': False, 'data': None, 'message': error_message}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        print(e)
+        return Response({'success': False, 'data': None, 'message': 'Internal Server Error'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 @swagger_auto_schema(
@@ -95,8 +104,8 @@ def update_user(request, id):
         return Response(result, status=status.HTTP_200_OK)
 
     except Exception as e:
-        error_message = f'Internal Server Error: {e}'
-        return Response({'success': False, 'data': None, 'message': error_message}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        print(e)
+        return Response({'success': False, 'data': None, 'message': 'Internal Server Error'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 @swagger_auto_schema(
@@ -117,5 +126,5 @@ def disabled(request, id):
 
         return Response(result, status=status.HTTP_200_OK)
     except Exception as e:
-        error_message = f'Internal Server Error: {e}'
-        return Response({'success': False, 'data': None, 'message': error_message}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        print(e)
+        return Response({'success': False, 'data': None, 'message': 'Internal Server Error'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

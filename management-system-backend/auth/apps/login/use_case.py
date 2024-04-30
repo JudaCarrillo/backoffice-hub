@@ -16,20 +16,23 @@ class LoginUseCase:
     def validate_password(self, raw_password: str, user: User):
         return user and check_password(raw_password, user.password)
 
-    def validate_user(self, username: str, password: str) -> Union[User, None]:
-        user = User.objects.get(username=username)
+    def validate_user(self, email: str, password: str) -> Union[User, None]:
+        try:
+            user = User.objects.get(email=email)
+        except User.DoesNotExist:
+            return None
 
         if not self.validate_password(password, user):
             return None
 
         return user
 
-    def run(self, username: str, password: str) -> dict:
+    def run(self, email: str, password: str) -> dict:
 
-        user = self.validate_user(username, password)
+        user = self.validate_user(email, password)
 
         if not user:
-            return {'success': False, 'data': None, 'message': 'Invalid username or password'}
+            return {'success': False, 'data': None, 'message': 'Invalid email or password'}
 
         serializer = UserSerializer(user)
         user = serializer.data

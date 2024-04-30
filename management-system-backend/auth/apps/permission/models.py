@@ -2,8 +2,6 @@ from django.db import models
 from apps.user_profile.models import UserProfile
 from apps.privilege.models import Privilege
 
-# Create your models here.
-
 
 class Permission(models.Model):
 

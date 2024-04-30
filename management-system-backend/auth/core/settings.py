@@ -19,6 +19,10 @@ load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_URL = 'http://localhost:8000'
+
+MEDIA_ROOT = ''
+MEDIA_URL = ''
 
 
 # Quick-start development settings - unsuitable for production
@@ -47,7 +51,7 @@ DJANGO_APPS = [
 ]
 
 PROJECT_APPS = [
-    'apps.user',
+    'apps.user',    
     'apps.user_profile',
     'apps.permission',
     'apps.privilege',
