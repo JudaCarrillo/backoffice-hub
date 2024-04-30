@@ -4,7 +4,6 @@ import { ButtonsTable } from "./buttons_action/buttons";
 
 export function Cuerpo({ columns, data, handleEdit, handleDelete }) {
   const privilegesWrite = getPrivileges("Write");
-
   return (
     <Container>
       <div className="table_body">
@@ -20,17 +19,21 @@ export function Cuerpo({ columns, data, handleEdit, handleDelete }) {
           <tbody className="table_bd">
             {data.map((user) => (
               <tr key={user.id} className="tr_table">
-                {columns.map((column) => (
-                  <td key={column.data} className="td_table">
-                    {renderCell(column, user)}
-                  </td>
-                ))}
-                {privilegesWrite.length > 0 && (
-                  <ButtonsTable
-                    key={`buttons_${user.data}`}
-                    onEdit={() => handleEdit(user.id)}
-                    onDelete={() => handleDelete(user.id)}
-                  />
+                {columns.map((column) =>
+                  column.title == "Photo" ? (
+                    <td key={column.data} className="td_table">
+                      <img
+                        src={user[column.data]}
+                        alt="User Photo"
+                        width="100px"
+                        height="60px"
+                      />
+                    </td>
+                  ) : (
+                    <td key={column.data} className="td_table">
+                      {renderCell(column, user)}
+                    </td>
+                  )
                 )}
               </tr>
             ))}

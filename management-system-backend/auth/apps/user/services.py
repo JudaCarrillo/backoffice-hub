@@ -1,6 +1,4 @@
-import datetime
 from django.contrib.auth.hashers import make_password
-from django.conf import settings
 
 from .models import User, UserProfile
 from .serializers import UserSerializer, CustomUserSerializer
@@ -20,7 +18,7 @@ class UserServices:
 
         user = user.get('data')
         serializer = UserSerializer(user)
-        return {'success': True, 'data': serializer.data , 'message': 'User found'}
+        return {'success': True, 'data': serializer.data, 'message': 'User found'}
 
     def create(self,
                last_name, first_name, title, title_of_courtesy, birth_date, hire_date, address, city, region, postal_code, country, home_phone, extension, photo, notes, email, password,
