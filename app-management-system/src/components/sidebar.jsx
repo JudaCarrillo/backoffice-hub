@@ -1,8 +1,7 @@
-import { useContext, useEffect, useMemo, useState } from "react";
-import { AiOutlineApartment, AiOutlineLeft } from "react-icons/ai";
-import { BiCategory } from "react-icons/bi";
-import { FaRegUser } from "react-icons/fa";
-import { FaPeopleCarryBox } from "react-icons/fa6";
+import styled from "styled-components"
+import logo from "../assets/logo.webp"
+import { v } from "../styles/variables";
+import { AiOutlineLeft } from "react-icons/ai";
 import { ImExit } from "react-icons/im";
 import { NavLink } from "react-router-dom";
 import styled, { StyleSheetManager } from "styled-components";
