@@ -14,7 +14,7 @@ function App() {
   const themeStyle = theme === "light" ? Light : Dark;
 
   const [sidebarOpen, setSidebarOpen] = useState(true);
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(max-width: 1300px)");
@@ -41,9 +41,10 @@ function App() {
 
   return (
     <>
-      <Pruebas />
+      {/* <Pruebas /> */}
 
-      {/* <ThemeContext.Provider value={{ setTheme, theme }}>
+      {
+        <ThemeContext.Provider value={{ setTheme, theme }}>
           <ThemeProvider theme={themeStyle}>
             <BrowserRouter>
               {isLoggedIn ? (
@@ -63,7 +64,8 @@ function App() {
               )}
             </BrowserRouter>
           </ThemeProvider>
-        </ThemeContext.Provider> */}
+        </ThemeContext.Provider>
+      }
     </>
   );
 }

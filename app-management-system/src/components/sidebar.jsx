@@ -1,12 +1,10 @@
-import styled from "styled-components"
-import logo from "../assets/logo.webp"
-import { v } from "../styles/variables";
-import { AiOutlineLeft } from "react-icons/ai";
+import { useContext, useEffect, useMemo, useState } from "react";
+import { AiOutlineApartment, AiOutlineLeft } from "react-icons/ai";
 import { ImExit } from "react-icons/im";
 import { NavLink } from "react-router-dom";
 import styled, { StyleSheetManager } from "styled-components";
 import { ThemeContext } from "../App";
-import logo from "../assets/logo.png";
+import logo from "../assets/logo.webp";
 import { v } from "../styles/variables";
 
 export function Sidebar({ sidebarOpen, setSidebarOpen, setIsLoggedIn }) {

@@ -2,7 +2,7 @@ import { useState } from "react";
 import styled from "styled-components";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import axios, { AxiosError } from "axios";
-import toast, { Toaster } from 'react-hot-toast';
+import toast, { Toaster } from "react-hot-toast";
 
 const LoginContainer = styled.div`
   position: relative;
@@ -23,13 +23,13 @@ const LoginFormContainer = styled.div`
   border-radius: 1rem;
   padding-top: 100px; /* Ajustamos el espacio superior del contenedor del formulario */
   padding-bottom: 200px; /* Ajustamos el espacio inferior del contenedor del formulario */
-   h1 {
+  h1 {
     margin-bottom: 50px;
-    fontSize: 25px;
-    textAlign: center;
-    fontFamily: "Inter";
-    fontWeight: 700;
-   }
+    fontsize: 25px;
+    textalign: center;
+    fontfamily: "Inter";
+    fontweight: 700;
+  }
 `;
 
 const Logocontent = styled.div`
@@ -40,32 +40,31 @@ const Logocontent = styled.div`
   height: 200px;
   justify-content: center;
   align-items: center;
-   img {
+  img {
     width: 90%;
     height: 90%;
-   }
+  }
 `;
 
-
 const LoginForm = styled.form`
-  width: 100%;
+  width: 300px;
   display: flex;
   flex-direction: column;
   align-items: center;
-   .notification{
+  .notification {
     position: relative;
     color: #000;
     bottom: 80px;
-   }
+  }
 `;
 
 const InputContainer = styled.div`
-display: flex;
-line-height: 30px;
-margin-bottom: 20px;
-align-items: center;
-position: relative;
-width: 100%;
+  display: flex;
+  line-height: 30px;
+  margin-bottom: 20px;
+  align-items: center;
+  position: relative;
+  width: 100%;
 `;
 
 const LoginInput = styled.input`
@@ -79,17 +78,17 @@ const LoginInput = styled.input`
   outline: none;
   background-color: #f8fafc;
   color: #0d0c22;
-  transition: .5s ease;
+  transition: 0.5s ease;
   &::placeholder {
     color: #94a3b8;
   }
-  &:focus,&:hover {
+  &:focus,
+  &:hover {
     outline: none;
     border-color: rgb(85 79 79);
     background-color: #fff;
     box-shadow: 0 0 0 5px rgb(85 79 79 / 30%);
   }
-  
 `;
 
 const ToggleButton = styled.button`
@@ -110,10 +109,10 @@ const LoginButton = styled.button`
   border-radius: 8px; /* Aumentamos el border-radius */
   background-color: #000;
   color: #fff;
-  font-size: 18px;
-  font-weight: bold;
+  font-size: 18px; /* Aumentamos el tamaño del texto */
+  font-weight: bold; /* Hacemos el texto en negrita */
   cursor: pointer;
-   &:hover {
+  &:hover {
     background-color: #fff;
     color: #000;
     transition: 0.5s ease;
@@ -127,37 +126,40 @@ export function Login({ onLoginSuccess }) {
 
   const enviarPeticion = async () => {
     const data = {
-      username: username,
+      email: username,
       password: password,
     };
 
+    const url = "http://localhost:8000/v1/login/";
+
     try {
       const response = await axios.post(url, data);
-      const {success, data: {privileges }} = response.data
-      if(!success){
-        throw new Error('Credenciales incorrectas');
+      const {
+        success,
+        data: { privileges },
+      } = response.data;
+      if (!success) {
+        throw new Error("Credenciales incorrectas");
       }
       onLoginSuccess(); // Si la solicitud es exitosa, llama a la función onLoginSuccess
-      
-      const Privileges = [...privileges]
-      localStorage.setItem('user', JSON.stringify(Privileges));
-      
+
+      const Privileges = [...privileges];
+      localStorage.setItem("user", JSON.stringify(Privileges));
     } catch (error) {
-      
       if (error instanceof Error) {
         // Handle general errors
         toast.error(error.message);
       } else if (AxiosError.isAxiosError(error)) {
         // Handle Axios errors
         if (error.response.status === 409) {
-          toast.error('Error: Invalid username');
+          toast.error("Error: Invalid username");
         } else {
-          toast.error('An unexpected error occurred. Please try again later.');
+          toast.error("An unexpected error occurred. Please try again later.");
         }
       }
     }
   };
- 
+
   const handleLogin = (e) => {
     e.preventDefault();
     enviarPeticion();
@@ -170,24 +172,26 @@ export function Login({ onLoginSuccess }) {
   return (
     <LoginContainer>
       <LoginFormContainer>
-
-        <LoginForm onSubmit={handleLogin}> {/* Agregamos el controlador de envío al formulario */}
+        <LoginForm onSubmit={handleLogin}>
+          {" "}
+          {/* Agregamos el controlador de envío al formulario */}
           <Logocontent>
             <img src="./src/assets/logo.webp" alt="Logo" />
           </Logocontent>
-          <h1>Inicio de Sesión</h1> {/* Ajustamos el espacio alrededor del texto de inicio de sesión */}
-          <Toaster 
+          <h1>Inicio de Sesión</h1>{" "}
+          {/* Ajustamos el espacio alrededor del texto de inicio de sesión */}
+          <Toaster
             toastOptions={{
-              className: 'notification',
-              position: 'bottom-center',
+              className: "notification",
+              position: "bottom-center",
               duration: 3000,
               iconTheme: {
-                primary: '#000',
+                primary: "#000",
               },
               style: {
-                fontSize: '1rem',
+                fontSize: "1rem",
                 fontWeight: 500,
-                borderRadius: '1rem',
+                borderRadius: "1rem",
               },
             }}
           />
@@ -219,9 +223,7 @@ export function Login({ onLoginSuccess }) {
               {/* Usamos íconos de React Icons */}
             </ToggleButton>
           </InputContainer>
-          <LoginButton type="submit" >
-            
-            Iniciar sesión</LoginButton>{" "}
+          <LoginButton type="submit">Iniciar sesión</LoginButton>{" "}
           {/* Cambiamos el tipo de botón a "submit" para enviar el formulario */}
         </LoginForm>
       </LoginFormContainer>
