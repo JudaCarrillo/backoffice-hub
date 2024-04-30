@@ -60,28 +60,16 @@ const LoginForm = styled.form`
 `;
 
 const InputContainer = styled.div`
-<<<<<<< HEAD
-  margin-bottom: 20px;
-  width: 100%;
-  position: relative;
-=======
 display: flex;
 line-height: 30px;
 margin-bottom: 20px;
 align-items: center;
 position: relative;
 width: 100%;
->>>>>>> origin/feat/frontend
 `;
 
 const LoginInput = styled.input`
   width: 100%;
-<<<<<<< HEAD
-  padding: 15px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  font-size: 16px;
-=======
   height: 45px;
   line-height: 30px;
   font-size: 16px;
@@ -102,7 +90,6 @@ const LoginInput = styled.input`
     box-shadow: 0 0 0 5px rgb(85 79 79 / 30%);
   }
   
->>>>>>> origin/feat/frontend
 `;
 
 const ToggleButton = styled.button`
@@ -117,17 +104,10 @@ const ToggleButton = styled.button`
 
 const LoginButton = styled.button`
   width: 100%;
-<<<<<<< HEAD
-  margin-top: 50px;
-  padding: 15px;
-  border: 1px solid #000;
-  border-radius: 8px;
-=======
   margin-top: 50px; /* Aumentamos el espacio entre el último contenedor de entrada y el botón */
   padding: 15px; /* Aumentamos el padding */
   border: none;
   border-radius: 8px; /* Aumentamos el border-radius */
->>>>>>> origin/feat/frontend
   background-color: #000;
   color: #fff;
   font-size: 18px;
@@ -152,22 +132,6 @@ export function Login({ onLoginSuccess }) {
     };
 
     try {
-<<<<<<< HEAD
-      const response = await login(data);
-      const {
-        success,
-        data: { privileges },
-        message,
-      } = response.data;
-      if (!success) console.log(message);
-
-      const Privileges = [...privileges];
-      localStorage.setItem("user", JSON.stringify(Privileges));
-      onLoginSuccess();
-    } catch (error) {
-      console.error("Error al realizar la petición:", error);
-      alert("Credenciales incorrectas"); // Muestra una alerta si hay un error en la solicitud
-=======
       const response = await axios.post(url, data);
       const {success, data: {privileges }} = response.data
       if(!success){
@@ -191,7 +155,6 @@ export function Login({ onLoginSuccess }) {
           toast.error('An unexpected error occurred. Please try again later.');
         }
       }
->>>>>>> origin/feat/frontend
     }
   };
  
@@ -207,24 +170,6 @@ export function Login({ onLoginSuccess }) {
   return (
     <LoginContainer>
       <LoginFormContainer>
-<<<<<<< HEAD
-        <LoginForm onSubmit={handleLogin}>
-          {" "}
-          {/* Agregamos el controlador de envío al formulario */}
-          <h1
-            style={{
-              marginBottom: "100px",
-              fontSize: "40px",
-              textAlign: "center",
-              fontFamily: "",
-              fontWeight: "700",
-              fontStyle: "normal",
-            }}
-          >
-            Inicio de Sesión
-          </h1>{" "}
-          {/* Ajustamos el espacio alrededor del texto de inicio de sesión */}
-=======
 
         <LoginForm onSubmit={handleLogin}> {/* Agregamos el controlador de envío al formulario */}
           <Logocontent>
@@ -246,7 +191,6 @@ export function Login({ onLoginSuccess }) {
               },
             }}
           />
->>>>>>> origin/feat/frontend
           <InputContainer>
             <LoginInput
               type="text"
