@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import axios, { AxiosError } from "axios";
 import toast, { Toaster } from "react-hot-toast";
+import { login } from "../api/auth";
 
 const LoginContainer = styled.div`
   position: relative;
@@ -119,7 +120,7 @@ const LoginButton = styled.button`
   }
 `;
 
-export function Login({ onLoginSuccess }) {
+export function Login({ onLoginSuccess, setIsForgotPassword }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -130,33 +131,28 @@ export function Login({ onLoginSuccess }) {
       password: password,
     };
 
-    const url = "http://localhost:8000/v1/login/";
-
     try {
-      const response = await axios.post(url, data);
+      const response = await login(data);
+
       const {
         success,
-        data: { privileges },
+        data: { user, privileges },
       } = response.data;
+
       if (!success) {
         throw new Error("Credenciales incorrectas");
       }
-      onLoginSuccess(); // Si la solicitud es exitosa, llama a la función onLoginSuccess
 
-      const Privileges = [...privileges];
-      localStorage.setItem("user", JSON.stringify(Privileges));
+      const items = { privileges: [...privileges], user: user };
+      console.log(items);
+      onLoginSuccess();
+      localStorage.setItem("user", JSON.stringify([...privileges]));
     } catch (error) {
-      if (error instanceof Error) {
-        // Handle general errors
-        toast.error(error.message);
-      } else if (AxiosError.isAxiosError(error)) {
-        // Handle Axios errors
-        if (error.response.status === 409) {
-          toast.error("Error: Invalid username");
-        } else {
-          toast.error("An unexpected error occurred. Please try again later.");
-        }
-      }
+      const message =
+        error?.response?.data?.message ||
+        "An unexpected error occurred. Please try again later.";
+
+      toast.error(message);
     }
   };
 
@@ -223,6 +219,9 @@ export function Login({ onLoginSuccess }) {
               {/* Usamos íconos de React Icons */}
             </ToggleButton>
           </InputContainer>
+          <button type="button" onClick={() => setIsForgotPassword()}>
+            Recuperar contraseña
+          </button>
           <LoginButton type="submit">Iniciar sesión</LoginButton>{" "}
           {/* Cambiamos el tipo de botón a "submit" para enviar el formulario */}
         </LoginForm>

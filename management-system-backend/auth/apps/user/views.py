@@ -12,6 +12,13 @@ from django.core.files.base import ContentFile
 services = UserServices()
 
 
+def get_base_url(request):
+    HOST = request.META.get('HTTP_HOST')
+    PROTOCOL = 'https' if 'HTTPS' in request.META.get(
+        'SERVER_PROTOCOL') else 'http'
+    return f'{PROTOCOL}://{HOST}'
+
+
 @swagger_auto_schema(
     methods=['GET'],
     responses={
@@ -22,8 +29,9 @@ services = UserServices()
 )
 @api_view(['GET'])
 def index(request):
+    BASE_URL = get_base_url(request)
     try:
-        result = services.get_all()
+        result = services.get_all(BASE_URL)
         return Response(result, status=status.HTTP_200_OK)
     except Exception as e:
         print(e)
@@ -40,8 +48,9 @@ def index(request):
 )
 @api_view(['GET'])
 def get_user(request, id):
+    BASE_URL = get_base_url(request)
     try:
-        result = services.get_by_id(id)
+        result = services.get_by_id(id, BASE_URL)
 
         if not result.get('success'):
             return Response(result, status=status.HTTP_400_BAD_REQUEST)

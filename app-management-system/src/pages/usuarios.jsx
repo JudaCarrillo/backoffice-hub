@@ -21,32 +21,16 @@ export function Usuarios() {
       const respuesta = await getUsuarios();
       const { success, data, message } = respuesta.data;
       if (success) {
-        const newData = data
-          .sort((a, b) => a.id - b.id)
-          .map((item) => {
-            return {
-              ...item,
-              photo: `${urlBase}${item.photo}`,
-            };
-          });
+        data.sort((a, b) => a.id - b.id);
 
-        const userKeys = Object.keys(newData[0]).filter((key) => {
-          return (
-            key !== "password" &&
-            key !== "created_at" &&
-            key !== "updated_at" &&
-            key !== "birth_day" &&
-            key !== "title_of_courtesy"
-          );
-        });
-
-        const nuevasColumnas = userKeys.map((key) => ({
+        const nuevasColumnas = Object.keys(data[0]).map((key) => ({
           title: key.charAt(0).toUpperCase() + key.slice(1),
           data: key,
           key: key,
         }));
+
         setColumns(nuevasColumnas);
-        setUser(newData);
+        setUser(data);
         setLoading(false); // Indicar que los datos se han cargado
       } else {
         throw new Error(message);

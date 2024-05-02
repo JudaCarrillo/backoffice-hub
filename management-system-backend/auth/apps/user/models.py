@@ -37,11 +37,6 @@ class User(models.Model):
         label = f'{self.first_name} {self.last_name}'
         return label
 
-    def save(self, *args, **kwargs):
-        if self.reports_to == self:
-            self.reports_to = None
-        super().save(*args, **kwargs)
-
     class Meta:
         constraints = [
             models.CheckConstraint(

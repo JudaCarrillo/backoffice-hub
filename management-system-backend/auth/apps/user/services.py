@@ -6,19 +6,39 @@ from .serializers import UserSerializer, CustomUserSerializer
 
 class UserServices:
 
-    def get_all(self) -> dict:
-        users = User.objects.all()
-        serializer = UserSerializer(users, many=True)
-        return {'success': True, 'data': serializer.data, 'message': 'Users found'}
+    def get_all(self, base_url) -> dict:
+        users = User.objects.values(
+            'photo', 'email', 'last_name', 'first_name', 'hire_date',
+            'country', 'city', 'address', 'home_phone', 'is_active'
+        )
 
-    def get_by_id(self, id) -> dict:
-        user = self._user_exists(id)
-        if not user.get('success'):
+        for user in users:
+            user['photo'] = f'{base_url}/{user.get("photo")}'
+
+        return {'success': True, 'data': users, 'message': 'Users found'}
+
+    def get_by_id(self, id, base_url) -> dict:
+        user = User.objects.values(
+            'photo', 'email', 'last_name', 'first_name', 'hire_date',
+            'country', 'city', 'address', 'home_phone', 'is_active'
+        ).get(id=id)
+
+        if not user.values():
             return {'success': False, 'data': None, 'message': 'User not found'}
 
-        user = user.get('data')
-        serializer = UserSerializer(user)
-        return {'success': True, 'data': serializer.data, 'message': 'User found'}
+        user['photo'] = f'{base_url}/{user.get("photo")}'
+        return {'success': True, 'data': user, 'message': 'User found'}
+
+    def _user_exists(self, id: int) -> dict:
+        try:
+            user = User.objects.values(
+                'photo', 'email', 'last_name', 'first_name', 'hire_date',
+                'country', 'city', 'address', 'home_phone', 'extension'
+            ).get(id=id)
+
+            return {'success': True, 'data': user}
+        except User.DoesNotExist:
+            return {'success': False, 'data': None}
 
     def create(self,
                last_name, first_name, title, title_of_courtesy, birth_date, hire_date, address, city, region, postal_code, country, home_phone, extension, photo, notes, email, password,
@@ -35,8 +55,9 @@ class UserServices:
         if not user_profile.get('success'):
             return {'success': False, 'data': None, 'message': 'User Profile not found'}
 
-        user_report = self._user_exists(id=reports_to)
-        if not user_report.get('success'):
+        try:
+            user_report = User.objects.get(id=reports_to)
+        except User.DoesNotExist:
             return {'success': False, 'data': None, 'message': 'User to send reports not found'}
 
         password = self._hash_password(password)
@@ -76,7 +97,7 @@ class UserServices:
         except UserProfile.DoesNotExist:
             return {'success': False, 'data': None}
 
-    def _email_exists(self, value_to_validate: str):
+    def _email_exists(self, emai: str):
         try:
             User.objects.get(email=value_to_validate)
             return False
@@ -118,22 +139,21 @@ class UserServices:
         except Exception as e:
             return {'success': False, 'data': None, 'message': 'The user was not updated. ' + str(e)}
 
-    def _user_exists(self, id: int):
-        try:
-            user = User.objects.get(id=id)
-            return {'success': True, 'data': user}
-        except User.DoesNotExist:
-            return {'success': False, 'data': None}
-
     def disabled(self, id: int):
 
-        user = self._user_exists(id)
-        if not user.get('success'):
+        try:
+            user = User.objects.get(id=id)
+        except User.DoesNotExist:
             return {'success': False, 'data': None, 'message': 'User not found'}
 
-        user = user.get('data')
+        if not user:
+            return {'success': False, 'data': None, 'message': 'User not found'}
+
         user.is_active = False
         user.save()
 
-        serializer = UserSerializer(user)
+        serializer = UserSerializer(user, fields={
+            'email', 'last_name', 'first_name', 'hire_date',
+            'country', 'city', 'address', 'home_phone', 'is_active'
+        })
         return {'success': True, 'data': serializer.data, 'message': 'User disabled'}
