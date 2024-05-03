@@ -1,7 +1,7 @@
 from django.contrib.auth.hashers import make_password
 
 from .models import User, UserProfile
-from .serializers import UserSerializer, CustomUserSerializer
+from .serializers import UserSerializer
 
 
 class UserServices:
@@ -18,142 +18,139 @@ class UserServices:
         return {'success': True, 'data': users, 'message': 'Users found'}
 
     def get_by_id(self, id, base_url) -> dict:
-        user = User.objects.values(
-            'photo', 'email', 'last_name', 'first_name', 'hire_date',
-            'country', 'city', 'address', 'home_phone', 'is_active'
-        ).get(id=id)
 
-        if not user.values():
+        user = self._user_exists('id', id)
+        if not user:
             return {'success': False, 'data': None, 'message': 'User not found'}
 
-        user['photo'] = f'{base_url}/{user.get("photo")}'
-        return {'success': True, 'data': user, 'message': 'User found'}
+        serializer = UserSerializer(user, fields={'photo', 'email', 'last_name', 'first_name',
+                                    'hire_date', 'country', 'city', 'address', 'home_phone', 'is_active'}).data
 
-    def _user_exists(self, id: int) -> dict:
-        try:
-            user = User.objects.values(
-                'photo', 'email', 'last_name', 'first_name', 'hire_date',
-                'country', 'city', 'address', 'home_phone', 'extension'
-            ).get(id=id)
+        serializer['photo'] = f'{base_url}{serializer["photo"]}'
 
-            return {'success': True, 'data': user}
-        except User.DoesNotExist:
-            return {'success': False, 'data': None}
+        return {'success': True, 'data': serializer, 'message': 'User found'}
 
-    def create(self,
-               last_name, first_name, title, title_of_courtesy, birth_date, hire_date, address, city, region, postal_code, country, home_phone, extension, photo, notes, email, password,
-               is_active, reports_to, id_profile
-               ) -> dict:
+    def create(self, request_files: dict, request_data: dict) -> dict:
 
-        if not photo:
-            return {'success': False, 'data': None, 'message': 'The photo is required'}
+        email = request_data.get('email')
+        id_profile = request_data.get('id_profile')
+        reports_to = request_data.get('reports_to')
+        password = request_data.get('password')
 
-        if not self._email_exists(email):
-            return {'success': False, 'data': None, 'message': 'The email is already registered'}
+        if not (request_files.get('photo') and email and id_profile and reports_to and password):
+            return {'success': False, 'data': None, 'message': 'Missing required fields'}
+
+        photo = request_files.get('photo')
+
+        if self._user_exists('email', email):
+            return {'success': False, 'data': None, 'message': 'Email is already in use'}
 
         user_profile = self._profile_exists(id_profile)
-        if not user_profile.get('success'):
+        if not user_profile:
             return {'success': False, 'data': None, 'message': 'User Profile not found'}
 
-        try:
-            user_report = User.objects.get(id=reports_to)
-        except User.DoesNotExist:
+        user_report = self._user_exists('id', reports_to)
+        if not user_report:
             return {'success': False, 'data': None, 'message': 'User to send reports not found'}
 
-        password = self._hash_password(password)
-        user = User.objects.create(
-            last_name=last_name,
-            first_name=first_name,
-            title=title,
-            title_of_courtesy=title_of_courtesy,
-            birth_date=birth_date,
-            hire_date=hire_date,
-            address=address,
-            city=city,
-            region=region,
-            postal_code=postal_code,
-            country=country,
-            home_phone=home_phone,
-            extension=extension,
+        password = make_password(password)
+        User.objects.create(
+            last_name=request_data.get('last_name'),
+            first_name=request_data.get('first_name'),
+            title=request_data.get('title'),
+            title_of_courtesy=request_data.get('title_of_courtesy'),
+            birth_date=request_data.get('birth_date'),
+            hire_date=request_data.get('hire_date'),
+            address=request_data.get('address'),
+            city=request_data.get('city'),
+            region=request_data.get('region'),
+            postal_code=request_data.get('postal_code'),
+            country=request_data.get('country'),
+            home_phone=request_data.get('home_phone'),
+            extension=request_data.get('extension'),
             photo=photo,
-            notes=notes,
+            notes=request_data.get('notes'),
             email=email,
             password=password,
-            is_active=is_active,
-            reports_to=user_report.get('data'),
-            id_profile=user_profile.get('data')
+            is_active=request_data.get('is_active'),
+            reports_to=user_report,
+            id_profile=user_profile
         )
 
-        serializer = UserSerializer(user)
-        return {'success': True, 'data': serializer.data, 'message': 'User created'}
-
-    def _hash_password(self, password):
-        return make_password(password)
+        return {'success': True, 'data': None, 'message': 'User created'}
 
     def _profile_exists(self, id_profile):
         try:
             user_profile = UserProfile.objects.get(id=id_profile)
-            return {'success': True, 'data': user_profile}
+            return user_profile
         except UserProfile.DoesNotExist:
-            return {'success': False, 'data': None}
+            return None
 
-    def _email_exists(self, emai: str):
-        try:
-            User.objects.get(email=value_to_validate)
-            return False
-        except User.DoesNotExist:
-            return True
-
-    def update(self, id: int, username: str, email: str, password: str, is_active: bool, id_profile: int) -> dict:
-
-        user = self._user_exists(id)
-        if not user.get('success'):
-            return {'success': False, 'data': None, 'message': 'User not found'}
-
-        if User.objects.filter(username=username).exclude(id=id).exists():
-            return {'success': False, 'data': None, 'message': 'Username is already in use'}
-
-        if not self._profile_exists(id_profile):
-            return {'success': False, 'data': None, 'message': 'User Profile not found'}
-
-        password = self._hash_password(password)
-
-        data = {
-            'username': username,
-            'email': email,
-            'password': password,
-            'is_active': is_active,
-            'id_profile': id_profile
+    def _user_exists(self, search_type, value):
+        search_fields = {
+            'id': 'id',
+            'email': 'email',
         }
 
+        field_name = search_fields.get(search_type)
+        if not field_name:
+            return None
+
         try:
-            serializer = CustomUserSerializer(
-                user.get('data'), data=data, partial=True)
+            user = User.objects.get(**{field_name: value})
+            return user
+        except User.DoesNotExist:
+            return None
 
-            if not serializer.is_valid():
-                return {'success': False, 'data': None, 'message': 'The user was not updated. ' + str(serializer.errors)}
+    def update(self, id, request_files: dict, request_data: dict) -> dict:
 
-            serializer.save()
-            return {'success': True, 'data': serializer.data, 'message': 'User updated'}
+        user = self._user_exists('id', id)
+        if not user:
+            return {'success': False, 'data': None, 'message': 'User not found'}
 
-        except Exception as e:
-            return {'success': False, 'data': None, 'message': 'The user was not updated. ' + str(e)}
+        if request_files.get('photo'):
+            user.photo = request_files.get('photo')
+
+        email = request_data.get('email', user.email)
+        reports_to = request_data.get('reports_to', user.reports_to_id)
+        id_profile = request_data.get('id_profile', user.id_profile_id)
+
+        if User.objects.filter(email=email).exclude(id=id).exists():
+            return {'success': False, 'data': None, 'message': 'Email is already in use'}
+
+        user_profile = self._profile_exists(id_profile)
+        if not user_profile:
+            return {'success': False, 'data': None, 'message': 'User Profile not found'}
+
+        if id == reports_to:
+            return {'success': False, 'data': None, 'message': 'User can not report to himself'}
+
+        user_report = self._user_exists('id', reports_to)
+        if not user_report:
+            return {'success': False, 'data': None, 'message': 'User to send reports not found'}
+
+        fields_to_update = [
+            'last_name', 'first_name', 'title', 'title_of_courtesy', 'birth_date',
+            'hire_date', 'address', 'city', 'region', 'postal_code', 'country', 'home_phone', 'extension', 'notes', 'is_active'
+        ]
+
+        for field in fields_to_update:
+            setattr(user, field, request_data.get(field, getattr(user, field)))
+
+        user.email = email
+        user.reports_to_id = reports_to
+        user.id_profile_id = user_profile
+        user.save()
+
+        return {'success': True, 'data': None, 'message': 'User updated'}
 
     def disabled(self, id: int):
 
-        try:
-            user = User.objects.get(id=id)
-        except User.DoesNotExist:
-            return {'success': False, 'data': None, 'message': 'User not found'}
-
+        user = self._user_exists('id', id)
         if not user:
             return {'success': False, 'data': None, 'message': 'User not found'}
 
         user.is_active = False
         user.save()
 
-        serializer = UserSerializer(user, fields={
-            'email', 'last_name', 'first_name', 'hire_date',
-            'country', 'city', 'address', 'home_phone', 'is_active'
-        })
-        return {'success': True, 'data': serializer.data, 'message': 'User disabled'}
+        return {'success': True, 'data': None, 'message': 'User disabled'}

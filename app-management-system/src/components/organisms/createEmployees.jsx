@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import Button from '../components/atoms/Button/button'
-import Field from '../components/molecules/Field/field';
-import LongText from "../components/molecules/LongText/longText";
+import Button from '../atoms/Button/button'
+import Field from '../molecules/Field/field';
+import LongText from "../molecules/LongText/longText";
 
 export function Pruebas() {
   const [employeeData, setEmployeeData] = useState({
