@@ -9,7 +9,7 @@ const Label = ({ htmlFor, text }) => {
 
 const StyledLabel = styled.label`
     display: block;
-    font-size: 16px;
+    font-size: 10px;
     color: #333;
     margin-bottom: 5px;
 `;

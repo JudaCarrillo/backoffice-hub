@@ -106,15 +106,7 @@ export function ModalUsuario({ modalName, title, onReceiveRows }) {
                 id={"contrasena"}
                 onChange={handleChange}
               />
-              <InputComponent
-                is_required={false}
-                name={"is_active"}
-                label={"Activo"}
-                type={"checkbox"}
-                checked={true}
-                id={"activo"}
-                onChange={handleChange}
-              />
+              
               <ComboBox
                 name="id_profile"
                 label="Seleccione un perfil"
