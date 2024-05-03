@@ -1,6 +1,6 @@
 from django.db import models
 from apps.category.models import Category
-from apps.vendor.models import Vendor
+from apps.supplier.models import Supplier
 
 
 class Product(models.Model):
@@ -12,7 +12,7 @@ class Product(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     id_category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    id_vendor = models.ForeignKey(Vendor, on_delete=models.CASCADE)
+    id_vendor = models.ForeignKey(Supplier, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name

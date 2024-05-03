@@ -1,5 +1,5 @@
-from .serializers import VendorSerializer, CustomVendorSerializer
-from .models import Vendor
+from .serializers import SupplierSerializer, CustomSupplierSerializer
+from .models import Supplier
 
 import datetime
 
@@ -7,44 +7,44 @@ import datetime
 class VendorManager:
 
     def get_all(self):
-        vendors = Vendor.objects.all()
-        serializer = VendorSerializer(vendors, many=True)
+        vendors = Supplier.objects.all()
+        serializer = SupplierSerializer(vendors, many=True)
         return {'success': True, 'data': serializer.data, 'message': 'Vendors found'}
 
     def get_by_id(self, id):
         try:
-            vendor = Vendor.objects.get(id=id)
-            serializer = VendorSerializer(vendor)
+            vendor = Supplier.objects.get(id=id)
+            serializer = SupplierSerializer(vendor)
             return {'success': True, 'data': serializer.data, 'message': 'Vendor found'}
-        except Vendor.DoesNotExist:
+        except Supplier.DoesNotExist:
             return {'success': False, 'data': None, 'message': 'Vendor not found'}
 
     def create(self, name, email, direction, phone):
         date = datetime.datetime.now()
-        vendor = Vendor.objects.create(
+        vendor = Supplier.objects.create(
             name=name,
             email=email,
             direction=direction,
             phone=phone,
             created_at=date
         )
-        serializer = VendorSerializer(vendor)
+        serializer = SupplierSerializer(vendor)
         return {'success': True, 'data': serializer.data, 'message': 'Vendor created'}
 
     def delete(self, id):
         try:
-            Vendor.objects.get(id=id).delete()
+            Supplier.objects.get(id=id).delete()
             return {'success': True, 'data': None, 'message': 'Vendor deleted'}
         except:
             return {'success': False, 'data': None, 'message': 'Vendor not found'}
 
     def update(self, id, **extra_fields):
         try:
-            vendor = Vendor.objects.get(id=id)
-        except Vendor.DoesNotExist:
+            vendor = Supplier.objects.get(id=id)
+        except Supplier.DoesNotExist:
             return {'success': False, 'data': None, 'message': 'Vendor not found'}
 
-        serializer = CustomVendorSerializer(
+        serializer = CustomSupplierSerializer(
             vendor, data=extra_fields, partial=True)
 
         if serializer.is_valid():

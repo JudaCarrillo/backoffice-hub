@@ -2,7 +2,7 @@ from rest_framework import serializers
 from .models import Product
 
 from apps.category.models import Category
-from apps.vendor.models import Vendor
+from apps.supplier.models import Supplier
 
 
 class ProductSerializer(serializers.ModelSerializer):
@@ -18,7 +18,7 @@ class CustomProductSerializer(serializers.Serializer):
     stock = serializers.IntegerField()
     description = serializers.CharField()
     id_vendor = serializers.PrimaryKeyRelatedField(
-        queryset=Vendor.objects.all(), write_only=True)
+        queryset=Supplier.objects.all(), write_only=True)
     id_category = serializers.PrimaryKeyRelatedField(
         queryset=Category.objects.all(), write_only=True)
 

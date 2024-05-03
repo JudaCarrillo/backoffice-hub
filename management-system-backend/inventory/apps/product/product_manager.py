@@ -1,6 +1,6 @@
 from .serializers import ProductSerializer, CustomProductSerializer
 from .models import Product
-from apps.vendor.models import Vendor
+from apps.supplier.models import Supplier
 from apps.category.models import Category
 
 import datetime
@@ -30,8 +30,8 @@ class ProductManager():
             return {'success': False, 'data': None, 'message': 'Category not found'}
 
         try:
-            id_vendor = Vendor.objects.get(id=id_vendor)
-        except Vendor.DoesNotExist:
+            id_vendor = Supplier.objects.get(id=id_vendor)
+        except Supplier.DoesNotExist:
             return {'success': False, 'data': None, 'message': 'Vendor not found'}
 
         product = Product.objects.create(

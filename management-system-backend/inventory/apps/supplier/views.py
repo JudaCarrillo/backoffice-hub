@@ -1,17 +1,13 @@
 from django.http import HttpResponse
-
-import csv
-
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-
-from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
+import csv
 
-from .models import Product
-from .product_manager import ProductManager
-from .serializers import ProductSerializer
-vendor = ProductManager()
+from .vendor_manager import VendorManager
+from .models import Supplier
+from .serializers import SupplierSerializer
+vendor = VendorManager()
 
 
 @api_view(['GET'])
@@ -26,7 +22,7 @@ def get_by_id(request, id):
 
 @swagger_auto_schema(
     methods=['POST'],
-    request_body=ProductSerializer,
+    request_body=SupplierSerializer,
     responses={
         200: 'Ok',
         201: 'Created',
@@ -40,7 +36,7 @@ def create(request):
 
 @swagger_auto_schema(
     methods=['PUT'],
-    request_body=ProductSerializer,
+    request_body=SupplierSerializer,
     responses={
         200: 'Ok',
         201: 'Created',
@@ -59,11 +55,10 @@ def delete(request, id):
 
 @api_view(['GET'])
 def export_to_csv(request):
-    product = Product.objects.all()
-    serializer = ProductSerializer(product, many=True)
-    headers = ['id', 'name', 'price', 'stock', 'description',
-               'created_at', 'updated_at', 'id_category', 'id_vendor']
-    filename = "product_data.csv"
+    vendors = Supplier.objects.all()
+    serializer = SupplierSerializer(vendors, many=True)
+    headers = ['id', 'name', 'email', 'direction', 'phone', 'created_at']
+    filename = "vendor_data.csv"
 
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = f'attachment; filename="{filename}"'

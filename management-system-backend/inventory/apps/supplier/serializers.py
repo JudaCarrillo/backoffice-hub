@@ -1,22 +1,23 @@
 from rest_framework import serializers
-from .models import Vendor
+from .models import Supplier
+from core.serializers import DynamicFieldsModelSerializer
 
 
-class VendorSerializer(serializers.ModelSerializer):
+class SupplierSerializer(DynamicFieldsModelSerializer):
 
     class Meta:
-        model = Vendor
-        fields = '__all__'
+        model = Supplier
+        fields = ('id', 'name', 'email', 'direction', 'phone')
 
 
-class CustomVendorSerializer(serializers.Serializer):
+class CustomSupplierSerializer(serializers.Serializer):
     name = serializers.CharField()
     email = serializers.EmailField()
     direction = serializers.CharField()
     phone = serializers.CharField()
 
     def create(self, validated_data):
-        return Vendor.objects.create(**validated_data)
+        return Supplier.objects.create(**validated_data)
 
     def update(self, instance, validated_data):
         instance.name = validated_data.get('name', instance.name)
