@@ -4,7 +4,7 @@ const url_base = process.env.API_BASE_URL_AUTH;
 const apiVersion = process.env.API_VERSION;
 const main_subject = "users/";
 const profile_subject = "user_profiles/";
-const login_subject = "login/";
+const login_subject = "login";
 
 export const getUsuarios = () => {
   return axios.get(`${url_base}/${apiVersion}/${main_subject}`);
@@ -36,5 +36,5 @@ export const getUserProfile = () => {
 };
 
 export const login = (data) => {
-  return axios.post(`${url_base}/${apiVersion}/${login_subject}`, data);
+  return axios.post(`${url_base}${apiVersion}/${login_subject}`, data);
 };

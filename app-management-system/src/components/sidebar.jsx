@@ -1,5 +1,8 @@
 import { useContext, useEffect, useMemo, useState } from "react";
 import { AiOutlineApartment, AiOutlineLeft } from "react-icons/ai";
+import {BiCategory} from 'react-icons/bi'
+import { FaPeopleCarry } from "react-icons/fa";
+import { FaRegUser } from "react-icons/fa";
 import { ImExit } from "react-icons/im";
 import { NavLink } from "react-router-dom";
 import styled, { StyleSheetManager } from "styled-components";
@@ -32,7 +35,7 @@ export function Sidebar({ sidebarOpen, setSidebarOpen, setIsLoggedIn }) {
       case "BiCategory":
         return <BiCategory />;
       case "FaPeopleCarryBox":
-        return <FaPeopleCarryBox />;
+        return <FaPeopleCarry/>;
       case "FaRegUser":
         return <FaRegUser />;
       default:

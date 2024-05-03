@@ -20,7 +20,7 @@ const StyledLongTextArea = styled.textarea`
   width: 100%;
   min-height: 150px; /* Ajusta la altura según tus preferencias */
   padding: 8px;
-  font-size: 16px;
+  font-size: 10px;
   border: 1px solid #ccc;
   border-radius: 4px;
   resize: vertical;

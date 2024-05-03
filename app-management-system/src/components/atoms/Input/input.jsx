@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 
-const Input = ({ id, name, type, value, onChange }) => {
+const Input = ({ id, name, type, value, onChange, checked}) => {
   return (
     <StyledInput
       id={id}
@@ -11,6 +11,7 @@ const Input = ({ id, name, type, value, onChange }) => {
       value={value}
       onChange={onChange}
       accept="image/jpeg, image/jpg, image/png"
+      checked={type === "checkbox" ? checked : undefined}
     />
   );
 };
@@ -20,7 +21,7 @@ const StyledInput = styled.input`
   padding: 10px;
   border-radius: 5px;
   border: 1px solid #ccc;
-  font-size: 16px;
+  font-size: 10px;
   margin-bottom: 10px;
   width: 400px;
 
