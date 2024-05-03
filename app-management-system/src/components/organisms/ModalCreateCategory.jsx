@@ -3,9 +3,9 @@ import Button from '../components/atoms/Button/button'
 import TextAreaWithLabel from "../components/molecules/TextAreaWithLabel/textwithlabel";
 import styled from "styled-components";
 import Field from "../components/molecules/Field/field";
-export function Pruebas() {
+export function ModalCreateCategory() {
   const [categoryData, setCategoryData] = useState({
-    CategoryID: '', // Si es un autoincremento, déjalo vacío
+    CategoryID: '', //Autoincremento
     CategoryName: '',
     Description: '',
     PicturePath: '',
