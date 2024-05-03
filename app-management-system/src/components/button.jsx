@@ -1,6 +1,6 @@
-import styled from "styled-components";
+import styled from 'styled-components'
 
-export function ButtonHead({ name, buttonColor, className, id, onClick }) {
+export function ButtonHead ({ name, buttonColor = null, className, id, onClick }) {
   return (
     <Container>
       <button
@@ -12,12 +12,8 @@ export function ButtonHead({ name, buttonColor, className, id, onClick }) {
         {name}
       </button>
     </Container>
-  );
+  )
 }
-
-ButtonHead.defaultProps = {
-  buttonColor: null,
-};
 
 const Container = styled.div`
   height: 45px;
@@ -41,4 +37,4 @@ const Container = styled.div`
     background: ${(props) => props.theme.gray700};
     color: ${(props) => props.theme.body};
   }
-`;
+`
