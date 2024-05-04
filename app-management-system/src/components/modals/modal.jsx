@@ -30,10 +30,7 @@ export function Modal({
             <div className="separacion">
               <ul>
                 <li>
-                  <ButtonModal
-                    type="button"
-                    onClick={handleCloseModal}
-                    name="cerrar"
+                  <ButtonModal type="button" onClick={handleCloseModal} name="cerrar"
                   />
                 </li>
                 <li>
@@ -60,58 +57,47 @@ const Container = styled.div`
     justify-content: center;
     align-items: center;
     z-index: 999;
+    
     .modal {
-      background-color: ${(props) => props.theme.body};
-      padding: 20px;
+      background-color: rgba(148, 163, 184, 1); /* Color de fondo del modal */
+      padding: 9px;
       border-radius: 2rem;
+      border: 5px solid ${(props) => props.theme.borderColor}; /* Agrega un borde de 10px */
       display: flex;
-      gap: 30px;
       flex-direction: column;
       align-items: center;
-      width: 350px;
-      height: 560px;
-      position: relative;
-      justify-content: center;
+      max-width: 100%; /* Ajustar el ancho máximo al 100% del viewport */
+      overflow-y: auto; /* Agregar desplazamiento vertical si el contenido excede el tamaño del modal */
+      
       .cabeza {
         width: 100%;
-        height: 100%;
         display: flex;
         justify-content: center;
         align-items: center;
-        position: relative;
-        top: 20px;
         gap: 20px;
-
+        margin-bottom: 20px; /* Agregar espacio inferior */
+        
         h2 {
-          color: white;
-          font-size: 2rem;
+          color: black;
+          font-size: 1.80rem;
           font-weight: 800;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          width: 100%;
-          height: 100%;
         }
       }
     }
 
     .separacion {
       display: flex;
+      flex-direction: column; /* Cambiar a una disposición vertical */
+      align-items: center; /* Centrar los elementos horizontalmente */
       gap: 20px;
-      justify-content: center;
-      align-items: center;
       width: 100%;
-      height: 100%;
-      position: relative;
-      justify-content: center;
+      
       ul {
         display: flex;
-        gap: 20px;
+        flex-wrap: wrap; /* Permitir que los elementos se envuelvan en varias líneas */
         justify-content: center;
-        align-items: center;
-        width: 100%;
-        height: 100%;
-        position: relative;
+        gap: 20px;
+        
         li {
           list-style: none;
         }
@@ -124,6 +110,9 @@ const Container = styled.div`
       cursor: pointer;
       font-size: 20px;
       padding: 5px;
+      position: absolute;
+      top: 10px;
+      right: 10px;
     }
   }
 `;

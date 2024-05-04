@@ -11,7 +11,7 @@ const Label = ({ htmlFor, text }) => {
 const StyledLabel = styled.label`
     display: block;
     font-size: 20px;
-    color: #FFF;
+    color: #000000;
     margin-bottom: 5px;
 `;
 
