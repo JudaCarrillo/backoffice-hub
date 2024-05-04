@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { InputText } from "primereact/inputtext";
 
-const Input = ({required, id, name, type, value, onChange }) => {
+const Input = ({ required, id, name, type, value, onChange }) => {
   return (
     <InputText 
       id={id} 
@@ -10,8 +10,8 @@ const Input = ({required, id, name, type, value, onChange }) => {
       type={type} 
       value={value} 
       onChange={onChange} 
-      className="w-15 h-10 p-2"
-      required={required}   
+      className="w-15 h-10" // Esto aplica un ancho completo y una altura de 12 unidades
+      required={required}
     />
   );
 };

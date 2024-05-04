@@ -2,13 +2,13 @@ version: "3.8"
 services:
   # Django app
   main:
-    container_name: backoffice_sales_management
+    container_name: backoffice_sales
     labels:
-      svc: backoffice_sales_management
+      svc: backoffice_sales
     restart: always
     build:
       dockerfile: ./Dockerfile
     volumes:
       - .:/app
     ports:
-      - 8200:8000
+      - 8400:8000
