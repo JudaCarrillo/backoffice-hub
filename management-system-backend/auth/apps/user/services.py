@@ -116,6 +116,8 @@ class UserServices:
         email = request_data.get('email', user.email)
         reports_to = request_data.get('reports_to', user.reports_to_id)
         id_profile = request_data.get('id_profile', user.id_profile_id)
+        is_active = request_data.get('is_active')
+        is_active = True if is_active == 'true' else False
 
         if User.objects.filter(email=email).exclude(id=id).exists():
             return {'success': False, 'data': None, 'message': 'Email is already in use'}
@@ -133,7 +135,7 @@ class UserServices:
 
         fields_to_update = [
             'last_name', 'first_name', 'title', 'title_of_courtesy', 'birth_date',
-            'hire_date', 'address', 'city', 'region', 'postal_code', 'country', 'home_phone', 'extension', 'notes', 'is_active'
+            'hire_date', 'address', 'city', 'region', 'postal_code', 'country', 'home_phone', 'extension', 'notes'
         ]
 
         for field in fields_to_update:
@@ -142,6 +144,7 @@ class UserServices:
         user.email = email
         user.reports_to_id = reports_to
         user.id_profile_id = user_profile
+        user.is_active = is_active
         user.save()
 
         return {'success': True, 'data': None, 'message': 'User updated'}

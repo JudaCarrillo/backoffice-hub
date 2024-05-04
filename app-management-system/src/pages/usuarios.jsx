@@ -90,6 +90,7 @@ export function Usuarios() {
           modalName={"Nuevo Usuarios"}
           title={"Crear nuevo usuario"}
           onReceiveRows={handleReceiveRows}
+          label={"Crear"}
         />
       </Cabecera>
       {loading ? (
@@ -105,10 +106,11 @@ export function Usuarios() {
           />
           <UpdateUserModal
             open={isEditModalOpen}
-            onClose={handleCloseEditModal}
             userId={editUserId}
-            onReceiveRows={handleReceiveRows}
+            onClose={handleCloseEditModal}
+            label={"Actualizar"}
             title={"Editar usuario"}
+            onReceiveRows={handleReceiveRows}
           />
         </>
       )}
