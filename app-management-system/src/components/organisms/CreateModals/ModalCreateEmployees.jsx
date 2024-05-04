@@ -133,7 +133,7 @@ export function ModalCreateEmployees({ modalName, title, onReceiveRows }) {
   };
 
   const handleImageChange = (event) => {
-    setPhoto(event.target.files[0]);
+    setPhoto(event.files[0]);
   };
 
   return (

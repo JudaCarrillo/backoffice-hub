@@ -27,16 +27,21 @@ export function Cuerpo({
         <DataTable
           value={data}
           paginator
-          rows={10}
+          rows={5}
           paginatorRight={paginatorRight}
           tableStyle={{
             minWidth: "50rem",
+            overflow: "auto",
           }}
+          className="w-full table-auto"
         >
           {columns.map((column) => (
             <Column
-              className="p-3 h-20 text-left"
-              style={{ minWidth: "25%" }}
+              className="p-3 text-left"
+              style={{ 
+                minWidth: "25%",
+                overflow: "visible",
+               }}
               key={column.data}
               field={column.data}
               header={column.title}
@@ -46,7 +51,7 @@ export function Cuerpo({
                 if (column.title === "Photo") {
                   return (
                     <img
-                      className="w-8 rounded-full"
+                      className="relative -left-3 w-9 h-10 max-w-10 max-h-10 rounded-full"
                       src={rowData[column.data]}
                       alt="user"
                     />
