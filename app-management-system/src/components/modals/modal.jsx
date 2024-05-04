@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { ButtonModal } from "./buttonmodal";
 
-export function ModalCompleto({
+export function Modal({
   title,
   showModalContent,
   onClose,
@@ -13,10 +13,9 @@ export function ModalCompleto({
   };
 
   const handleCreate = async (e) => {
-    e.preventDefault(); // Evitar el envío del formulario
-    await onCreate(); // Esperar a que se cree la categoría (si onCreate está definido)
-    // Esperar a que se cree la categoría
-    onClose(); // Cierra el modal después de crear la categoría
+    e.preventDefault();
+    await onCreate();
+    onClose();
   };
 
   return (
@@ -69,7 +68,7 @@ const Container = styled.div`
       gap: 30px;
       flex-direction: column;
       align-items: center;
-      width: 300px;
+      width: 350px;
       height: 560px;
       position: relative;
       justify-content: center;
@@ -84,11 +83,10 @@ const Container = styled.div`
         gap: 20px;
 
         h2 {
-          color: ${(props) => props.theme.text};
-          font-size: 20px;
+          color: white;
+          font-size: 2rem;
           font-weight: 800;
           display: flex;
-          position: relative;
           justify-content: center;
           align-items: center;
           width: 100%;

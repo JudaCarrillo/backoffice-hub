@@ -5,7 +5,7 @@ import { createProduct, getProducts } from "../../../services/products";
 import { getVendors } from "../../../services/vendors";
 import ComboBox from "../comboBox";
 import { InputComponent } from "../input";
-import { ModalCompleto } from "../modalCompleto";
+import { Modal } from "../modal";
 
 export function ModalProductos({ modalName, title, onReceiveRows }) {
   const [showModal, setShowModal] = useState(false);
@@ -98,7 +98,7 @@ export function ModalProductos({ modalName, title, onReceiveRows }) {
         {modalName}
       </button>
       {showModal && (
-        <ModalCompleto
+        <Modal
           title={title}
           showModalContent={(handleCloseModal) => (
             <>

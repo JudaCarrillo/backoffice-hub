@@ -7,7 +7,7 @@ import {
 } from "../../../services/auth";
 import ComboBox from "../comboBox";
 import { InputComponent } from "../input";
-import { ModalCompleto } from "../modalCompleto";
+import { Modal } from "../modal";
 
 export function ModalUsuario({ modalName, title, onReceiveRows }) {
   const [showModal, setShowModal] = useState(false);
@@ -83,7 +83,7 @@ export function ModalUsuario({ modalName, title, onReceiveRows }) {
         {modalName}
       </button>
       {showModal && (
-        <ModalCompleto
+        <Modal
           title={title}
           showModalContent={(handleCloseModal) => (
             <>

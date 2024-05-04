@@ -2,7 +2,7 @@ import { useState } from "react";
 import styled from "styled-components";
 import { createCategory, getCategories } from "../../../services/categories";
 import { InputComponent } from "../input";
-import { ModalCompleto } from "../modalCompleto";
+import { Modal } from "../modal";
 
 export function CategoryModal({ modalName, title, onReceiveRows }) {
   const [showModal, setShowModal] = useState(false);
@@ -41,7 +41,7 @@ export function CategoryModal({ modalName, title, onReceiveRows }) {
         {modalName}
       </button>
       {showModal && (
-        <ModalCompleto
+        <Modal
           title={title}
           showModalContent={(handleCloseModal) => (
             <>

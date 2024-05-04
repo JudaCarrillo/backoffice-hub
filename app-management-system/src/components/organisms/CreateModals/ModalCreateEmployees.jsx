@@ -6,7 +6,7 @@ import {
   getUsersToReport,
 } from "../../../services/auth";
 import ComboBox from "../../modals/comboBox";
-import { ModalCompleto } from "../../modals/modalCompleto";
+import { Modal } from "../../modals/modal";
 import ChkBox from "../../molecules/CheckBox/checkbox";
 import Field from "../../molecules/Field/field";
 import Img_input from "../../molecules/Img/img_input";
@@ -142,10 +142,10 @@ export function ModalCreateEmployees({ modalName, title, onReceiveRows }) {
         {modalName}
       </button>
       {showModal && (
-        <ModalCompleto
+        <Modal
           title={title}
           showModalContent={(handleCloseModal) => (
-            <FormContainer>
+            <FormContainer className="bg-slate-400 p-5">
               <FormColumn>
                 <Field
                   name="last_name"
@@ -196,7 +196,9 @@ export function ModalCreateEmployees({ modalName, title, onReceiveRows }) {
                   value={users.birth_date}
                   onChange={handleChange}
                 />
+              </FormColumn>
 
+              <FormColumn>
                 <Field
                   name="hire_date"
                   labelFor="hire_date"
@@ -238,6 +240,15 @@ export function ModalCreateEmployees({ modalName, title, onReceiveRows }) {
                   onChange={handleChange}
                 />
 
+                <ComboBox
+                  name="reports_to"
+                  label="Seleccione un Usuario"
+                  onChange={handleChangeReportsTo}
+                  options={usersToReport}
+                />
+              </FormColumn>
+
+              <FormColumn>
                 <Field
                   name="postal_code"
                   labelFor="postal_code"
@@ -250,14 +261,6 @@ export function ModalCreateEmployees({ modalName, title, onReceiveRows }) {
                   onChange={handleChange}
                 />
 
-                <ComboBox
-                  name="reports_to"
-                  label="Seleccione un Usuario"
-                  onChange={handleChangeReportsTo}
-                  options={usersToReport}
-                />
-              </FormColumn>
-              <FormColumn>
                 <Field
                   name="country"
                   labelFor="country"
@@ -297,7 +300,9 @@ export function ModalCreateEmployees({ modalName, title, onReceiveRows }) {
                   labelText="Notas:"
                   placeholder="Escribe notas..."
                 />
+              </FormColumn>
 
+              <FormColumn>
                 <Img_input
                   name="photo"
                   id="photo"
@@ -305,6 +310,7 @@ export function ModalCreateEmployees({ modalName, title, onReceiveRows }) {
                   accept="image/*"
                   chooseLabel="Seleccionar Archivo"
                 />
+
                 <Field
                   name="email"
                   labelFor="email"
@@ -315,6 +321,7 @@ export function ModalCreateEmployees({ modalName, title, onReceiveRows }) {
                   onChange={handleChange}
                   required
                 />
+
                 <Field
                   name="password"
                   labelFor="password"
@@ -325,6 +332,7 @@ export function ModalCreateEmployees({ modalName, title, onReceiveRows }) {
                   onChange={handleChange}
                   required
                 />
+
                 <ChkBox
                   name="is_active"
                   type="checkbox"
@@ -333,6 +341,7 @@ export function ModalCreateEmployees({ modalName, title, onReceiveRows }) {
                   value={users.is_active}
                   onChange={handleChange}
                 />
+
                 <ComboBox
                   name="id_profile"
                   label="Seleccione un perfil"
