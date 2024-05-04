@@ -123,10 +123,11 @@ const LoginButton = styled.button`
   }
 `
 
-export function Login ({ onLoginSuccess }) {
+export function Login ({ onLoginSuccess, setIsForgotPassword }) {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
+
 
   const enviarPeticion = async () => {
     const data = {
