@@ -1,56 +1,75 @@
-import styled from "styled-components";
-import { getPrivileges } from "../services/privileges";
-import { ButtonsTable } from "./buttons_action/buttons";
+import styled from 'styled-components'
+import { getPrivileges } from '../services/privileges'
+import { ButtonsTable } from './buttons_action/buttons'
+import { DataTable } from 'primereact/datatable' 
+import { Column } from 'primereact/column'
 
 export function Cuerpo({ columns, data, handleEdit, handleDelete }) {
-  const privilegesWrite = getPrivileges("Write");
+  const privilegesWrite = getPrivileges('Write')
   return (
-    <Container>
-      <div className="table_body">
+    <Container className='b'>
+      <DataTable
+        
+        value={data}
+        tableStyle={{ minWidth: '50rem' }}
+      >
+        {columns.map((column) => (
+          <Column
+            key={column.data}
+            field={column.data}
+            header={column.title}
+          />
+        ))}
+        {privilegesWrite.length > 0 && <Column header='Acciones' body={ButtonsTable} />}
+      </DataTable>
+      {/* <div className='table_body'>
         <Table>
-          <thead className="table_head">
-            <tr key="head" className="tr_table">
+          <thead className='table_head'>
+            <tr key='head' className='tr_table'>
               {columns.map((column) => (
                 <th key={column.data}>{column.title}</th>
               ))}
               {privilegesWrite.length > 0 && <th>Acciones</th>}
             </tr>
           </thead>
-          <tbody className="table_bd">
+          <tbody className='table_bd'>
             {data.map((user) => (
-              <tr key={user.id} className="tr_table">
+              <tr key={user.id} className='tr_table'>
                 {columns.map((column) =>
-                  column.title == "Photo" ? (
-                    <td key={column.data} className="td_table">
-                      <img
-                        src={user[column.data]}
-                        alt="User Photo"
-                        width="100px"
-                        height="60px"
-                      />
-                    </td>
-                  ) : (
-                    <td key={column.data} className="td_table">
-                      {renderCell(column, user)}
-                    </td>
-                  )
+                  column.title === 'Photo'
+                    ? (
+                      <td key={column.data} className='td_table'>
+                        <img
+                          src={user[column.data]}
+                          alt='User Photo'
+                          width='100px'
+                          height='60px'
+                        />
+                      </td>
+                      )
+                    : (
+                      <td key={column.data} className='td_table'>
+                        {renderCell(column, user)}
+                      </td>
+                      )
                 )}
+                {privilegesWrite.length > 0 && <td className='td_table'><ButtonsTable onEdit={() => handleEdit(user.id)} onDelete={() => handleDelete(user.id)} /></td>}
               </tr>
             ))}
           </tbody>
         </Table>
-      </div>
+      </div> */}
     </Container>
   )
 }
 function renderCell(column, user) {
-  if (column.data === "is_active") {
-    return user[column.data] ? "✔" : "X";
-  } else if (column.data === "created_at" || column.data === "updated_at") {
-    const date = new Date(user[column.data]);
-    return date.toLocaleDateString();
+  if (column.data === 'is_active') {
+    return user[column.data] ? '✔' : 'X';
+  } else if (column.data === 'created_at' || column.data === 'updated_at') {
+    const date = new Date(user[column.data])
+    return date.toLocaleDateString()
   } else {
-    return user[column.data];
+    return user[column.data]
   }
 }
 

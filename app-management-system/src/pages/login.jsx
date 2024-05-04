@@ -147,7 +147,6 @@ export function Login ({ onLoginSuccess }) {
       }
 
       const items = JSON.stringify({ privileges: [...privileges], user })
-
       onLoginSuccess()
       localStorage.setItem('user', items)
     } catch (error) {

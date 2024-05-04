@@ -6,8 +6,9 @@ import { Cuerpo } from "../components/cuerpo";
 import { ModalUsuario } from "../components/modals/CrearModales/modalUsuario";
 import { UpdateUserModal } from "../components/modals/updateModal/updateUser";
 import { Preloader } from "./preloader";
-import { Pruebas } from "../components/organisms/createEmployees";
-import Modal from "../components/organisms/modal";
+import { ModalCreateEmployees} from "../components/organisms/CreateModals/ModalCreateEmployees";
+
+
 
 export function Usuarios() {
   const urlBase = process.env.API_BASE_URL_AUTH;
@@ -82,16 +83,16 @@ export function Usuarios() {
   return (
     <Container>
       <Cabecera title={"Usuarios"}>
-        {/* <ModalUsuario
+        <ModalCreateEmployees
           modalName={"Nuevo Usuarios"}
           title={"Crear nuevo usuario"}
           onReceiveRows={handleReceiveRows}
-        /> */}
-        <Modal
+        />
+        {/*<Modal
           children={<Pruebas />}
         >
           
-        </Modal>
+        </Modal>*/}
       </Cabecera>
       {loading ? (
         <Preloader /> // Mostrar indicador de carga

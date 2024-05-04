@@ -36,6 +36,8 @@ class UserServices:
         id_profile = request_data.get('id_profile')
         reports_to = request_data.get('reports_to')
         password = request_data.get('password')
+        is_active = request_data.get('is_active')
+        is_active = True if is_active == 'true' else False
 
         if not (request_files.get('photo') and email and id_profile and reports_to and password):
             return {'success': False, 'data': None, 'message': 'Missing required fields'}
@@ -72,7 +74,7 @@ class UserServices:
             notes=request_data.get('notes'),
             email=email,
             password=password,
-            is_active=request_data.get('is_active'),
+            is_active=is_active,
             reports_to=user_report,
             id_profile=user_profile
         )
@@ -154,3 +156,13 @@ class UserServices:
         user.save()
 
         return {'success': True, 'data': None, 'message': 'User disabled'}
+
+    def get_users_to_report(self):
+        users = User.objects.filter(id_profile__lt=3).values(
+            'id', 'last_name', 'first_name'
+        )
+
+        for user in users:
+            user['name'] = f'{user.get("first_name")} {user.get("last_name")}'
+
+        return {'success': True, 'data': users, 'message': 'Users found'}

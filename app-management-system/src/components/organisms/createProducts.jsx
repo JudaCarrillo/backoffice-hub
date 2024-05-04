@@ -36,33 +36,6 @@ export function CreateProducts() {
     <FormContainer onSubmit={handleSubmit}>
 	    <FormColumn>
 		<Field
-			name="ProductID"
-			labelFor="ProductID"
-			labelText="ProductID"
-			inputId="ShipNameInput"
-			type="number"
-			value={productData.ProductID}
-			onChange={handleChange}
-		/>
-		<Field
-			name="SupplierID"
-			labelFor="SupplierID"
-			labelText="SupplierID"
-			inputId="SupplierIDInput"
-			type="number"
-			value={productData.SupplierID}
-			onChange={handleChange}
-		/>
-		<Field
-			name="CategoryID"
-			labelFor="CategoryID"
-			labelText="CategoryID"
-			inputId="CategoryIDInput"
-			type="number"
-			value={productData.CategoryID}
-			onChange={handleChange}
-		/>
-		<Field
 			name="QuantityPerUnit"
 			labelFor="QuantityPerUnit"
 			labelText="Cantidad por unidad"

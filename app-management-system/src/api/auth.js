@@ -10,6 +10,10 @@ export const getUsuarios = () => {
   return axios.get(`${url_base}/${apiVersion}/${main_subject}`)
 }
 
+export const getUsersToReport = () => {
+  return axios.get(`${url_base}/${apiVersion}/${main_subject}to-report`);
+}
+
 export const disabledUser = (id) => {
   return axios.post(`${url_base}/${apiVersion}/${main_subject}disabled/${id}`)
 }
