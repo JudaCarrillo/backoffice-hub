@@ -49,5 +49,5 @@ urlpatterns = [
     path(f'{VERSION}/categories/', include('apps.category.urls')),
     path(f'{VERSION}/suppliers/', include('apps.supplier.urls')),
     path(f'{VERSION}/customers/', include('apps.customer.urls')),
-    # path(f'{VERSION}/product/', include('apps.product.urls')),
+    path(f'{VERSION}/products/', include('apps.product.urls')),
 ]

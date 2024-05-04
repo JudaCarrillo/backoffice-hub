@@ -147,7 +147,6 @@ class UserServices:
         return {'success': True, 'data': None, 'message': 'User updated'}
 
     def disabled(self, id: int):
-
         user = self._user_exists('id', id)
         if not user:
             return {'success': False, 'data': None, 'message': 'User not found'}

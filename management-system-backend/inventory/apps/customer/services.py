@@ -76,7 +76,7 @@ class CustomerService:
         customers = Customers.objects.all()
         serializer = CustomerSerializer(customers, many=True)
         headers = ['id', 'company_name', 'contact_name', 'contact_title', 'address',
-                   'city', 'region', 'postal_code', 'country', 'phone', 'fax', 'home_page']
+                   'city', 'region', 'postal_code', 'country', 'phone', 'fax',]
 
         filename = "customer_data.csv"
 
