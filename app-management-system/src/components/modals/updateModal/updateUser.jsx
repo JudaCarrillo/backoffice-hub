@@ -10,6 +10,9 @@ import {
 import ComboBox from "../comboBox";
 import { InputComponent } from "../input";
 import { ModalParaUpdate } from "../modalparaUpdate";
+import Field from '../../molecules/Field/field';
+import { InputText } from "primereact/inputtext";
+import { FloatLabel } from "primereact/floatlabel";
 
 export function UpdateUserModal({
   open,
@@ -135,7 +138,7 @@ export function UpdateUserModal({
         title={title}
         showModalContent={() => (
           <>
-            <InputComponent
+            <Field
               name={"username"}
               label={"Usuario"}
               type={"text"}
@@ -143,7 +146,7 @@ export function UpdateUserModal({
               value={users.username}
               onChange={handleChange}
             />
-            <InputComponent
+            <Field
               name={"email"}
               label={"E-mail"}
               type={"email"}

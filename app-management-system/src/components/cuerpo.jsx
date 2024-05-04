@@ -35,6 +35,11 @@ export function Cuerpo({ columns, data, handleEdit, handleDelete }) {
                     </td>
                   )
                 )}
+                {privilegesWrite.length > 0 && (
+                  <td className="td_table">
+                    <ButtonsTable onEdit={() => handleEdit(user.id)} onDelete={() => handleDelete(user.id)} />
+                  </td>
+                )}
               </tr>
             ))}
           </tbody>
