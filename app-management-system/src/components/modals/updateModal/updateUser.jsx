@@ -37,7 +37,6 @@ export function UpdateUserModal({
     extension: "",
     notes: "",
     email: "",
-    password: "",
     is_active: true,
     id_profile: "",
     reports_to: "",
@@ -80,7 +79,6 @@ export function UpdateUserModal({
           extension: data.extension,
           notes: data.notes,
           email: data.email,
-          password: "",
           is_active: data.is_active,
           id_profile: data.id_profile,
           reports_to: data.reports_to,
@@ -107,7 +105,10 @@ export function UpdateUserModal({
         formData.append(key, users[key]);
       });
 
-      photo && formData.append("photo", photo);
+      if (photo) {
+        formData.delete("photo");
+        formData.append("photo", photo);
+      }
 
       await updateUsers(userId, formData);
       const response = await getUsuarios();
@@ -135,7 +136,6 @@ export function UpdateUserModal({
       extension: "",
       notes: "",
       email: "",
-      password: "",
       is_active: true,
       id_profile: "",
       reports_to: "",
