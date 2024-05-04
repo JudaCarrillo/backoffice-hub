@@ -3,7 +3,7 @@ from django.db import models
 
 class Customers(models.Model):
 
-    id = models.AutoField(primary_key=True)
+    id = models.CharField(max_length=5, primary_key=True)
     company_name = models.CharField(max_length=40, db_index=True)
     contact_name = models.CharField(max_length=30)
     contact_title = models.CharField(max_length=30)

@@ -1,18 +1,34 @@
 // import styled from "styled-components";
 import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
-import { getPrivileges } from "../utils/logic";
+
+import { Button } from "primereact/button";
+
 import { ButtonsTable } from "./buttons_action/buttons";
 
-export function Cuerpo({ columns, data, handleEdit, handleDelete }) {
-  const privilegesWrite = getPrivileges("Write");
+export function Cuerpo({
+  columns,
+  data,
+  handleEdit,
+  handleDelete,
+  handleDownload = undefined,
+  showActions,
+  showActionForDownload,
+}) {
+  const paginatorRight = handleDownload && showActionForDownload && (
+    <Button type="button" icon="pi pi-download" text onClick={handleDownload} />
+  );
+
   return (
     <div
       className={`relative bg-white top-36 w-11/12 p-4 h-550 left-24 -m-10 rounded-2xl overflow-hidden shadow-md transition-max-w duration-500 ease-in-out lg:max-w-full md:max-w-[80vw] sm:max-w-[70vw] xs:max-w-[60vw] 2xs:max-w-[55vw]`}
     >
-      <div className="min-w-[600px] w-full p-4">
+      <div className="min-w-[600px] w-full p-2">
         <DataTable
           value={data}
+          paginator
+          rows={10}
+          paginatorRight={paginatorRight}
           tableStyle={{
             minWidth: "50rem",
           }}
@@ -24,15 +40,15 @@ export function Cuerpo({ columns, data, handleEdit, handleDelete }) {
               key={column.data}
               field={column.data}
               header={column.title}
-              headerClassName="text-left w-40"
+              headerClassName="text-left w-40 bg-white"
               sortable
               body={(rowData) => {
                 if (column.title === "Photo") {
                   return (
                     <img
-                      className="w-12 h-12 rounded-3xl"
+                      className="w-8 rounded-full"
                       src={rowData[column.data]}
-                      alt="User Photo"
+                      alt="user"
                     />
                   );
                 } else {
@@ -41,10 +57,11 @@ export function Cuerpo({ columns, data, handleEdit, handleDelete }) {
               }}
             />
           ))}
-          {privilegesWrite.length > 0 && (
+          {showActions > 0 && (
             <Column
               key="actions"
               header="Acciones"
+              headerClassName="text-left bg-white"
               body={(rowData) => (
                 <ButtonsTable
                   onEdit={() => handleEdit(rowData.id)}

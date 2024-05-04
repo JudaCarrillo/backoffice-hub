@@ -8,7 +8,7 @@ class UserServices:
 
     def get_all(self, base_url) -> dict:
         users = User.objects.values(
-            'photo', 'email', 'last_name', 'first_name', 'hire_date',
+            'id', 'photo', 'email', 'last_name', 'first_name', 'hire_date',
             'country', 'city', 'home_phone', 'is_active'
         )
 
@@ -23,10 +23,10 @@ class UserServices:
         if not user:
             return {'success': False, 'data': None, 'message': 'User not found'}
 
-        serializer = UserSerializer(user, fields={'photo', 'email', 'last_name', 'first_name',
-                                    'hire_date', 'country', 'city', 'address', 'home_phone', 'is_active'}).data
+        serializer = UserSerializer(user).data
 
         serializer['photo'] = f'{base_url}{serializer["photo"]}'
+        serializer.pop('password')
 
         return {'success': True, 'data': serializer, 'message': 'User found'}
 

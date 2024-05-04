@@ -8,8 +8,8 @@ class SupplierService:
 
     def get_all(self):
         suppliers = Suppliers.objects.values(
-            'company_name', 'contact_name', 'address',
-            'city', 'region', 'country', 'phone',
+            'company_name', 'contact_name', 'contact_title', 'address',
+            'city', 'region', 'country', 'phone', 'fax'
         )
 
         return {'success': True, 'data': suppliers, 'message': 'Suppliers found'}

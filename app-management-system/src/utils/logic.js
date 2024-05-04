@@ -20,9 +20,13 @@ export const getPrivileges = (name) => {
   if (!item) return [];
 
   const { privileges } = JSON.parse(item);
-  const privilegesReport = privileges.filter((privilege) =>
+  const permissions = privileges.filter((privilege) =>
     privilege.name.includes(name)
   );
 
-  return privilegesReport;
+  return permissions;
+};
+
+export const hasPrivileges = (privileges) => {
+  return privileges.length > 0;
 };

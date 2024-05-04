@@ -91,11 +91,6 @@ export function Usuarios() {
           title={"Crear nuevo usuario"}
           onReceiveRows={handleReceiveRows}
         />
-        {/*<Modal
-          children={<Pruebas />}
-        >
-          
-        </Modal>*/}
       </Cabecera>
       {loading ? (
         <Preloader /> // Mostrar indicador de carga
@@ -106,6 +101,7 @@ export function Usuarios() {
             data={user}
             handleEdit={handleEdit}
             handleDelete={handleDelete}
+            showActions={true}
           />
           <UpdateUserModal
             open={isEditModalOpen}

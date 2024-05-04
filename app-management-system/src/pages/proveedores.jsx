@@ -1,16 +1,16 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import {
-  deleteVendor,
-  exportVendorsToCsv,
-  getVendors,
-} from "../services/vendors";
 import { ButtonHead } from "../components/button";
 import { Cabecera } from "../components/cabecera";
 import { Cuerpo } from "../components/cuerpo";
 import ModalProveedor from "../components/modals/CrearModales/modalProveedor";
 import { UpdateVendorsModal } from "../components/modals/updateModal/updateVendors";
-import { getCsv, getPrivileges } from "../utils/logic";
+import {
+  deleteVendor,
+  exportVendorsToCsv,
+  getVendors,
+} from "../services/vendors";
+import { getCsv, getPrivileges, hasPrivileges } from "../utils/logic";
 import { Preloader } from "./preloader";
 
 export function Proveedores() {
@@ -36,7 +36,15 @@ export function Proveedores() {
             data: key,
             key: key,
           }));
-          setColumns(nuevasColumnas);
+
+          const columns = nuevasColumnas.map((column) => {
+            return {
+              ...column,
+              title: column.title.replace(/_/g, " "),
+            };
+          });
+
+          setColumns(columns);
           setProv(data);
           setLoading(false); // Indicar que los datos se han cargado
         } else {
@@ -81,15 +89,6 @@ export function Proveedores() {
   return (
     <Container>
       <Cabecera title={"Proveedores"}>
-        {privilegesReport.length > 0 && (
-          <ButtonHead
-            name={"Descargar"}
-            onClick={() =>
-              getCsv({ callback: exportVendorsToCsv, name: "vendors_data" })
-            }
-            buttonColor="#969593"
-          />
-        )}
         {privilegesWrite.length > 0 && (
           <ModalProveedor
             modalName={"Nuevo Proveedor"}
@@ -99,7 +98,7 @@ export function Proveedores() {
         )}
       </Cabecera>
       {loading ? (
-        <Preloader /> // Mostrar indicador de carga
+        <Preloader />
       ) : (
         <>
           <Cuerpo
@@ -107,6 +106,11 @@ export function Proveedores() {
             data={prov}
             handleEdit={handleEdit}
             handleDelete={handleDelete}
+            showActions={hasPrivileges(privilegesWrite)}
+            showActionForDownload={hasPrivileges(privilegesReport)}
+            handleDownload={() =>
+              getCsv({ callback: exportVendorsToCsv, name: "vendors_data" })
+            }
           />
 
           <UpdateVendorsModal

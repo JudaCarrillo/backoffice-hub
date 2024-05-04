@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { ButtonModal } from "./buttonmodal";
-import { Button } from 'primereact/button';
-import { Dialog } from 'primereact/dialog';
-
+import { Button } from "primereact/button";
+import { Dialog } from "primereact/dialog";
 
 export function ModalParaUpdate({
   open,
@@ -11,8 +10,9 @@ export function ModalParaUpdate({
   showModalContent,
   onClose,
   onUpdate,
+  textButton,
 }) {
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState(true);
 
   const handleCloseModal = () => {
     onClose();
@@ -26,14 +26,21 @@ export function ModalParaUpdate({
 
   return (
     <>
-      <Dialog header={title} visible={open} style={{ width: '50vw' }} onHide={() => setVisible(true)}>
+      <Dialog
+        header={title}
+        visible={open}
+        style={{ width: "50vw" }}
+        closeOnEscape
+        onClick={handleCloseModal}
+      >
         <div className="p-6 bg-zinc-900">
-          {showModalContent(handleCloseModal)}
+          {showModalContent(handleUpdate)}
         </div>
         <div className="flex justify-end p-6 bg-zinc-900">
-        <Button label="Cerrar" className="p-button-text mr-4 text-white" onClick={handleCloseModal} /> {/* Establece el color del texto como blanco */}
-        <Button label="Actualizar" className="text-white" onClick={handleUpdate} /> {/* Establece el color del texto como blanco */}
-      </div>
+          <Button className="text-white" onClick={handleUpdate}>
+            {textButton}
+          </Button>
+        </div>
       </Dialog>
     </>
   );

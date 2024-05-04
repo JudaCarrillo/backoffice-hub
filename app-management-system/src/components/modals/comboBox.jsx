@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { CascadeSelect } from 'primereact/cascadeselect';
+import { CascadeSelect } from "primereact/cascadeselect";
 
 const ComboBox = ({ options, label, onChange }) => {
   const handleSelectChange = (e) => {
@@ -24,8 +24,6 @@ const ComboBox = ({ options, label, onChange }) => {
   );
 };
 
-
-
 export default ComboBox;
 
 const Container = styled.div`
@@ -49,7 +47,3 @@ const Select = styled.select`
     border-color: #007bff;
   }
 `;
-
-
-
-        

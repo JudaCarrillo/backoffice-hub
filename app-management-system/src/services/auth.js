@@ -13,7 +13,7 @@ export const getUsuarios = () => {
 };
 
 export const getUsersToReport = () => {
-  return axios.get(`${url_base}/${apiVersion}/${main_subject}/to-report/`);
+  return axios.get(`${url_base}/${apiVersion}/${main_subject}/to-report`);
 };
 
 export const disabledUser = (id) => {
