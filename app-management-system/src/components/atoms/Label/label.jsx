@@ -3,14 +3,15 @@ import styled from 'styled-components';
 
 const Label = ({ htmlFor, text }) => {
     return (
-        <StyledLabel htmlFor={htmlFor}>{text}</StyledLabel>
+    <StyledLabel htmlFor={htmlFor} className="text-custom">{text}</StyledLabel>
     );
 };
 
+
 const StyledLabel = styled.label`
     display: block;
-    font-size: 10px;
-    color: #333;
+    font-size: 20px;
+    color: #FFF;
     margin-bottom: 5px;
 `;
 
