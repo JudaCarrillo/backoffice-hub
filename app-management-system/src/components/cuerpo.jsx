@@ -7,8 +7,8 @@ import { Column } from "primereact/column";
 export function Cuerpo({ columns, data, handleEdit, handleDelete }) {
   const privilegesWrite = getPrivileges("Write");
   return (
-    <div className="relative top-36 w-11/12 p-4 h-550 left-24 -m-10 rounded-2xl overflow-hidden shadow-md transition-max-w duration-500 ease-in-out lg:max-w-full md:max-w-[80vw] sm:max-w-[70vw] xs:max-w-[60vw] 2xs:max-w-[55vw]">
-    <div className="min-w-[600px] w-full">
+    <div className={`relative bg-white top-36 w-11/12 p-4 h-550 left-24 -m-10 rounded-2xl overflow-hidden shadow-md transition-max-w duration-500 ease-in-out lg:max-w-full md:max-w-[80vw] sm:max-w-[70vw] xs:max-w-[60vw] 2xs:max-w-[55vw]`}>
+    <div className="min-w-[600px] w-full p-4">
       <DataTable
         value={data}
         tableStyle={{
@@ -18,12 +18,12 @@ export function Cuerpo({ columns, data, handleEdit, handleDelete }) {
       >
          {columns.map((column) => (
           <Column
-            className="p-2  w-30 h-20 text-left"
+            className="p-3 h-20 text-left"
             style={{ minWidth: "25%" }}
             key={column.data}
             field={column.data}
             header={column.title}
-            headerClassName="px-43"
+            headerClassName="text-left w-40"
             sortable
             body={(rowData) => {
               if (column.title === "Photo") {
@@ -53,43 +53,6 @@ export function Cuerpo({ columns, data, handleEdit, handleDelete }) {
           />
         )}
       </DataTable>
-      {/* <div className='table_body'>
-        <Table>
-          <thead className='table_head'>
-            <tr key='head' className='tr_table'>
-              {columns.map((column) => (
-                <th key={column.data}>{column.title}</th>
-              ))}
-              {privilegesWrite.length > 0 && <th>Acciones</th>}
-            </tr>
-          </thead>
-          <tbody className='table_bd'>
-            {data.map((user) => (
-              <tr key={user.id} className='tr_table'>
-                {columns.map((column) =>
-                  column.title === 'Photo'
-                    ? (
-                      <td key={column.data} className='td_table'>
-                        <img
-                          src={user[column.data]}
-                          alt='User Photo'
-                          width='100px'
-                          height='60px'
-                        />
-                      </td>
-                      )
-                    : (
-                      <td key={column.data} className='td_table'>
-                        {renderCell(column, user)}
-                      </td>
-                      )
-                )}
-                {privilegesWrite.length > 0 && <td className='td_table'><ButtonsTable onEdit={() => handleEdit(user.id)} onDelete={() => handleDelete(user.id)} /></td>}
-              </tr>
-            ))}
-          </tbody>
-        </Table>
-      </div> */}
     </div>
     </div>
   );

@@ -125,11 +125,10 @@ export function Sidebar ({ sidebarOpen, setSidebarOpen, setIsLoggedIn }) {
         ))}
         <Divider />
 
-        <div className='UserContent'>
-          {sidebarOpen && <span className='titleUser'>Usuario</span>}
-          <div className='userContent'>
-            <img src={userState.photo} alt='Logo de la aplicación' />
-            <span className='username'>{userState.email}</span>
+        <div className='w-full pl-4 h-10'>
+          <div className='flex items-center gap-4 w-full h-full'>
+            <img className='w-12 h-12 rounded-full' src={userState.photo} alt='user' />
+            {sidebarOpen && <span className='font-semibold text-base'>{userState.email}</span>}
           </div>
         </div>
       </Container>
@@ -248,7 +247,7 @@ const Container = styled.div`
     left: 1px;
   }
   .ThemeContent {
-    padding: ${({ isopen }) => (isopen ? '10% 10%' : '')};
+    padding: ${({ isopen }) => (isopen ? '1% 15%' : '')};
     display: flex;
     align-items: center;
     justify-content: space-between;
