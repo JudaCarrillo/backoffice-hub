@@ -9,7 +9,7 @@ class CustomerService:
     def get_all(self):
         customers = Customers.objects.values(
             'id', 'company_name', 'contact_name', 'contact_title',
-            'city', 'region', 'country', 'phone',
+            'city', 'country', 'phone',
         )
 
         return {'success': True, 'data': customers, 'message': 'Suppliers found'}
