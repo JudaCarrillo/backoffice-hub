@@ -41,7 +41,7 @@ export function Cuerpo({ columns, data, handleEdit, handleDelete }) {
         </Table>
       </div>
     </Container>
-  );
+  )
 }
 function renderCell(column, user) {
   if (column.data === "is_active") {

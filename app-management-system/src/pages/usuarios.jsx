@@ -6,6 +6,8 @@ import { Cuerpo } from "../components/cuerpo";
 import { ModalUsuario } from "../components/modals/CrearModales/modalUsuario";
 import { UpdateUserModal } from "../components/modals/updateModal/updateUser";
 import { Preloader } from "./preloader";
+import { Pruebas } from "../components/organisms/createEmployees";
+import Modal from "../components/organisms/modal";
 
 export function Usuarios() {
   const urlBase = process.env.API_BASE_URL_AUTH;
@@ -21,32 +23,16 @@ export function Usuarios() {
       const respuesta = await getUsuarios();
       const { success, data, message } = respuesta.data;
       if (success) {
-        const newData = data
-          .sort((a, b) => a.id - b.id)
-          .map((item) => {
-            return {
-              ...item,
-              photo: `${urlBase}${item.photo}`,
-            };
-          });
+        data.sort((a, b) => a.id - b.id);
 
-        const userKeys = Object.keys(newData[0]).filter((key) => {
-          return (
-            key !== "password" &&
-            key !== "created_at" &&
-            key !== "updated_at" &&
-            key !== "birth_day" &&
-            key !== "title_of_courtesy"
-          );
-        });
-
-        const nuevasColumnas = userKeys.map((key) => ({
+        const nuevasColumnas = Object.keys(data[0]).map((key) => ({
           title: key.charAt(0).toUpperCase() + key.slice(1),
           data: key,
           key: key,
         }));
+
         setColumns(nuevasColumnas);
-        setUser(newData);
+        setUser(data);
         setLoading(false); // Indicar que los datos se han cargado
       } else {
         throw new Error(message);
@@ -96,11 +82,16 @@ export function Usuarios() {
   return (
     <Container>
       <Cabecera title={"Usuarios"}>
-        <ModalUsuario
+        {/* <ModalUsuario
           modalName={"Nuevo Usuarios"}
           title={"Crear nuevo usuario"}
           onReceiveRows={handleReceiveRows}
-        />
+        /> */}
+        <Modal
+          children={<Pruebas />}
+        >
+          
+        </Modal>
       </Cabecera>
       {loading ? (
         <Preloader /> // Mostrar indicador de carga

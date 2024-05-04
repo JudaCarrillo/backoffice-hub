@@ -14,6 +14,7 @@ function App () {
 
   const [sidebarOpen, setSidebarOpen] = useState(true)
   const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [forgotPassword, setIsForgotPassword] = useState(false)
 
   useEffect(() => {
     const mediaQuery = window.matchMedia('(max-width: 1300px)')
@@ -38,6 +39,10 @@ function App () {
     localStorage.setItem('isLoggedIn', 'true')
   }
 
+  const setIsForgotPasswordFnc = () => {
+    setIsForgotPassword(true);
+  }
+
   return (
     <>
       <ThemeContext.Provider value={{ setTheme, theme }}>
@@ -54,12 +59,17 @@ function App () {
                   <MyRoutes />
                 </Container>
                 )
-              : (
-                <Login
-                  setIsLoggedIn={setIsLoggedIn}
-                  onLoginSuccess={handleLoginSuccess}
-                />
-                )}
+              : forgotPassword
+                ? (
+                  <div> hola mundo </div>
+                  )
+                : (
+                  <Login
+                    setIsForgotPassword={setIsForgotPasswordFnc}
+                    setIsLoggedIn={setIsLoggedIn}
+                    onLoginSuccess={handleLoginSuccess}
+                  />
+                  )}
           </BrowserRouter>
         </ThemeProvider>
       </ThemeContext.Provider>

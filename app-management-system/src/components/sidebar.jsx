@@ -11,6 +11,10 @@ import { v } from '../styles/variables'
 
 export function Sidebar ({ sidebarOpen, setSidebarOpen, setIsLoggedIn }) {
   const [userPrivileges, setUserPrivileges] = useState([])
+  const [userState, setUserState] = useState({
+    photo: '',
+    email: ''
+  })
 
   const ModSidebarOpen = () => {
     setSidebarOpen(!sidebarOpen)
@@ -21,11 +25,13 @@ export function Sidebar ({ sidebarOpen, setSidebarOpen, setIsLoggedIn }) {
   }
 
   useEffect(() => {
-    const storedPrivileges = JSON.parse(localStorage.getItem('user'))
-    if (storedPrivileges) {
-      setUserPrivileges(storedPrivileges)
+    const item = localStorage.getItem('user')
+    if (item) {
+      const { privileges, user } = JSON.parse(item)
+      setUserPrivileges(privileges)
+      setUserState(user) // Almacenamos toda la información del usuario en el estado
     }
-  }, [])
+  }, []);
 
   const getIconComponent = (iconName) => {
     switch (iconName) {
@@ -33,7 +39,7 @@ export function Sidebar ({ sidebarOpen, setSidebarOpen, setIsLoggedIn }) {
         return <AiOutlineApartment />
       case 'BiCategory':
         return <BiCategory />
-      case 'FaPeopleCarryBox':
+      case 'FaPeopleCarry':
         return <FaPeopleCarry />
       case 'FaRegUser':
         return <FaRegUser />
@@ -117,6 +123,15 @@ export function Sidebar ({ sidebarOpen, setSidebarOpen, setIsLoggedIn }) {
             </NavLink>
           </div>
         ))}
+        <Divider />
+
+        <div className='UserContent'>
+          {sidebarOpen && <span className='titleUser'>Usuario</span>}
+          <div className='userContent'>
+            <img src={userState.photo} alt='Logo de la aplicación' />
+            <span className='username'>{userState.email}</span>
+          </div>
+        </div>
       </Container>
     </StyleSheetManager>
   )

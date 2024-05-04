@@ -1,7 +1,9 @@
-from rest_framework import serializers
 from .models import Privilege
+from core.serializers import DynamicFieldsModelSerializer
 
-class PrivilegeSerializer(serializers.ModelSerializer):
+
+class PrivilegeSerializer(DynamicFieldsModelSerializer):
     class Meta:
         model = Privilege
-        fields = '__all__'
+        fields = ['id', 'name', 'description',
+                  'title', 'route', 'icon', 'created_at']

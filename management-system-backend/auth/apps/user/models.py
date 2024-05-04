@@ -18,7 +18,8 @@ class User(models.Model):
     country = models.CharField(max_length=15, null=True)
     home_phone = models.CharField(max_length=24, null=True)
     extension = models.CharField(max_length=4, null=True)
-    photo = models.ImageField(null=True, upload_to='files/users/')
+    photo = models.ImageField(upload_to='files/users/',
+                              default='files/users/default.webp', null=False)
     notes = models.TextField()
     email = models.EmailField(unique=True, db_index=True)
     password = models.CharField(max_length=255, db_index=True)
@@ -36,11 +37,6 @@ class User(models.Model):
     def __str__(self) -> str:
         label = f'{self.first_name} {self.last_name}'
         return label
-
-    def save(self, *args, **kwargs):
-        if self.reports_to == self:
-            self.reports_to = None
-        super().save(*args, **kwargs)
 
     class Meta:
         constraints = [
