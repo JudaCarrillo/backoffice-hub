@@ -12,7 +12,12 @@ import Field from "../../molecules/Field/field";
 import Img_input from "../../molecules/Img/img_input";
 import LongText from "../../molecules/LongText/longText";
 
-export function ModalCreateEmployees({ modalName, title, onReceiveRows, label }) {
+export function ModalCreateEmployees({
+  modalName,
+  title,
+  onReceiveRows,
+  label,
+}) {
   const [showModal, setShowModal] = useState(false);
   const [userProfiles, setUserProfiles] = useState([]);
   const [usersToReport, setUsersToReport] = useState([]);
@@ -87,11 +92,15 @@ export function ModalCreateEmployees({ modalName, title, onReceiveRows, label })
   const handleCrearEmployee = async () => {
     try {
       const formData = new FormData();
-      
+
       Object.keys(users).forEach((key) => {
         formData.append(key, users[key]);
       });
-      formData.append("photo", photo);
+
+      if (photo) {
+        formData.delete("photo");
+        formData.append("photo", photo);
+      }
 
       const response = await createUsers(formData);
       const { success, data, message } = response.data;
