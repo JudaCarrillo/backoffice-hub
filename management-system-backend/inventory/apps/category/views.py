@@ -2,31 +2,87 @@ from django.http import HttpResponse
 
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
+from rest_framework import status
 
-from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
 
 import csv
 
-from .category_manager import CategoryManager
+from .services import CategoryService
 from .models import Categories
-from .serializers import CustomCategorySerializer, CategorySerializer
-category = CategoryManager()
+from .serializers import CategorySerializer
+
+services = CategoryService()
 
 
+def get_base_url(request):
+    HOST = request.META.get('HTTP_HOST')
+    PROTOCOL = 'https' if 'HTTPS' in request.META.get(
+        'SERVER_PROTOCOL') else 'http'
+    return f'{PROTOCOL}://{HOST}'
+
+
+@swagger_auto_schema(
+    methods=['GET'],
+    responses={
+        200: 'Ok',
+        400: 'Bad Request',
+        500: 'Internal Server Error',
+    }
+)
 @api_view(['GET'])
 def index(request):
-    return Response(category.get_all())
+    BASE_URL = get_base_url(request)
+    try:
+        result = services.get_all(BASE_URL)
+        return Response(result)
+    except Exception as e:
+        print(e)
+        return Response({'success': False, 'data': None, 'message': 'Internal Server Error'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
+@swagger_auto_schema(
+    methods=['GET'],
+    responses={
+        200: 'Ok',
+        400: 'Bad Request',
+        500: 'Internal Server Error',
+    }
+
+)
 @api_view(['GET'])
 def get_by_id(request, id):
-    return Response(category.get_by_id(id))
+    BASE_URL = get_base_url(request)
+    try:
+        result = services.get_by_id(id, BASE_URL)
+
+        if not result.get('success'):
+            return Response(result, status=status.HTTP_400_BAD_REQUEST)
+
+        return Response(result)
+    except Exception as e:
+        print(e)
+        return Response({'success': False, 'data': None, 'message': 'Internal Server Error'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
+@swagger_auto_schema(
+    methods=['DELETE'],
+    responses={
+        200: 'Ok',
+        400: 'Bad Request',
+        500: 'Internal Server Error',
+    }
+)
 @api_view(['DELETE'])
 def delete(request, id):
-    return Response(category.delete(id))
+    try:
+        result = services.delete(id)
+
+        if not result.get('success'):
+            return Response(result, status=status.HTTP_400_BAD_REQUEST)
+    except Exception as e:
+        print(e)
+        return Response({'success': False, 'data': None, 'message': 'Internal Server Error'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 @swagger_auto_schema(
@@ -40,7 +96,20 @@ def delete(request, id):
 )
 @api_view(['POST'])
 def create(request):
-    return Response(category.create(**request.data))
+    try:
+        result = services.create(
+            request_files=request.FILES,
+            request_data=request.data
+        )
+
+        if not result.get('success'):
+            return Response(result, status=status.HTTP_400_BAD_REQUEST)
+
+        return Response(result, status=status.HTTP_201_CREATED)
+
+    except Exception as e:
+        print(e)
+        return Response({'success': False, 'data': None, 'message': 'Internal Server Error'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 @swagger_auto_schema(
@@ -54,23 +123,30 @@ def create(request):
 )
 @api_view(['PUT'])
 def update(request, id):
-    return Response(category.update(id, **request.data))
+    try:
+        result = services.update(
+            id,
+            request_files=request.FILES,
+            request_data=request.data
+        )
+        if not result.get('success'):
+            return Response(result, status=status.HTTP_400_BAD_REQUEST)
+        return Response(result, status=status.HTTP_200_OK)
+    except Exception as e:
+        print(e)
+        return Response({'success': False, 'data': None, 'message': 'Internal Server Error'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
+@swagger_auto_schema(
+    methods=['GET'],
+    responses={
+        200: 'Ok',
+        400: 'Bad Request',
+        500: 'Internal Server Error',
+    }
+)
 @api_view(['GET'])
 def export_to_csv(request):
-    categories = Categories.objects.all()
-    serializer = CategorySerializer(categories, many=True)
-    headers = ['id', 'name', 'description', 'created_at']
-    filename = "category_data.csv"
-
     response = HttpResponse(content_type='text/csv')
-    response['Content-Disposition'] = f'attachment; filename="{filename}"'
-
-    writer = csv.DictWriter(response, fieldnames=headers)
-    writer.writeheader()
-
-    for row in serializer.data:
-        writer.writerow({header: row[header] for header in headers})
-
-    return response
+    result = services.export_to_csv(response)
+    return result
