@@ -8,7 +8,7 @@ class CustomerService:
 
     def get_all(self):
         customers = Customers.objects.values(
-            'company_name', 'contact_name',
+            'id', 'company_name', 'contact_name', 'contact_title',
             'city', 'region', 'country', 'phone',
         )
 

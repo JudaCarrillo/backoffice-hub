@@ -12,7 +12,7 @@ import Field from "../../molecules/Field/field";
 import Img_input from "../../molecules/Img/img_input";
 import LongText from "../../molecules/LongText/longText";
 
-export function ModalCreateEmployees({ modalName, title, onReceiveRows }) {
+export function ModalCreateEmployees({ modalName, title, onReceiveRows, label }) {
   const [showModal, setShowModal] = useState(false);
   const [userProfiles, setUserProfiles] = useState([]);
   const [usersToReport, setUsersToReport] = useState([]);
@@ -87,25 +87,10 @@ export function ModalCreateEmployees({ modalName, title, onReceiveRows }) {
   const handleCrearEmployee = async () => {
     try {
       const formData = new FormData();
-      formData.append("last_name", users.last_name);
-      formData.append("first_name", users.first_name);
-      formData.append("title", users.title);
-      formData.append("title_of_courtesy", users.title_of_courtesy);
-      formData.append("birth_date", users.birth_date);
-      formData.append("hire_date", users.hire_date);
-      formData.append("address", users.address);
-      formData.append("city", users.city);
-      formData.append("region", users.region);
-      formData.append("postal_code", users.postal_code);
-      formData.append("country", users.country);
-      formData.append("home_phone", users.home_phone);
-      formData.append("extension", users.extension);
-      formData.append("notes", users.notes);
-      formData.append("email", users.email);
-      formData.append("password", users.password);
-      formData.append("is_active", users.is_active);
-      formData.append("id_profile", users.id_profile);
-      formData.append("reports_to", users.reports_to);
+      
+      Object.keys(users).forEach((key) => {
+        formData.append(key, users[key]);
+      });
       formData.append("photo", photo);
 
       const response = await createUsers(formData);
@@ -143,6 +128,9 @@ export function ModalCreateEmployees({ modalName, title, onReceiveRows }) {
       </button>
       {showModal && (
         <Modal
+          label={label}
+          onClose={toggleModal}
+          onAction={handleCrearEmployee}
           title={title}
           showModalContent={(handleCloseModal) => (
             <FormContainer className="bg-slate-400 p-5">
@@ -351,8 +339,6 @@ export function ModalCreateEmployees({ modalName, title, onReceiveRows }) {
               </FormColumn>
             </FormContainer>
           )}
-          onClose={toggleModal}
-          onCreate={handleCrearEmployee}
         />
       )}
     </Container>
