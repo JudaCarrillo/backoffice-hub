@@ -152,6 +152,7 @@ export function ModalCreateEmployees({
                   type="text"
                   value={users.last_name}
                   onChange={handleChange}
+                  isRequired={true}
                 />
 
                 <Field
