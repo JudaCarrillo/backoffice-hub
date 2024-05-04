@@ -113,14 +113,14 @@ def update_user(request, id):
 
 
 @swagger_auto_schema(
-    methods=['POST'],
+    methods=['PATCH'],
     responses={
         200: 'Ok',
         400: 'Bad Request',
         500: 'Internal Server Error',
     }
 )
-@api_view(['POST'])
+@api_view(['PATCH'])
 def disabled(request, id):
     try:
         result = services.disabled(id)

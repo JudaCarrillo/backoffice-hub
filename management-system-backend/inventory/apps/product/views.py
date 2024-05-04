@@ -64,17 +64,17 @@ def get_by_id(request, id):
 
 
 @swagger_auto_schema(
-    methods=['DELETE'],
+    methods=['PATCH'],
     responses={
         200: 'Ok',
         400: 'Bad Request',
         500: 'Internal Server Error',
     }
 )
-@api_view(['DELETE'])
+@api_view(['PATCH'])
 def delete(request, id):
     try:
-        result = services.delete(id)
+        result = services.disabled(id)
 
         if not result.get('success'):
             return Response(result, status=status.HTTP_400_BAD_REQUEST)
