@@ -6,10 +6,8 @@ from rest_framework import status
 
 from drf_yasg.utils import swagger_auto_schema
 
-import csv
 
 from .services import CategoryService
-from .models import Categories
 from .serializers import CategorySerializer
 
 services = CategoryService()

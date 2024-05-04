@@ -5,11 +5,10 @@ from drf_yasg.utils import swagger_auto_schema
 from rest_framework import status
 import csv
 
-from .services import SupplierService
-from .models import Suppliers
-from .serializers import SupplierSerializer
+from .services import CustomerService
+from .serializers import CustomerSerializer
 
-services = SupplierService()
+services = CustomerService()
 
 
 @swagger_auto_schema(
@@ -52,7 +51,7 @@ def get_by_id(request, id):
 
 @swagger_auto_schema(
     methods=['POST'],
-    request_body=SupplierSerializer,
+    request_body=CustomerSerializer,
     responses={
         201: 'Created',
         400: 'Bad Request',
@@ -78,7 +77,7 @@ def create(request):
 
 @swagger_auto_schema(
     methods=['PUT'],
-    request_body=SupplierSerializer,
+    request_body=CustomerSerializer,
     responses={
         200: 'Ok',
         400: 'Bad Request',

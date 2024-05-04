@@ -48,6 +48,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path(f'{VERSION}/categories/', include('apps.category.urls')),
     path(f'{VERSION}/suppliers/', include('apps.supplier.urls')),
-    # path(f'{VERSION}/customer/', include('apps.customer.urls')),
+    path(f'{VERSION}/customers/', include('apps.customer.urls')),
     # path(f'{VERSION}/product/', include('apps.product.urls')),
 ]

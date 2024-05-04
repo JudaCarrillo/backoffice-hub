@@ -8,5 +8,5 @@ class CustomerSerializer(DynamicFieldsModelSerializer):
         model = Customers
         fields = [
             'id', 'company_name', 'contact_name', 'contact_title', 'address',
-            'city', 'region', 'postal_code', 'country', 'phone', 'fax', 'home_page'
+            'city', 'region', 'postal_code', 'country', 'phone', 'fax'
         ]

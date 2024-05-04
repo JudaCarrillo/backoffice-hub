@@ -1,38 +1,38 @@
 import csv
 
-from .serializers import SupplierSerializer
-from .models import Suppliers
+from .serializers import CustomerSerializer
+from .models import Customers
 
 
-class SupplierService:
+class CustomerService:
 
     def get_all(self):
-        suppliers = Suppliers.objects.values(
-            'company_name', 'contact_name', 'address',
+        customers = Customers.objects.values(
+            'company_name', 'contact_name',
             'city', 'region', 'country', 'phone',
         )
 
-        return {'success': True, 'data': suppliers, 'message': 'Suppliers found'}
+        return {'success': True, 'data': customers, 'message': 'Suppliers found'}
 
     def get_by_id(self, id):
-        supplier = self._supplier_exists('id', id)
-        if not supplier:
+        customer = self._customer_exists('id', id)
+        if not customer:
             return {'success': False, 'data': None, 'message': 'Supplier not found'}
 
-        serializer = SupplierSerializer(supplier).data
+        serializer = CustomerSerializer(customer).data
         return {'success': True, 'data': serializer, 'message': 'Supplier found'}
 
-    def _supplier_exists(self, field, value):
+    def _customer_exists(self, field, value):
         try:
-            supplier = Suppliers.objects.get(**{field: value})
-            return supplier
-        except Suppliers.DoesNotExist:
+            customer = Customers.objects.get(**{field: value})
+            return customer
+        except Customers.DoesNotExist:
             return None
 
     def create(self, request_data):
 
         try:
-            Suppliers.objects.create(
+            Customers.objects.create(
                 company_name=request_data.get('company_name'),
                 contact_name=request_data.get('contact_name'),
                 contact_title=request_data.get('contact_title'),
@@ -43,7 +43,6 @@ class SupplierService:
                 country=request_data.get('country'),
                 phone=request_data.get('phone'),
                 fax=request_data.get('fax'),
-                home_page=request_data.get('home_page')
             )
         except Exception as e:
             return {'success': False, 'data': None, 'message': 'Error creating supplier. ' + str(e)}
@@ -51,42 +50,42 @@ class SupplierService:
         return {'success': True, 'data': None, 'message': 'Supplier created'}
 
     def delete(self, id):
-        supplier = self._supplier_exists('id', id)
-        if not supplier:
+        customer = self._customer_exists('id', id)
+        if not customer:
             return {'success': False, 'data': None, 'message': 'Supplier not found'}
 
-        supplier.delete()
+        customer.delete()
         return {'success': True, 'data': None, 'message': 'Supplier deleted'}
 
     def update(self, id, request_data):
-        supplier = self._supplier_exists('id', id)
-        if not supplier:
+        customer = self._customer_exists('id', id)
+        if not customer:
             return {'success': False, 'data': None, 'message': 'Supplier not found'}
 
         fields_to_update = ['company_name', 'contact_name', 'contact_title', 'address',
-                            'city', 'region', 'postal_code', 'country', 'phone', 'fax', 'home_page']
+                            'city', 'region', 'postal_code', 'country', 'phone', 'fax']
 
         for field in fields_to_update:
-            setattr(supplier, field, request_data.get(
-                field, getattr(supplier, field)))
+            setattr(customer, field, request_data.get(
+                field, getattr(customer, field)))
 
-        supplier.save()
+        customer.save()
         return {'success': True, 'data': None, 'message': 'Supplier updated'}
 
     def export_to_csv(self, response):
-        suppliers = Suppliers.objects.all()
-        serializer = SupplierSerializer(suppliers, many=True)
+        customers = Customers.objects.all()
+        serializer = CustomerSerializer(customers, many=True)
         headers = ['id', 'company_name', 'contact_name', 'contact_title', 'address',
                    'city', 'region', 'postal_code', 'country', 'phone', 'fax', 'home_page']
 
-        filename = "supplier_data.csv"
+        filename = "customer_data.csv"
 
         response['Content-Disposition'] = f'attachment; filename="{filename}"'
 
         writer = csv.DictWriter(response, fieldnames=headers)
         writer.writeheader()
 
-        for supplier in serializer.data:
-            writer.writerow(supplier)
+        for customer in serializer.data:
+            writer.writerow(customer)
 
         return response
