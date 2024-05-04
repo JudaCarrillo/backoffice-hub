@@ -12,7 +12,7 @@ const Field = ({ id, name, type, value, onChange, labelFor, labelText, required 
         value={value}
         onChange={onChange}
         accept="image/*"
-        Isrquired = {required}
+        required = {required}
       />
     </div>
   );
