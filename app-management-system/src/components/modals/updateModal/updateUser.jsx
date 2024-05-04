@@ -6,16 +6,12 @@ import {
   getUserProfileById,
   getUsuarios,
   updateUsers,
-} from "../../../api/auth";
-import ComboBox from "../comboBox";
-import { InputComponent } from "../input";
-import { ModalParaUpdate } from "../modalparaUpdate";
+} from "../../../services/auth";
+import ChkBox from "../../molecules/CheckBox/checkbox";
 import Field from '../../molecules/Field/field';
 import LongText from "../../molecules/LongText/longText";
-import { InputText } from "primereact/inputtext";
-import { FloatLabel } from "primereact/floatlabel";
-import ChkBox from "../../molecules/CheckBox/checkbox";
-import ImgInput from "../../molecules/Img/img_input";
+import ComboBox from "../comboBox";
+import { ModalParaUpdate } from "../modalparaUpdate";
 export function UpdateUserModal({
   open,
   onClose,

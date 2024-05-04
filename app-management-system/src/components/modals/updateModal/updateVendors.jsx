@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { getVendors, getVendorsId, updateVendor } from "../../../api/vendors";
+import {
+  getVendors,
+  getVendorsId,
+  updateVendor,
+} from "../../../services/vendors";
 import { InputComponent } from "../input";
 import { ModalParaUpdate } from "../modalparaUpdate";
 export function UpdateVendorsModal({

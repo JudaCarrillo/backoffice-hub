@@ -1,18 +1,14 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { disabledUser, getUsuarios } from "../api/auth";
+import { disabledUser, getUsuarios } from "../services/auth";
 import { Cabecera } from "../components/cabecera";
 import { Cuerpo } from "../components/cuerpo";
 import { ModalUsuario } from "../components/modals/CrearModales/modalUsuario";
 import { UpdateUserModal } from "../components/modals/updateModal/updateUser";
 import { Preloader } from "./preloader";
-import { ModalCreateEmployees} from "../components/organisms/CreateModals/ModalCreateEmployees";
-
-
+import { ModalCreateEmployees } from "../components/organisms/CreateModals/ModalCreateEmployees";
 
 export function Usuarios() {
-  const urlBase = process.env.API_BASE_URL_AUTH;
-
   const [user, setUser] = useState([]);
   const [columns, setColumns] = useState([]);
   const [loading, setLoading] = useState(true);

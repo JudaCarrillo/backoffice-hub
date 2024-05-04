@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { getCategoriById, getCategories } from "../../../api/categories";
 import {
   getProducts,
   getProductsId,
   updateProduct,
-} from "../../../api/products";
-import { getVendors, getVendorsId } from "../../../api/vendors";
+} from "../../../services/products";
+import { getCategoriById, getCategories } from "../../../services/categories";
+import { getVendors, getVendorsId } from "../../../services/vendors";
 import ComboBox from "../comboBox";
 import { InputComponent } from "../input";
 import { ModalParaUpdate } from "../modalparaUpdate";

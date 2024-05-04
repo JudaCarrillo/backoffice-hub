@@ -1,6 +1,6 @@
 import { useState } from "react";
 import styled from "styled-components";
-import { createCategory, getCategories } from "../../../api/categories";
+import { createCategory, getCategories } from "../../../services/categories";
 import { InputComponent } from "../input";
 import { ModalCompleto } from "../modalCompleto";
 

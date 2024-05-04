@@ -1,8 +1,8 @@
 import { useState } from 'react'
-import styled from 'styled-components'
-import { FaEye, FaEyeSlash } from 'react-icons/fa'
 import toast, { Toaster } from 'react-hot-toast'
-import { login } from '../api/auth'
+import { FaEye, FaEyeSlash } from 'react-icons/fa'
+import styled from 'styled-components'
+import { login } from '../services/auth'
 
 const LoginContainer = styled.div`
   position: relative;

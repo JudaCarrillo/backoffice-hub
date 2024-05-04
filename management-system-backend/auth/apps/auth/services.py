@@ -14,7 +14,7 @@ class LoginService:
     def validate_credentials(self, email: str, password: str) -> Union[dict, None]:
         try:
             user = User.objects.values(
-                'email', 'photo', 'is_active', 'id_profile', 'password'
+                'email', 'photo', 'is_active', 'id_profile', 'password', 'first_name',
             ).get(email=email)
 
         except User.DoesNotExist:
@@ -42,6 +42,7 @@ class LoginService:
                                          many=True,
                                          fields={'name', 'title', 'route', 'icon'}).data
 
+        user['name'] = user['first_name']
         user['photo'] = f'{base_url}/{user.get("photo")}'
         user.pop('password')
         user.pop('id_profile')

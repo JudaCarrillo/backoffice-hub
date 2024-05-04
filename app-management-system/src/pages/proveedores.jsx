@@ -1,13 +1,16 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { deleteVendor, exportVendorsToCsv, getVendors } from "../api/vendors";
+import {
+  deleteVendor,
+  exportVendorsToCsv,
+  getVendors,
+} from "../services/vendors";
 import { ButtonHead } from "../components/button";
 import { Cabecera } from "../components/cabecera";
 import { Cuerpo } from "../components/cuerpo";
 import ModalProveedor from "../components/modals/CrearModales/modalProveedor";
 import { UpdateVendorsModal } from "../components/modals/updateModal/updateVendors";
-import { getPrivileges } from "../services/privileges";
-import { getCsv } from "../utils/logic";
+import { getCsv, getPrivileges } from "../utils/logic";
 import { Preloader } from "./preloader";
 
 export function Proveedores() {
@@ -67,13 +70,13 @@ export function Proveedores() {
         throw new Error(message);
       }
     } catch (error) {
-      console.error('Error al eliminar Proveedor:', error)
+      console.error("Error al eliminar Proveedor:", error);
     }
-  }
+  };
   const handleReceiveRows = async (data) => {
     data.sort((a, b) => a.id - b.id);
     setProv(data);
-  }
+  };
 
   return (
     <Container>

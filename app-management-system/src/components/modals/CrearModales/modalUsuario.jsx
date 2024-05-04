@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { createUsers, getUsuarios } from "../../../api/auth";
-import { getUserProfile } from "../../../api/auth";
+import {
+  createUsers,
+  getUserProfile,
+  getUsuarios,
+} from "../../../services/auth";
 import ComboBox from "../comboBox";
 import { InputComponent } from "../input";
 import { ModalCompleto } from "../modalCompleto";
@@ -31,7 +34,6 @@ export function ModalUsuario({ modalName, title, onReceiveRows }) {
     if (showModal) {
       fetchUserProfiles();
     }
-
   }, [showModal]);
 
   const toggleModal = () => setShowModal(!showModal);
@@ -106,7 +108,7 @@ export function ModalUsuario({ modalName, title, onReceiveRows }) {
                 id={"contrasena"}
                 onChange={handleChange}
               />
-              
+
               <ComboBox
                 name="id_profile"
                 label="Seleccione un perfil"

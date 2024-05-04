@@ -1,59 +1,60 @@
 // import styled from "styled-components";
-import { getPrivileges } from "../services/privileges";
-import { ButtonsTable } from "./buttons_action/buttons";
-import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
+import { DataTable } from "primereact/datatable";
+import { getPrivileges } from "../utils/logic";
+import { ButtonsTable } from "./buttons_action/buttons";
 
 export function Cuerpo({ columns, data, handleEdit, handleDelete }) {
   const privilegesWrite = getPrivileges("Write");
   return (
-    <div className={`relative bg-white top-36 w-11/12 p-4 h-550 left-24 -m-10 rounded-2xl overflow-hidden shadow-md transition-max-w duration-500 ease-in-out lg:max-w-full md:max-w-[80vw] sm:max-w-[70vw] xs:max-w-[60vw] 2xs:max-w-[55vw]`}>
-    <div className="min-w-[600px] w-full p-4">
-      <DataTable
-        value={data}
-        tableStyle={{
-          minWidth: "50rem",
-        }}
-        
-      >
-         {columns.map((column) => (
-          <Column
-            className="p-3 h-20 text-left"
-            style={{ minWidth: "25%" }}
-            key={column.data}
-            field={column.data}
-            header={column.title}
-            headerClassName="text-left w-40"
-            sortable
-            body={(rowData) => {
-              if (column.title === "Photo") {
-                return (
-                  <img
-                    className="w-12 h-12 rounded-3xl"
-                    src={rowData[column.data]}
-                    alt="User Photo"
-                  />
-                );
-              } else {
-                return renderCell(column, rowData);
-              }
-            }}
-          />
-        ))}
-        {privilegesWrite.length > 0 && (
-          <Column
-            key="actions"
-            header="Acciones"
-            body={(rowData) => (
-              <ButtonsTable
-                onEdit={() => handleEdit(rowData.id)}
-                onDelete={() => handleDelete(rowData.id)}
-              />
-            )}
-          />
-        )}
-      </DataTable>
-    </div>
+    <div
+      className={`relative bg-white top-36 w-11/12 p-4 h-550 left-24 -m-10 rounded-2xl overflow-hidden shadow-md transition-max-w duration-500 ease-in-out lg:max-w-full md:max-w-[80vw] sm:max-w-[70vw] xs:max-w-[60vw] 2xs:max-w-[55vw]`}
+    >
+      <div className="min-w-[600px] w-full p-4">
+        <DataTable
+          value={data}
+          tableStyle={{
+            minWidth: "50rem",
+          }}
+        >
+          {columns.map((column) => (
+            <Column
+              className="p-3 h-20 text-left"
+              style={{ minWidth: "25%" }}
+              key={column.data}
+              field={column.data}
+              header={column.title}
+              headerClassName="text-left w-40"
+              sortable
+              body={(rowData) => {
+                if (column.title === "Photo") {
+                  return (
+                    <img
+                      className="w-12 h-12 rounded-3xl"
+                      src={rowData[column.data]}
+                      alt="User Photo"
+                    />
+                  );
+                } else {
+                  return renderCell(column, rowData);
+                }
+              }}
+            />
+          ))}
+          {privilegesWrite.length > 0 && (
+            <Column
+              key="actions"
+              header="Acciones"
+              body={(rowData) => (
+                <ButtonsTable
+                  onEdit={() => handleEdit(rowData.id)}
+                  onDelete={() => handleDelete(rowData.id)}
+                />
+              )}
+            />
+          )}
+        </DataTable>
+      </div>
     </div>
   );
 }

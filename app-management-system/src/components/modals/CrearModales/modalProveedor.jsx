@@ -1,6 +1,6 @@
 import { useState } from "react";
 import styled from "styled-components";
-import { createVendor, getVendors } from "../../../api/vendors";
+import { createVendor, getVendors } from "../../../services/vendors";
 import { InputComponent } from "../input";
 import { ModalCompleto } from "../modalCompleto";
 

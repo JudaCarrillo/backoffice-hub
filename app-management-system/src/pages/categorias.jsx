@@ -1,17 +1,16 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import {
-  deleteCategory,
-  exportCategoriesToCsv,
-  getCategories,
-} from "../api/categories";
 import { ButtonHead } from "../components/button";
 import { Cabecera } from "../components/cabecera";
 import { Cuerpo } from "../components/cuerpo";
 import { CategoryModal } from "../components/modals/CrearModales/modalCategoria";
 import { UpdateModal } from "../components/modals/updateModal/updateCategoria";
-import { getPrivileges } from "../services/privileges";
-import { getCsv } from "../utils/logic";
+import {
+  deleteCategory,
+  exportCategoriesToCsv,
+  getCategories,
+} from "../services/categories";
+import { getCsv, getPrivileges } from "../utils/logic";
 import { Preloader } from "./preloader";
 
 export function Categoria() {

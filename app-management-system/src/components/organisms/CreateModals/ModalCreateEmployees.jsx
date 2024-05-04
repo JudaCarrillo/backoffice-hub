@@ -1,14 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { createUsers, getUsersToReport } from "../../../api/auth";
-import Field from "../../molecules/Field/field";
-import LongText from "../../molecules/LongText/longText";
-import { getUserProfile } from "../../../api/auth";
-import { ModalCompleto } from "../../modals/modalCompleto";
+import {
+  createUsers,
+  getUserProfile,
+  getUsersToReport,
+} from "../../../services/auth";
 import ComboBox from "../../modals/comboBox";
-import { MdOutlineAirlineSeatLegroomReduced } from "react-icons/md";
-import Img_input from "../../molecules/Img/img_input";
+import { ModalCompleto } from "../../modals/modalCompleto";
 import ChkBox from "../../molecules/CheckBox/checkbox";
+import Field from "../../molecules/Field/field";
+import Img_input from "../../molecules/Img/img_input";
+import LongText from "../../molecules/LongText/longText";
 
 export function ModalCreateEmployees({ modalName, title, onReceiveRows }) {
   const [showModal, setShowModal] = useState(false);
@@ -294,7 +296,7 @@ export function ModalCreateEmployees({ modalName, title, onReceiveRows }) {
                   labelFor="notes"
                   labelText="Notas:"
                   placeholder="Escribe notas..."
-                />  
+                />
 
                 <Img_input
                   type="file"

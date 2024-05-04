@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { getCategories } from "../../../api/categories";
-import { createProduct, getProducts } from "../../../api/products";
-import { getVendors } from "../../../api/vendors";
+import { getCategories } from "../../../services/categories";
+import { createProduct, getProducts } from "../../../services/products";
+import { getVendors } from "../../../services/vendors";
 import ComboBox from "../comboBox";
 import { InputComponent } from "../input";
 import { ModalCompleto } from "../modalCompleto";

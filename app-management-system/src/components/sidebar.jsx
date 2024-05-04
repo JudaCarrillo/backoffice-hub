@@ -1,110 +1,110 @@
-import { useContext, useEffect, useMemo, useState } from 'react'
-import { AiOutlineApartment, AiOutlineLeft } from 'react-icons/ai'
-import { BiCategory } from 'react-icons/bi'
-import { FaPeopleCarry, FaRegUser } from 'react-icons/fa'
-import { ImExit } from 'react-icons/im'
-import { NavLink } from 'react-router-dom'
-import styled, { StyleSheetManager } from 'styled-components'
-import { ThemeContext } from '../App'
-import logo from '../assets/logo.webp'
-import { v } from '../styles/variables'
+import { useContext, useEffect, useMemo, useState } from "react";
+import { AiOutlineApartment, AiOutlineLeft } from "react-icons/ai";
+import { BiCategory } from "react-icons/bi";
+import { FaPeopleCarry, FaRegUser } from "react-icons/fa";
+import { ImExit } from "react-icons/im";
+import { NavLink } from "react-router-dom";
+import styled, { StyleSheetManager } from "styled-components";
+import { ThemeContext } from "../App";
+import logo from "../assets/logo.webp";
+import { v } from "../styles/variables";
 
-export function Sidebar ({ sidebarOpen, setSidebarOpen, setIsLoggedIn }) {
-  const [userPrivileges, setUserPrivileges] = useState([])
+export function Sidebar({ sidebarOpen, setSidebarOpen, setIsLoggedIn }) {
+  const [userPrivileges, setUserPrivileges] = useState([]);
   const [userState, setUserState] = useState({
-    photo: '',
-    email: ''
-  })
+    photo: "",
+    name: "",
+  });
 
   const ModSidebarOpen = () => {
-    setSidebarOpen(!sidebarOpen)
-  }
-  const { setTheme, theme } = useContext(ThemeContext)
+    setSidebarOpen(!sidebarOpen);
+  };
+  const { setTheme, theme } = useContext(ThemeContext);
   const cambiarTheme = () => {
-    setTheme((theme) => (theme === 'light' ? 'dark' : 'light'))
-  }
+    setTheme((theme) => (theme === "light" ? "dark" : "light"));
+  };
 
   useEffect(() => {
-    const item = localStorage.getItem('user')
+    const item = localStorage.getItem("user");
     if (item) {
-      const { privileges, user } = JSON.parse(item)
-      setUserPrivileges(privileges)
-      setUserState(user) // Almacenamos toda la información del usuario en el estado
+      const { privileges, user } = JSON.parse(item);
+      setUserPrivileges(privileges);
+      setUserState(user);
     }
   }, []);
 
   const getIconComponent = (iconName) => {
     switch (iconName) {
-      case 'AiOutlineApartment':
-        return <AiOutlineApartment />
-      case 'BiCategory':
-        return <BiCategory />
-      case 'FaPeopleCarry':
-        return <FaPeopleCarry />
-      case 'FaRegUser':
-        return <FaRegUser />
+      case "AiOutlineApartment":
+        return <AiOutlineApartment />;
+      case "BiCategory":
+        return <BiCategory />;
+      case "FaPeopleCarry":
+        return <FaPeopleCarry />;
+      case "FaRegUser":
+        return <FaRegUser />;
       default:
-        return null
+        return null;
     }
-  }
+  };
   const linksArray = useMemo(() => {
     if (userPrivileges === null) {
-      return []
+      return [];
     }
     const filteredPrivileges = userPrivileges.filter(
       (privilege) => privilege.route !== null
-    )
+    );
     return filteredPrivileges.map((privilege) => ({
       label: privilege.title,
       icon: getIconComponent(privilege.icon),
-      to: `/${privilege.route}`
-    }))
-  }, [userPrivileges])
+      to: `/${privilege.route}`,
+    }));
+  }, [userPrivileges]);
 
   const salir = () => {
-    setIsLoggedIn(false)
-    localStorage.removeItem('isLoggedIn')
-    localStorage.removeItem('user')
-    window.location.href = '/'
-  }
+    setIsLoggedIn(false);
+    localStorage.removeItem("isLoggedIn");
+    localStorage.removeItem("user");
+    window.location.href = "/";
+  };
   return (
-    <StyleSheetManager shouldForwardProp={(prop) => prop !== 'isopen'}>
+    <StyleSheetManager shouldForwardProp={(prop) => prop !== "isopen"}>
       <Container isopen={sidebarOpen} themeuse={theme}>
-        <button className='sidebarButton' onClick={ModSidebarOpen}>
+        <button className="sidebarButton" onClick={ModSidebarOpen}>
           <AiOutlineLeft />
         </button>
-        <div className='LogoContent'>
-          <div className='imgContent'>
-            <img src={logo} alt='Logo de la aplicación' />
+        <div className="LogoContent">
+          <div className="imgContent">
+            <img src={logo} alt="Logo de la aplicación" />
           </div>
-          <h2 className='text-2xl font-bold'>ROMER</h2>
+          <h2 className="text-2xl font-bold">ROMER</h2>
         </div>
         {linksArray.map(({ icon, label, to }) => (
-          <div className='LinkContainer' key={label}>
+          <div className="LinkContainer" key={label}>
             <NavLink
               to={to}
-              className={({ isActive }) => `Links${isActive ? ' active' : ''}`}
+              className={({ isActive }) => `Links${isActive ? " active" : ""}`}
             >
-              <div className='LinkIcon'>{icon}</div>
+              <div className="LinkIcon">{icon}</div>
               {sidebarOpen && <span>{label}</span>}
             </NavLink>
           </div>
         ))}
         <Divider />
 
-        <div className='ThemeContent'>
-          {sidebarOpen && <span className='titleTheme'>Dark Mode</span>}
-          <div className='toggleContent'>
-            <div className='grid theme-container'>
-              <div className='content'>
-                <div className='demo'>
-                  <label className='switch'>
+        <div className="ThemeContent">
+          {sidebarOpen && <span className="titleTheme">Dark Mode</span>}
+          <div className="toggleContent">
+            <div className="grid theme-container">
+              <div className="content">
+                <div className="demo">
+                  <label className="switch">
                     <input
-                      type='checkbox'
-                      className='theme-swither'
+                      type="checkbox"
+                      className="theme-swither"
                       onClick={cambiarTheme}
                     />
-                    <span className='slider round' />
+                    <span className="slider round" />
                   </label>
                 </div>
               </div>
@@ -112,28 +112,36 @@ export function Sidebar ({ sidebarOpen, setSidebarOpen, setIsLoggedIn }) {
           </div>
         </div>
         {secundaryLinksArray.map(({ icon, label, to }) => (
-          <div className='LinkContainer salirbutton' key={label}>
+          <div className="LinkContainer salirbutton" key={label}>
             <NavLink
               to={to}
               onClick={salir}
-              className={({ isActive }) => `Links${isActive ? ' active' : ''}`}
+              className={({ isActive }) => `Links${isActive ? " active" : ""}`}
             >
-              <div className='LinkIcon'>{icon}</div>
+              <div className="LinkIcon">{icon}</div>
               {sidebarOpen && <span>{label}</span>}
             </NavLink>
           </div>
         ))}
         <Divider />
 
-        <div className='w-full pl-4 h-10'>
-          <div className='flex items-center gap-4 w-full h-full'>
-            <img className='w-12 h-12 rounded-full' src={userState.photo} alt='user' />
-            {sidebarOpen && <span className='font-semibold text-base'>{userState.email}</span>}
+        <div className="w-full h-10">
+          <div className="flex items-center justify-center gap-4 w-full h-full">
+            <img
+              className="w-14 h-14 rounded-full"
+              src={userState.photo}
+              alt={userState.name}
+            />
+            {sidebarOpen && (
+              <span className="font-normal from-neutral-800 text-xl">
+                {userState.name}
+              </span>
+            )}
           </div>
         </div>
       </Container>
     </StyleSheetManager>
-  )
+  );
 }
 // #REGION DATA LINKS
 
@@ -142,11 +150,11 @@ export function Sidebar ({ sidebarOpen, setSidebarOpen, setIsLoggedIn }) {
 // #REGION DATA LINKS SECUNDARY
 const secundaryLinksArray = [
   {
-    label: 'Salir',
+    label: "Salir",
     icon: <ImExit />,
-    to: '/login'
-  }
-]
+    to: "/login",
+  },
+];
 // #ENDREGION
 
 // #REGION STYLED CONTAINER
@@ -154,7 +162,7 @@ const Container = styled.div`
   color: ${(props) => props.theme.text};
   background: ${(props) => props.theme.bg};
   position: sticky;
-  padding-top: ${({ isopen }) => (isopen ? '30%' : '100px')};
+  padding-top: ${({ isopen }) => (isopen ? "30%" : "100px")};
   .sidebarButton {
     position: absolute;
     top: 10px;
@@ -176,7 +184,7 @@ const Container = styled.div`
     justify-content: center;
     cursor: pointer;
     transition: all 0.3s;
-    transform: ${({ isopen }) => (isopen ? 'initial' : 'rotate(180deg)')};
+    transform: ${({ isopen }) => (isopen ? "initial" : "rotate(180deg)")};
     svg {
       font-size: 30px;
     }
@@ -197,10 +205,10 @@ const Container = styled.div`
       }
       cursor: pointer;
       transition: all 0.3s;
-      transform: ${({ isopen }) => (isopen ? 'scale(1.9)' : 'scale(1.9)')};
+      transform: ${({ isopen }) => (isopen ? "scale(1.9)" : "scale(1.9)")};
     }
     h2 {
-      display: ${({ isopen }) => (isopen ? 'block' : 'none')};
+      display: ${({ isopen }) => (isopen ? "block" : "none")};
     }
   }
 
@@ -247,7 +255,7 @@ const Container = styled.div`
     left: 1px;
   }
   .ThemeContent {
-    padding: ${({ isopen }) => (isopen ? '1% 15%' : '')};
+    padding: ${({ isopen }) => (isopen ? "1% 15%" : "")};
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -255,13 +263,13 @@ const Container = styled.div`
       display: block;
       padding: 10px;
       font-weight: 700;
-      opacity: ${({ isopen }) => (isopen ? '1' : '0')};
+      opacity: ${({ isopen }) => (isopen ? "1" : "0")};
       transition: all 0.3s;
       white-space: nowrap;
       overflow: hidden;
     }
     .toggleContent {
-      margin: ${({ isopen }) => (isopen ? 'auto 40px' : 'auto 15px')};
+      margin: ${({ isopen }) => (isopen ? "auto 40px" : "auto 15px")};
       width: 36px;
       height: 20px;
       border-radius: 10px;
@@ -306,7 +314,7 @@ const Container = styled.div`
             right: 0;
             bottom: 5px;
             background: ${({ themeuse }) =>
-              themeuse === 'light' ? v.lightbackground : v.checkbox};
+              themeuse === "light" ? v.lightbackground : v.checkbox};
             transition: 0.3s;
             &::before {
               position: absolute;
@@ -331,9 +339,9 @@ const Container = styled.div`
     }
   }
   @media (max-width: 1300px) {
-    padding-top: ${({ isopen }) => (isopen ? '30%' : '100px')};
+    padding-top: ${({ isopen }) => (isopen ? "30%" : "100px")};
   }
-`
+`;
 // #ENDREGION
 
 // #REGION STYLED COMPONENTS DIVISOR
@@ -342,5 +350,5 @@ const Divider = styled.div`
   width: 100%;
   background: ${(props) => props.theme.bg3};
   margin-bottom: 40px;
-`
+`;
 // #ENDREGION
