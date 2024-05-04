@@ -77,7 +77,7 @@ export function Sidebar ({ sidebarOpen, setSidebarOpen, setIsLoggedIn }) {
           <div className='imgContent'>
             <img src={logo} alt='Logo de la aplicación' />
           </div>
-          <h2>ROMER</h2>
+          <h2 className='text-2xl font-bold'>ROMER</h2>
         </div>
         {linksArray.map(({ icon, label, to }) => (
           <div className='LinkContainer' key={label}>
