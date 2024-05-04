@@ -61,6 +61,9 @@ const Container = styled.div`
 
         .Headboard-title{
             color: ${(props)=>props.theme.text};
+            font-size: 2rem;
+            font-weight: bold;
+            letter-spacing: 1px;
         }
     }
     
@@ -69,5 +72,4 @@ const Container = styled.div`
         gap: 20px;
         
     }
-    
 `;

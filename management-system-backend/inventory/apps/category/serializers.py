@@ -1,11 +1,11 @@
 from rest_framework import serializers
-from .models import Category
+from .models import Categories
 
 
 class CategorySerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = Category
+        model = Categories
         fields = '__all__'
 
 
@@ -14,7 +14,7 @@ class CustomCategorySerializer(serializers.Serializer):
     description = serializers.CharField()
 
     def create(self, validated_data):
-        return Category.objects.create(**validated_data)
+        return Categories.objects.create(**validated_data)
 
     def update(self, instance, validated_data):
         instance.name = validated_data.get('name', instance.name)

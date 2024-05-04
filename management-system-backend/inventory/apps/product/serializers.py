@@ -1,14 +1,14 @@
 from rest_framework import serializers
-from .models import Product
+from .models import Products
 
-from apps.category.models import Category
-from apps.supplier.models import Supplier
+from apps.category.models import Categories
+from apps.supplier.models import Suppliers
 
 
 class ProductSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = Product
+        model = Products
         fields = '__all__'
 
 
@@ -18,12 +18,12 @@ class CustomProductSerializer(serializers.Serializer):
     stock = serializers.IntegerField()
     description = serializers.CharField()
     id_vendor = serializers.PrimaryKeyRelatedField(
-        queryset=Supplier.objects.all(), write_only=True)
+        queryset=Suppliers.objects.all(), write_only=True)
     id_category = serializers.PrimaryKeyRelatedField(
-        queryset=Category.objects.all(), write_only=True)
+        queryset=Categories.objects.all(), write_only=True)
 
     def create(self, validated_data):
-        return Product.objects.create(**validated_data)
+        return Products.objects.create(**validated_data)
 
     def update(self, instance, validated_data):
         instance.name = validated_data.get('name', instance.name)

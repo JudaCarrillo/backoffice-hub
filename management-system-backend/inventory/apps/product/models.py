@@ -1,4 +1,6 @@
 from django.db import models
+from apps.category.models import Categories
+from apps.supplier.models import Suppliers
 
 
 class Products(models.Model):
@@ -10,8 +12,8 @@ class Products(models.Model):
     units_on_order = models.SmallIntegerField()
     reorder_level = models.SmallIntegerField()
     discontinued = models.BooleanField()
-    id_category = models.ForeignKey('Categories')
-    id_supplier = models.ForeignKey('Suppliers')
+    id_category = models.ForeignKey(Categories, on_delete=models.PROTECT)
+    id_supplier = models.ForeignKey(Suppliers, on_delete=models.PROTECT)
 
     def __str__(self):
         return self.name

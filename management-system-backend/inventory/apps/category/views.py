@@ -9,7 +9,7 @@ from drf_yasg.utils import swagger_auto_schema
 import csv
 
 from .category_manager import CategoryManager
-from .models import Category
+from .models import Categories
 from .serializers import CustomCategorySerializer, CategorySerializer
 category = CategoryManager()
 
@@ -59,7 +59,7 @@ def update(request, id):
 
 @api_view(['GET'])
 def export_to_csv(request):
-    categories = Category.objects.all()
+    categories = Categories.objects.all()
     serializer = CategorySerializer(categories, many=True)
     headers = ['id', 'name', 'description', 'created_at']
     filename = "category_data.csv"

@@ -1,9 +1,9 @@
 from django.contrib import admin
-from .models import Category
+from .models import Categories
 
 
-class CategoryAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'description', 'created_at')
+class CategoriesAdmin(admin.ModelAdmin):
+    list_display = ('id', 'name', 'description')
 
 
-admin.site.register(Category, CategoryAdmin)
+admin.site.register(Categories, CategoriesAdmin)
