@@ -44,7 +44,7 @@ class CategoryService:
             return {'success': False, 'data': None, 'message': 'Missing required fields'}
 
         try:
-            category = Categories.objects.create(
+            Categories.objects.create(
                 name=name,
                 description=description,
                 picture=picture
@@ -52,8 +52,7 @@ class CategoryService:
         except Exception as e:
             return {'success': False, 'data': None, 'message': 'Error creating category. ' + str(e)}
 
-        serializer = CategorySerializer(category).data
-        return {'success': True, 'data': serializer, 'message': 'Category created'}
+        return {'success': True, 'data': None, 'message': 'Category created'}
 
     def delete(self, id):
         category = self._category_exists('id', id)
