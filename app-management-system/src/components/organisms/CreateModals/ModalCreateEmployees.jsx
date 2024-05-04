@@ -7,6 +7,8 @@ import { getUserProfile } from "../../../api/auth";
 import { ModalCompleto } from "../../modals/modalCompleto";
 import ComboBox from "../../modals/comboBox";
 import { MdOutlineAirlineSeatLegroomReduced } from "react-icons/md";
+import Img_input from "../../molecules/Img/img_input";
+import ChkBox from "../../molecules/CheckBox/checkbox";
 
 export function ModalCreateEmployees({ modalName, title, onReceiveRows }) {
   const [showModal, setShowModal] = useState(false);
@@ -294,12 +296,13 @@ export function ModalCreateEmployees({ modalName, title, onReceiveRows }) {
                   placeholder="Escribe notas..."
                 />  
 
-                <input
+                <Img_input
                   type="file"
                   name="photo"
                   id="photo"
                   onChange={handleImageChange}
                   accept="image/*"
+                  chooseLabel="Seleccionar Archivo"
                 />
                 {/* <Field
                   id="photo"
@@ -330,7 +333,7 @@ export function ModalCreateEmployees({ modalName, title, onReceiveRows }) {
                   onChange={handleChange}
                   required
                 />
-                <Field
+                <ChkBox
                   name="is_active"
                   type="checkbox"
                   labelFor="is_active"

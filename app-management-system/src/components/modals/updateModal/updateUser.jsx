@@ -11,9 +11,11 @@ import ComboBox from "../comboBox";
 import { InputComponent } from "../input";
 import { ModalParaUpdate } from "../modalparaUpdate";
 import Field from '../../molecules/Field/field';
+import LongText from "../../molecules/LongText/longText";
 import { InputText } from "primereact/inputtext";
 import { FloatLabel } from "primereact/floatlabel";
-
+import ChkBox from "../../molecules/CheckBox/checkbox";
+import ImgInput from "../../molecules/Img/img_input";
 export function UpdateUserModal({
   open,
   onClose,
@@ -22,14 +24,30 @@ export function UpdateUserModal({
   title,
 }) {
   const [users, setUsers] = useState({
-    username: "",
+    last_name: "",
+    first_name: "",
+    title: "",
+    title_of_courtesy: "",
+    birth_date: "",
+    hire_date: "",
+    address: "",
+    city: "",
+    region: "",
+    postal_code: 0,
+    country: "",
+    home_phone: 0,
+    extension: "",
+    notes: "",
     email: "",
     password: "",
-    is_active: false,
+    is_active: true,
     id_profile: "",
+    reports_to: "",
+    photo: "",
   });
-
+  const [usersToReport, setUsersToReport] = useState([]);
   const [profileUserName, setProfileUserName] = useState("");
+  const [userProfiles, setUserProfiles] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -44,11 +62,26 @@ export function UpdateUserModal({
           throw new Error(message);
         }
         setUsers({
-          username: items.username,
+          last_name: items.last_name,
+          first_name: items.first_name,
+          title: items.title,
+          title_of_courtesy: items.title_of_courtesy,
+          birth_date: items.birth_date,
+          hire_date: items.hire_date,
+          address: items.address,
+          city: items.city,
+          region: items.region,
+          postal_code: items.postal_code,
+          country: items.country,
+          home_phone: items.home_phone,
+          extension: items.extension,
+          notes: items.notes,
           email: items.email,
           password: "",
           is_active: items.is_active,
           id_profile: items.id_profile,
+          reports_to: items.reports_to,
+          photo: items.photo,
         });
       } catch (error) {
         console.error("Error al obtener los detalles de la categoría:", error);
@@ -79,6 +112,15 @@ export function UpdateUserModal({
     fetchProfileName();
   }, [users.id_profile]);
 
+  const fetchUsersReportsTo = async () => {
+    const response = await getUsersToReport();
+    const { success, data, message } = response.data;
+    if (success) {
+      setUsersToReport(data);
+    } else {
+      throw new Error(message);
+    }
+  };
   const getProfiles = async () => {
     const response = await getUserProfile();
     const { success, data, message } = response.data;
@@ -105,11 +147,26 @@ export function UpdateUserModal({
   };
   const clearFormFields = () => {
     setUsers({
-      username: "",
-      email: "",
-      password: "",
-      is_active: false,
-      id_profile: "",
+      last_name: "",
+    first_name: "",
+    title: "",
+    title_of_courtesy: "",
+    birth_date: "",
+    hire_date: "",
+    address: "",
+    city: "",
+    region: "",
+    postal_code: 0,
+    country: "",
+    home_phone: 0,
+    extension: "",
+    notes: "",
+    email: "",
+    password: "",
+    is_active: true,
+    id_profile: "",
+    reports_to: "",
+    photo: "",
     });
   };
   const handleChange = (e) => {
@@ -131,58 +188,230 @@ export function UpdateUserModal({
       id_profile: selectedProfile,
     }));
   };
-
+  const handleChangeReportsTo = (selectedReportsTo) => {
+    setUsers((prevUser) => ({
+      ...prevUser,
+      reports_to: selectedReportsTo,
+    }));
+  };
   return (
-    <ModalContainer open={open}>
-      <ModalParaUpdate
+      <ModalParaUpdate 
+        open={open}
         title={title}
         showModalContent={() => (
           <>
-            <Field
-              name={"username"}
-              label={"Usuario"}
-              type={"text"}
-              id={"usuario"}
-              value={users.username}
-              onChange={handleChange}
-            />
-            <Field
-              name={"email"}
-              label={"E-mail"}
-              type={"email"}
-              id={"email"}
-              value={users.email}
-              onChange={handleChange}
-            />
-            <InputComponent
-              name={"password"}
-              label={"Contraseña"}
-              type={"password"}
-              id={"contrasena"}
-              value={users.password}
-              onChange={handleChange}
-            />
-            <InputComponent
-              is_required={false}
-              name={"is_active"}
-              label={"Activo"}
-              type={"checkbox"}
-              id={"is_active"}
-              checked={users.is_active}
-              onChange={handleChange}
-            />
-            <ComboBox
-              name="id_profile"
-              label={profileUserName}
-              onChange={handleChangeProfile}
-              callback={getProfiles}
-            />
+            <FormContainer>
+              <FormColumn>
+                <Field
+                  name="last_name"
+                  labelFor="last_name"
+                  labelText="Apellido:"
+                  inputId="LastNameInput"
+                  type="text"
+                  value={users.last_name}
+                  onChange={handleChange}
+                />
+
+                <Field
+                  name="first_name"
+                  labelFor="first_name"
+                  labelText="Nombre:"
+                  inputId="FirstNameInput"
+                  type="text"
+                  value={users.first_name}
+                  onChange={handleChange}
+                />
+
+                <Field
+                  name="title"
+                  labelFor="title"
+                  labelText="Título:"
+                  inputId="TitleInput"
+                  type="text"
+                  value={users.title}
+                  onChange={handleChange}
+                />
+
+                <Field
+                  name="title_of_courtesy"
+                  labelFor="title_of_courtesy"
+                  labelText="Título de cortesía:"
+                  inputId="TitleOfCourtesyInput"
+                  type="text"
+                  value={users.title_of_courtesy}
+                  onChange={handleChange}
+                />
+
+                <Field
+                  name="birth_date"
+                  labelFor="birth_date"
+                  labelText="Fecha de nacimiento:"
+                  inputId="BirthDateInput"
+                  type="date"
+                  value={users.birth_date}
+                  onChange={handleChange}
+                />
+
+                <Field
+                  name="hire_date"
+                  labelFor="hire_date"
+                  labelText="Fecha de contratación:"
+                  inputId="HireDateInput"
+                  type="date"
+                  value={users.hire_date}
+                  onChange={handleChange}
+                />
+
+                <Field
+                  name="address"
+                  labelFor="address"
+                  labelText="Dirección:"
+                  inputId="AddressInput"
+                  type="text"
+                  value={users.address}
+                  onChange={handleChange}
+                />
+
+                <Field
+                  name="city"
+                  labelFor="city"
+                  labelText="Ciudad:"
+                  inputId="CityInput"
+                  type="text"
+                  value={users.city}
+                  onChange={handleChange}
+                  minLength={15}
+                />
+
+                <Field
+                  name="region"
+                  labelFor="region"
+                  labelText="Región:"
+                  inputId="RegionInput"
+                  type="text"
+                  value={users.region}
+                  onChange={handleChange}
+                />
+
+                <Field
+                  name="postal_code"
+                  labelFor="postal_code"
+                  labelText="Código Postal:"
+                  inputId="PostalCodeInput"
+                  type="text"
+                  maxLength={10}
+                  required
+                  value={users.postal_code}
+                  onChange={handleChange}
+                />
+
+                <ComboBox
+                  name="reports_to"
+                  label="Seleccione un Usuario"
+                  onChange={handleChangeReportsTo}
+                  options={usersToReport}
+                />
+              </FormColumn>
+              <FormColumn>
+                <Field
+                  name="country"
+                  labelFor="country"
+                  labelText="País:"
+                  inputId="CountryInput"
+                  type="text"
+                  value={users.country}
+                  onChange={handleChange}
+                />
+
+                <Field
+                  name="home_phone"
+                  labelFor="home_phone"
+                  labelText="Teléfono de casa:"
+                  inputId="HomePhoneInput"
+                  type="tel"
+                  value={users.home_phone}
+                  onChange={handleChange}
+                />
+
+                <Field
+                  name="extension"
+                  labelFor="extension"
+                  labelText="Extensión:"
+                  inputId="ExtensionInput"
+                  type="text"
+                  value={users.extension}
+                  onChange={handleChange}
+                />
+
+                <LongText
+                  id="notes"
+                  name="notes"
+                  value={users.notes}
+                  onChange={handleChange}
+                  labelFor="notes"
+                  labelText="Notas:"
+                  placeholder="Escribe notas..."
+                />  
+
+                {/*<Img_input
+                  type="file"
+                  name="photo"
+                  id="photo"
+                  onChange={handleImageChange}
+                  accept="image/*"
+                  chooseLabel="Seleccionar Archivo"
+        />*/}
+                {/* <Field
+                  id="photo"
+                  name="photo"
+                  type="file"
+                  labelFor="photo"
+                  labelText="Imagen:"
+                  // value={photo ? photo.name : ""}
+                  onChange={handleImageChange}
+                /> */}
+                <Field
+                  name="email"
+                  labelFor="email"
+                  labelText="Email:"
+                  inputId="EmailInput"
+                  type="email"
+                  value={users.email}
+                  onChange={handleChange}
+                  required
+                />
+                <Field
+                  name="password"
+                  labelFor="password"
+                  labelText="Contraseña:"
+                  inputId="PasswordInput"
+                  type="password"
+                  value={users.password}
+                  onChange={handleChange}
+                  required
+                />
+                <ChkBox
+                  name="is_active"
+                  type="checkbox"
+                  labelFor="is_active"
+                  labelText="Activo:"
+                  value={users.is_active}
+                  onChange={handleChange}
+                />
+                <ComboBox
+                  name="id_profile"
+                  label="Seleccione un perfil"
+                  onChange={handleChangeProfile}
+                  options={userProfiles}
+                />
+              </FormColumn>
+            </FormContainer>
           </>
         )}
         onClose={handleClose}
         onUpdate={handleUpdate}
       />
-    </ModalContainer>
+    
   );
 }
 
@@ -196,4 +425,13 @@ const ModalContainer = styled.div`
   padding: 20px;
   border: 1px solid #ccc;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+`;
+const FormContainer = styled.div`
+  display: flex;
+  gap: 20px;
+`;
+
+const FormColumn = styled.div`
+  display: flex;
+  flex-direction: column;
 `;

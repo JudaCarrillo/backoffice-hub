@@ -4,14 +4,17 @@ import { InputText } from "primereact/inputtext";
 
 const Input = ({ id, name, type, value, onChange }) => {
   return (
-      <InputText 
+    <InputText 
       id={id} 
       name={name} 
       type={type} 
       value={value} 
-      onChange={onChange} />
+      onChange={onChange} 
+      className="w-15 h-10" // Esto aplica un ancho completo y una altura de 12 unidades
+    />
   );
 };
+
 
 
 export default Input;
