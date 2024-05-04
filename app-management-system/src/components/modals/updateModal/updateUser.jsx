@@ -37,12 +37,13 @@ export function UpdateUserModal({
     extension: "",
     notes: "",
     email: "",
-    password: "",
     is_active: true,
     id_profile: "",
     reports_to: "",
     photo: "",
   });
+
+  const [photo, setPhoto] = useState(null);
   const [usersToReport, setUsersToReport] = useState([]);
   const [userProfiles, setUserProfiles] = useState([]);
 
@@ -78,7 +79,6 @@ export function UpdateUserModal({
           extension: data.extension,
           notes: data.notes,
           email: data.email,
-          password: "",
           is_active: data.is_active,
           id_profile: data.id_profile,
           reports_to: data.reports_to,
@@ -99,7 +99,18 @@ export function UpdateUserModal({
 
   const handleUpdate = async () => {
     try {
-      await updateUsers(userId, users);
+      const formData = new FormData();
+
+      Object.keys(users).forEach((key) => {
+        formData.append(key, users[key]);
+      });
+
+      if (photo) {
+        formData.delete("photo");
+        formData.append("photo", photo);
+      }
+
+      await updateUsers(userId, formData);
       const response = await getUsuarios();
       const { data } = response.data;
       onReceiveRows(data);
@@ -125,25 +136,16 @@ export function UpdateUserModal({
       extension: "",
       notes: "",
       email: "",
-      password: "",
       is_active: true,
       id_profile: "",
       reports_to: "",
       photo: "",
     });
   };
-  const handleChange = (e) => {
-    const value =
-      e.target.type === "checkbox" ? e.target.checked : e.target.value;
-    setUsers({
-      ...users,
-      [e.target.name]: value,
-    });
-  };
 
   const handleClose = () => {
-    clearFormFields(); // Limpia los campos del formulario
-    onClose(); // Cierra el modal
+    clearFormFields();
+    onClose();
   };
 
   const handleChangeProfile = (selectedProfile) => {
@@ -158,6 +160,17 @@ export function UpdateUserModal({
       reports_to: selectedReportsTo,
     }));
   };
+
+  const handleChange = (e) => {
+    const value =
+      e.target.type === "checkbox" ? e.target.checked : e.target.value;
+    setUsers({ ...users, [e.target.name]: value });
+  };
+
+  const handleImageChange = (event) => {
+    setPhoto(event.files[0]);
+  };
+
   return (
     <Container>
       {open && userId && (
@@ -168,6 +181,13 @@ export function UpdateUserModal({
           title={title}
           showModalContent={(handleCloseModal) => (
             <FormContainer className="bg-slate-400 p-5">
+              <img
+                src={users.photo}
+                alt={users.first_name}
+                width="500px"
+                className="rounded-full"
+              />
+
               <FormColumn>
                 <Field
                   name="last_name"
@@ -340,17 +360,6 @@ export function UpdateUserModal({
                   inputId="EmailInput"
                   type="email"
                   value={users.email}
-                  onChange={handleChange}
-                  required
-                />
-
-                <Field
-                  name="password"
-                  labelFor="password"
-                  labelText="Contraseña:"
-                  inputId="PasswordInput"
-                  type="password"
-                  value={users.password}
                   onChange={handleChange}
                   required
                 />
