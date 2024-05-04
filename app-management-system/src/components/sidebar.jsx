@@ -22,9 +22,10 @@ export function Sidebar({ sidebarOpen, setSidebarOpen, setIsLoggedIn }) {
   };
 
   useEffect(() => {
-    const storedPrivileges = JSON.parse(localStorage.getItem("user"));
-    if (storedPrivileges) {
-      setUserPrivileges(storedPrivileges);
+    const item = localStorage.getItem("user");
+    if (item) {
+      const { privileges } = JSON.parse(item);
+      setUserPrivileges(privileges);
     }
   }, []);
 

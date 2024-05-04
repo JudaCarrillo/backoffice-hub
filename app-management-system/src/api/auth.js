@@ -10,6 +10,10 @@ export const getUsuarios = () => {
   return axios.get(`${url_base}/${apiVersion}/${main_subject}`);
 };
 
+export const getUsersToReport = () => {
+  return axios.get(`${url_base}/${apiVersion}/${main_subject}to-report`);
+}
+
 export const disabledUser = (id) => {
   return axios.post(`${url_base}/${apiVersion}/${main_subject}disabled/${id}`);
 };
@@ -36,5 +40,5 @@ export const getUserProfile = () => {
 };
 
 export const login = (data) => {
-  return axios.post(`${url_base}${apiVersion}/${login_subject}`, data);
+  return axios.post(`${url_base}${apiVersion}/auth/${login_subject}`, data);
 };

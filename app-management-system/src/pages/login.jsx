@@ -143,10 +143,9 @@ export function Login({ onLoginSuccess, setIsForgotPassword }) {
         throw new Error("Credenciales incorrectas");
       }
 
-      const items = { privileges: [...privileges], user: user };
-      console.log(items);
+      const items = JSON.stringify({ privileges: [...privileges], user: user });
       onLoginSuccess();
-      localStorage.setItem("user", JSON.stringify([...privileges]));
+      localStorage.setItem("user", items);
     } catch (error) {
       const message =
         error?.response?.data?.message ||

@@ -1,39 +1,42 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { createUsers, getUsuarios } from "../../../api/auth";
-import Field from '../../molecules/Field/field';
+import { createUsers, getUsersToReport } from "../../../api/auth";
+import Field from "../../molecules/Field/field";
 import LongText from "../../molecules/LongText/longText";
 import { getUserProfile } from "../../../api/auth";
 import { ModalCompleto } from "../../modals/modalCompleto";
 import ComboBox from "../../modals/comboBox";
+import { MdOutlineAirlineSeatLegroomReduced } from "react-icons/md";
 
-export function ModalCreateEmployees({modalName, title, onReceiveRows}) {
+export function ModalCreateEmployees({ modalName, title, onReceiveRows }) {
   const [showModal, setShowModal] = useState(false);
   const [userProfiles, setUserProfiles] = useState([]);
+  const [usersToReport, setUsersToReport] = useState([]);
+  const [photo, setPhoto] = useState(null);
+
   const [users, setUsers] = useState({
-    employee_ID: '', // Si es un autoincremento, déjalo vacío
-    last_name: '',
-    first_name: '',
-    title: '',
-    title_of_courtesy: '',
-    birth_date: '',
-    hire_date: '',
-    address: '',
-    city: '',
-    region: '',
+    last_name: "",
+    first_name: "",
+    title: "",
+    title_of_courtesy: "",
+    birth_date: "",
+    hire_date: "",
+    address: "",
+    city: "",
+    region: "",
     postal_code: 0,
-    country: '',
+    country: "",
     home_phone: 0,
-    extension: '',
-    notes: '',
-	email: '',
-    password: '',
-    is_active: false,
-    id_profile: '',
-    reports_to: '',
-    photo_path: '',
+    extension: "",
+    notes: "",
+    email: "",
+    password: "",
+    is_active: true,
+    id_profile: "",
+    reports_to: "",
+    photo: "",
   });
-  
+
   useEffect(() => {
     const fetchUserProfiles = async () => {
       const response = await getUserProfile();
@@ -45,10 +48,20 @@ export function ModalCreateEmployees({modalName, title, onReceiveRows}) {
       }
     };
 
+    const fetchUsersReportsTo = async () => {
+      const response = await getUsersToReport();
+      const { success, data, message } = response.data;
+      if (success) {
+        setUsersToReport(data);
+      } else {
+        throw new Error(message);
+      }
+    };
+
     if (showModal) {
       fetchUserProfiles();
+      fetchUsersReportsTo();
     }
-
   }, [showModal]);
 
   const toggleModal = () => setShowModal(!showModal);
@@ -60,32 +73,40 @@ export function ModalCreateEmployees({modalName, title, onReceiveRows}) {
     }));
   };
 
+  const handleChangeReportsTo = (selectedReportsTo) => {
+    setUsers((prevUser) => ({
+      ...prevUser,
+      reports_to: selectedReportsTo,
+    }));
+  };
+
   const handleCrearEmployee = async () => {
     try {
-      const data2 = {
-        last_name:users.last_name,
-		first_name: users.first_name,
-		title: users.title,
-		title_of_courtesy: users.title_of_courtesy,
-		birth_date: users.birth_date,
-		hire_date: users.hire_date,
-		address: users.address,
-		city: users.cityData,
-		region: users.region,
-		postal_code: users.postal_code,
-		country: users.country,
-		home_phone: users.home_phone,
-		extension: users.extension,
-		notes: users.notes,
-		email: users.email,
-		password: users.password,
-		is_active: users.is_active,
-		id_profile: users.id_profile,
-		reports_to: users.reports_to,
-		photo_path: users.photo_path,
-      };
-      const response = await createUsers(data2);
+      const formData = new FormData();
+      formData.append("last_name", users.last_name);
+      formData.append("first_name", users.first_name);
+      formData.append("title", users.title);
+      formData.append("title_of_courtesy", users.title_of_courtesy);
+      formData.append("birth_date", users.birth_date);
+      formData.append("hire_date", users.hire_date);
+      formData.append("address", users.address);
+      formData.append("city", users.city);
+      formData.append("region", users.region);
+      formData.append("postal_code", users.postal_code);
+      formData.append("country", users.country);
+      formData.append("home_phone", users.home_phone);
+      formData.append("extension", users.extension);
+      formData.append("notes", users.notes);
+      formData.append("email", users.email);
+      formData.append("password", users.password);
+      formData.append("is_active", users.is_active);
+      formData.append("id_profile", users.id_profile);
+      formData.append("reports_to", users.reports_to);
+      formData.append("photo", photo);
+
+      const response = await createUsers(formData);
       const { success, data, message } = response.data;
+
       if (success) {
         const rows = await getUsuarios();
         const {
@@ -100,14 +121,19 @@ export function ModalCreateEmployees({modalName, title, onReceiveRows}) {
       console.error("Error al crear el empleado:", error);
     }
   };
+
   const handleChange = (e) => {
     const value =
       e.target.type === "checkbox" ? e.target.checked : e.target.value;
     setUsers({ ...users, [e.target.name]: value });
   };
 
+  const handleImageChange = (event) => {
+    setPhoto(event.target.files[0]);
+  };
+
   return (
-<Container>
+    <Container>
       <button className="button_head" onClick={toggleModal}>
         {modalName}
       </button>
@@ -195,6 +221,7 @@ export function ModalCreateEmployees({modalName, title, onReceiveRows}) {
                   type="text"
                   value={users.city}
                   onChange={handleChange}
+                  minLength={15}
                 />
 
                 <Field
@@ -206,7 +233,7 @@ export function ModalCreateEmployees({modalName, title, onReceiveRows}) {
                   value={users.region}
                   onChange={handleChange}
                 />
-              
+
                 <Field
                   name="postal_code"
                   labelFor="postal_code"
@@ -218,7 +245,14 @@ export function ModalCreateEmployees({modalName, title, onReceiveRows}) {
                   value={users.postal_code}
                   onChange={handleChange}
                 />
-			  </FormColumn>
+
+                <ComboBox
+                  name="reports_to"
+                  label="Seleccione un Usuario"
+                  onChange={handleChangeReportsTo}
+                  options={usersToReport}
+                />
+              </FormColumn>
               <FormColumn>
                 <Field
                   name="country"
@@ -229,7 +263,7 @@ export function ModalCreateEmployees({modalName, title, onReceiveRows}) {
                   value={users.country}
                   onChange={handleChange}
                 />
-              
+
                 <Field
                   name="home_phone"
                   labelFor="home_phone"
@@ -258,49 +292,45 @@ export function ModalCreateEmployees({modalName, title, onReceiveRows}) {
                   labelFor="notes"
                   labelText="Notas:"
                   placeholder="Escribe notas..."
-                />
+                />  
 
-                <Field
-                  name="reports_to"
-                  labelFor="reports_to"
-                  labelText="Reporta a:"
-                  inputId="ReportsToInput"
-                  type="number"
-                  value={users.reports_to}
-                  onChange={handleChange}
-                />
-
-                <Field
-                  id="photo_path"
-                  name="photo_path"
+                <input
                   type="file"
-                  labelFor="photo_path"
-                  labelText="Imagen:"
-                  accept=".jpeg, .jpg, .png"
-                  value={users.photo_path}
-                  onChange={handleChange}
+                  name="photo"
+                  id="photo"
+                  onChange={handleImageChange}
+                  accept="image/*"
                 />
-				<Field
+                {/* <Field
+                  id="photo"
+                  name="photo"
+                  type="file"
+                  labelFor="photo"
+                  labelText="Imagen:"
+                  // value={photo ? photo.name : ""}
+                  onChange={handleImageChange}
+                /> */}
+                <Field
                   name="email"
                   labelFor="email"
                   labelText="Email:"
                   inputId="EmailInput"
-				  type="email"
+                  type="email"
                   value={users.email}
-				  onChange={handleChange}
-				  required
-				/>
-				<Field
+                  onChange={handleChange}
+                  required
+                />
+                <Field
                   name="password"
                   labelFor="password"
                   labelText="Contraseña:"
                   inputId="PasswordInput"
-				  type="password"
+                  type="password"
                   value={users.password}
-				  onChange={handleChange}
-				  required
-				/>
-				<Field
+                  onChange={handleChange}
+                  required
+                />
+                <Field
                   name="is_active"
                   type="checkbox"
                   labelFor="is_active"
@@ -308,12 +338,12 @@ export function ModalCreateEmployees({modalName, title, onReceiveRows}) {
                   value={users.is_active}
                   onChange={handleChange}
                 />
-				<ComboBox
-                name="id_profile"
-                label="Seleccione un perfil"
-                onChange={handleChangeProfile}
-                options={userProfiles}
-              />
+                <ComboBox
+                  name="id_profile"
+                  label="Seleccione un perfil"
+                  onChange={handleChangeProfile}
+                  options={userProfiles}
+                />
               </FormColumn>
             </FormContainer>
           )}
@@ -347,7 +377,6 @@ const Container = styled.div`
     }
   }
 `;
-
 
 const FormContainer = styled.div`
   display: flex;
