@@ -12,7 +12,7 @@ import Field from "../../molecules/Field/field";
 import Img_input from "../../molecules/Img/img_input";
 import LongText from "../../molecules/LongText/longText";
 
-export function ModalCreateEmployees({ modalName, title, onReceiveRows }) {
+export function ModalCreateEmployees({ modalName, title, onReceiveRows, label }) {
   const [showModal, setShowModal] = useState(false);
   const [userProfiles, setUserProfiles] = useState([]);
   const [usersToReport, setUsersToReport] = useState([]);
@@ -133,7 +133,7 @@ export function ModalCreateEmployees({ modalName, title, onReceiveRows }) {
   };
 
   const handleImageChange = (event) => {
-    setPhoto(event.target.files[0]);
+    setPhoto(event.files[0]);
   };
 
   return (
@@ -143,6 +143,9 @@ export function ModalCreateEmployees({ modalName, title, onReceiveRows }) {
       </button>
       {showModal && (
         <Modal
+          label={label}
+          onClose={toggleModal}
+          onAction={handleCrearEmployee}
           title={title}
           showModalContent={(handleCloseModal) => (
             <FormContainer className="bg-slate-400 p-5">
@@ -351,8 +354,6 @@ export function ModalCreateEmployees({ modalName, title, onReceiveRows }) {
               </FormColumn>
             </FormContainer>
           )}
-          onClose={toggleModal}
-          onCreate={handleCrearEmployee}
         />
       )}
     </Container>

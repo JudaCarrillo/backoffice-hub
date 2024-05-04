@@ -1,27 +1,21 @@
 import styled from "styled-components";
 import { ButtonModal } from "./buttonmodal";
 
-export function Modal({
-  title,
-  showModalContent,
-  onClose,
-  onCreate,
-  onUpdate,
-}) {
+export function Modal({ title, showModalContent, onClose, onAction, label }) {
   const handleCloseModal = () => {
     onClose();
   };
 
-  const handleCreate = async (e) => {
+  const handleAction = async (e) => {
     e.preventDefault();
-    await onCreate();
+    await onAction();
     onClose();
   };
 
   return (
     <Container>
       <div className="modal-overlay">
-        <form onSubmit={handleCreate}>
+        <form onSubmit={handleAction}>
           <div className="modal">
             <div className="cabeza">
               <h2>{title}</h2>
@@ -37,7 +31,7 @@ export function Modal({
                   />
                 </li>
                 <li>
-                  <ButtonModal type="submit" name="Crear" />
+                  <ButtonModal type="submit" name={label} />
                 </li>
               </ul>
             </div>

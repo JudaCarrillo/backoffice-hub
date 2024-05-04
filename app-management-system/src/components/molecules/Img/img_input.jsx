@@ -21,3 +21,4 @@ const Img_input = ({ name, id, accept, onChange }) => {
 };
 
 export default Img_input;
+  

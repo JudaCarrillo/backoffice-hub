@@ -13,13 +13,6 @@ from .serializers import ProductSerializer
 services = ProductService()
 
 
-def get_base_url(request):
-    HOST = request.META.get('HTTP_HOST')
-    PROTOCOL = 'https' if 'HTTPS' in request.META.get(
-        'SERVER_PROTOCOL') else 'http'
-    return f'{PROTOCOL}://{HOST}'
-
-
 @swagger_auto_schema(
     methods=['GET'],
     responses={
@@ -30,9 +23,8 @@ def get_base_url(request):
 )
 @api_view(['GET'])
 def index(request):
-    BASE_URL = get_base_url(request)
     try:
-        result = services.get_all(BASE_URL)
+        result = services.get_all()
         return Response(result)
     except Exception as e:
         print(e)
@@ -50,9 +42,8 @@ def index(request):
 )
 @api_view(['GET'])
 def get_by_id(request, id):
-    BASE_URL = get_base_url(request)
     try:
-        result = services.get_by_id(id, BASE_URL)
+        result = services.get_by_id(id)
 
         if not result.get('success'):
             return Response(result, status=status.HTTP_400_BAD_REQUEST)
