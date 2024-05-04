@@ -9,7 +9,7 @@ class UserServices:
     def get_all(self, base_url) -> dict:
         users = User.objects.values(
             'photo', 'email', 'last_name', 'first_name', 'hire_date',
-            'country', 'city', 'address', 'home_phone', 'is_active'
+            'country', 'city', 'home_phone', 'is_active'
         )
 
         for user in users:

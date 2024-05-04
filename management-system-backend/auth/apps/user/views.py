@@ -6,8 +6,6 @@ from drf_yasg.utils import swagger_auto_schema
 
 from .serializers import UserSerializer
 from .services import UserServices
-from django.core.files.storage import default_storage
-from django.core.files.base import ContentFile
 
 services = UserServices()
 
@@ -85,7 +83,7 @@ def create(request):
 
     except Exception as e:
         print(e)
-        return Response({'success': False, 'data': None, 'message': f'Internal Server Error {e}' }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        return Response({'success': False, 'data': None, 'message': f'Internal Server Error {e}'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 @swagger_auto_schema(
@@ -99,19 +97,19 @@ def create(request):
 )
 @api_view(['PUT'])
 def update_user(request, id):
-    # try:
-    result = services.update(
-        id,
-        request_files=request.FILES,
-        request_data=request.data
-    )
-    if not result.get('success'):
-        return Response(result, status=status.HTTP_400_BAD_REQUEST)
-    return Response(result, status=status.HTTP_200_OK)
+    try:
+        result = services.update(
+            id,
+            request_files=request.FILES,
+            request_data=request.data
+        )
+        if not result.get('success'):
+            return Response(result, status=status.HTTP_400_BAD_REQUEST)
+        return Response(result, status=status.HTTP_200_OK)
 
-    """ except Exception as e:
+    except Exception as e:
         print(e)
-        return Response({'success': False, 'data': None, 'message': 'Internal Server Error'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR) """
+        return Response({'success': False, 'data': None, 'message': 'Internal Server Error'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 @swagger_auto_schema(

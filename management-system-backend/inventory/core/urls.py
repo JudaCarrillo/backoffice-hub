@@ -42,15 +42,12 @@ schema_view = get_schema_view(
 
 urlpatterns = [
     # Swagger
-    path('doc<format>/', schema_view.without_ui(cache_timeout=0), name='schema-json'),
-    path('doc/', schema_view.with_ui('swagger',
+    path('documentation/', schema_view.with_ui('swagger',
          cache_timeout=0), name='schema-swagger-ui'),
-    path('redoc/', schema_view.with_ui('redoc',
-         cache_timeout=0), name='schema-redoc'),
 
     path('admin/', admin.site.urls),
-    path(f'{VERSION}/category/', include('apps.category.urls')),
-    path(f'{VERSION}/product/', include('apps.product.urls')),
-    path(f'{VERSION}/supplier/', include('apps.supplier.urls')),
+    path(f'{VERSION}/categories/', include('apps.category.urls')),
+    path(f'{VERSION}/suppliers/', include('apps.supplier.urls')),
     # path(f'{VERSION}/customer/', include('apps.customer.urls')),
+    # path(f'{VERSION}/product/', include('apps.product.urls')),
 ]
