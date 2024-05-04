@@ -10,7 +10,7 @@ const Input = ({ id, name, type, value, onChange }) => {
       type={type} 
       value={value} 
       onChange={onChange} 
-      className="w-15 h-10" // Esto aplica un ancho completo y una altura de 12 unidades
+      className="w-15 h-10 p-2" // Esto aplica un ancho completo y una altura de 12 unidades
     />
   );
 };
@@ -28,7 +28,6 @@ const StyledInput = styled.input`
 
   &:focus {
     outline: none;
-    border-color: #1766DC;
-    box-shadow: 0 0 0 3px rgba(23, 102, 220, 0.2);
+    border-color: #01050c;;
   }
 `;
