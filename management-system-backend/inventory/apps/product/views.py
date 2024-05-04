@@ -7,7 +7,7 @@ from rest_framework.response import Response
 
 from drf_yasg.utils import swagger_auto_schema
 
-from .models import Product
+from .models import Products
 from .product_manager import ProductManager
 from .serializers import ProductSerializer
 vendor = ProductManager()
@@ -58,7 +58,7 @@ def delete(request, id):
 
 @api_view(['GET'])
 def export_to_csv(request):
-    product = Product.objects.all()
+    product = Products.objects.all()
     serializer = ProductSerializer(product, many=True)
     headers = ['id', 'name', 'price', 'stock', 'description',
                'created_at', 'updated_at', 'id_category', 'id_vendor']

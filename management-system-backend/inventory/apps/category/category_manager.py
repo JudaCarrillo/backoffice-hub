@@ -1,5 +1,5 @@
 from .serializers import CategorySerializer, CustomCategorySerializer
-from .models import Category
+from .models import Categories
 
 import datetime
 
@@ -7,21 +7,21 @@ import datetime
 class CategoryManager:
 
     def get_all(self):
-        categories = Category.objects.all()
+        categories = Categories.objects.all()
         serializer = CategorySerializer(categories, many=True)
         return {'success': True, 'data': serializer.data, 'message': 'Categories found'}
 
     def get_by_id(self, id):
         try:
-            category = Category.objects.get(id=id)
+            category = Categories.objects.get(id=id)
             serializer = CategorySerializer(category)
             return {'success': True, 'data': serializer.data, 'message': 'Category found'}
-        except Category.DoesNotExist:
+        except Categories.DoesNotExist:
             return {'success': False, 'data': None, 'message': 'Category not found'}
 
     def create(self, name, description):
         date = datetime.datetime.now()
-        category = Category.objects.create(
+        category = Categories.objects.create(
             name=name,
             description=description,
             created_at=date
@@ -31,15 +31,15 @@ class CategoryManager:
 
     def delete(self, id):
         try:
-            Category.objects.get(id=id).delete()
+            Categories.objects.get(id=id).delete()
             return {'success': True, 'data': None, 'message': 'Category deleted'}
         except:
             return {'success': False, 'data': None, 'message': 'Category not found'}
 
     def update(self, id, **extra_fields):
         try:
-            category = Category.objects.get(id=id)
-        except Category.DoesNotExist:
+            category = Categories.objects.get(id=id)
+        except Categories.DoesNotExist:
             return {'success': False, 'data': None, 'message': 'Category not found'}
 
         serializer = CustomCategorySerializer(

@@ -5,7 +5,7 @@ from drf_yasg.utils import swagger_auto_schema
 import csv
 
 from .vendor_manager import VendorManager
-from .models import Supplier
+from .models import Suppliers
 from .serializers import SupplierSerializer
 vendor = VendorManager()
 
@@ -55,7 +55,7 @@ def delete(request, id):
 
 @api_view(['GET'])
 def export_to_csv(request):
-    vendors = Supplier.objects.all()
+    vendors = Suppliers.objects.all()
     serializer = SupplierSerializer(vendors, many=True)
     headers = ['id', 'name', 'email', 'direction', 'phone', 'created_at']
     filename = "vendor_data.csv"

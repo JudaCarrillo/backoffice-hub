@@ -1,7 +1,7 @@
 from .serializers import ProductSerializer, CustomProductSerializer
-from .models import Product
-from apps.supplier.models import Supplier
-from apps.category.models import Category
+from .models import Products
+from apps.supplier.models import Suppliers
+from apps.category.models import Categories
 
 import datetime
 
@@ -9,32 +9,32 @@ import datetime
 class ProductManager():
 
     def get_all(self):
-        products = Product.objects.all()
+        products = Products.objects.all()
         serializer = ProductSerializer(products, many=True)
         return {'success': True, 'data': serializer.data, 'message': 'Products found'}
 
     def get_by_id(self, id):
         try:
-            product = Product.objects.get(id=id)
+            product = Products.objects.get(id=id)
             serializer = ProductSerializer(product)
             return {'success': True, 'data': serializer.data, 'message': 'Product found'}
-        except Product.DoesNotExist:
+        except Products.DoesNotExist:
             return {'success': False, 'data': None, 'message': 'Product not found'}
 
     def create(self, name, price, stock, description, id_category, id_vendor):
         date = datetime.datetime.now()
 
         try:
-            id_category = Category.objects.get(id=id_category)
-        except Category.DoesNotExist:
+            id_category = Categories.objects.get(id=id_category)
+        except Categories.DoesNotExist:
             return {'success': False, 'data': None, 'message': 'Category not found'}
 
         try:
-            id_vendor = Supplier.objects.get(id=id_vendor)
-        except Supplier.DoesNotExist:
+            id_vendor = Suppliers.objects.get(id=id_vendor)
+        except Suppliers.DoesNotExist:
             return {'success': False, 'data': None, 'message': 'Vendor not found'}
 
-        product = Product.objects.create(
+        product = Products.objects.create(
             name=name,
             price=price,
             stock=stock,
@@ -49,8 +49,8 @@ class ProductManager():
 
     def update(self, id, **kwargs):
         try:
-            product = Product.objects.get(id=id)
-        except Product.DoesNotExist:
+            product = Products.objects.get(id=id)
+        except Products.DoesNotExist:
             return {'success': False, 'data': None, 'message': 'Product not found'}
 
         serializer = CustomProductSerializer(
@@ -64,7 +64,7 @@ class ProductManager():
 
     def delete(self, id):
         try:
-            Product.objects.get(id=id).delete()
+            Products.objects.get(id=id).delete()
             return {'success': True, 'data': None, 'message': 'Product deleted'}
         except:
             return {'success': False, 'data': None, 'message': 'Product not found'}

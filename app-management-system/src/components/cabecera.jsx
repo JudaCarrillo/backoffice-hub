@@ -3,8 +3,8 @@ import styled from "styled-components"
 export function Cabecera({title, children }){
     return(
         <Container>
-            <div className="Headboard">
-                <h1 className="Headboard-title">
+            <div className="Headboard bg-red-900">
+                <h1 className="bg-red-900">
                     {title}
                 </h1>
                 <div className="button_lado">
@@ -16,7 +16,7 @@ export function Cabecera({title, children }){
     );
 }
 
-const Container = styled.div`
+const Container = styled.div` /*
     position:relative;
     width: 98%;
     height: 160px;
@@ -69,5 +69,5 @@ const Container = styled.div`
         gap: 20px;
         
     }
-    
+    */
 `;

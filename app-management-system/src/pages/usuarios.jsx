@@ -32,7 +32,15 @@ export function Usuarios() {
           key: key,
         }));
 
-        setColumns(nuevasColumnas);
+        const columns = nuevasColumnas.map((item) => {
+          return {
+            ...item,
+            title: item.title.replace("_", " "),
+          };
+        });
+
+
+        setColumns(columns);
         setUser(data);
         setLoading(false); // Indicar que los datos se han cargado
       } else {

@@ -1,12 +1,12 @@
 from rest_framework import serializers
-from .models import Supplier
+from .models import Suppliers
 from core.serializers import DynamicFieldsModelSerializer
 
 
 class SupplierSerializer(DynamicFieldsModelSerializer):
 
     class Meta:
-        model = Supplier
+        model = Suppliers
         fields = ('id', 'name', 'email', 'direction', 'phone')
 
 
@@ -17,7 +17,7 @@ class CustomSupplierSerializer(serializers.Serializer):
     phone = serializers.CharField()
 
     def create(self, validated_data):
-        return Supplier.objects.create(**validated_data)
+        return Suppliers.objects.create(**validated_data)
 
     def update(self, instance, validated_data):
         instance.name = validated_data.get('name', instance.name)

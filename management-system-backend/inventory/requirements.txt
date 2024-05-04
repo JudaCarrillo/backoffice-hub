@@ -4,3 +4,4 @@ drf-yasg==1.21.7
 psycopg2==2.9.9
 python-dotenv
 django-cors-headers
+pillow
