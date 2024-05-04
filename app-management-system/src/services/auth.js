@@ -23,7 +23,7 @@ export const disabledUser = (id) => {
 };
 
 export const createUsers = (data) => {
-  return axios.post(`${url_base}/${apiVersion}/${main_subject}/create/`, data);
+  return axios.post(`${url_base}/${apiVersion}/${main_subject}/create`, data);
 };
 
 export const updateUsers = (id, data) => {

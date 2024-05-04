@@ -299,22 +299,12 @@ export function ModalCreateEmployees({ modalName, title, onReceiveRows }) {
                 />
 
                 <Img_input
-                  type="file"
                   name="photo"
                   id="photo"
                   onChange={handleImageChange}
                   accept="image/*"
                   chooseLabel="Seleccionar Archivo"
                 />
-                {/* <Field
-                  id="photo"
-                  name="photo"
-                  type="file"
-                  labelFor="photo"
-                  labelText="Imagen:"
-                  // value={photo ? photo.name : ""}
-                  onChange={handleImageChange}
-                /> */}
                 <Field
                   name="email"
                   labelFor="email"
