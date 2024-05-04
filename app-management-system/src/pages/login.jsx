@@ -1,21 +1,24 @@
-import { useState } from "react";
-import styled from "styled-components";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
-import axios, { AxiosError } from "axios";
-import toast, { Toaster } from "react-hot-toast";
-import { login } from "../api/auth";
+import { useState } from 'react'
+import styled from 'styled-components'
+import { FaEye, FaEyeSlash } from 'react-icons/fa'
+import toast, { Toaster } from 'react-hot-toast'
+import { login } from '../api/auth'
 
 const LoginContainer = styled.div`
   position: relative;
   height: 100vh;
   width: 100vw;
   background: linear-gradient(#888888, #000000);
-`;
+`
 
 const LoginFormContainer = styled.div`
   position: absolute;
   width: 400px;
   height: 80vh;
+  min-width: 400px;
+  max-width: 400px;
+  min-height: 75vh;
+  max-height: 80vh;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -31,7 +34,7 @@ const LoginFormContainer = styled.div`
     fontfamily: "Inter";
     fontweight: 700;
   }
-`;
+`
 
 const Logocontent = styled.div`
   display: flex;
@@ -45,7 +48,7 @@ const Logocontent = styled.div`
     width: 90%;
     height: 90%;
   }
-`;
+`
 
 const LoginForm = styled.form`
   width: 300px;
@@ -57,7 +60,7 @@ const LoginForm = styled.form`
     color: #000;
     bottom: 80px;
   }
-`;
+`
 
 const InputContainer = styled.div`
   display: flex;
@@ -66,7 +69,7 @@ const InputContainer = styled.div`
   align-items: center;
   position: relative;
   width: 100%;
-`;
+`
 
 const LoginInput = styled.input`
   width: 100%;
@@ -90,7 +93,7 @@ const LoginInput = styled.input`
     background-color: #fff;
     box-shadow: 0 0 0 5px rgb(85 79 79 / 30%);
   }
-`;
+`
 
 const ToggleButton = styled.button`
   position: absolute;
@@ -100,7 +103,7 @@ const ToggleButton = styled.button`
   background-color: transparent;
   border: none;
   cursor: pointer;
-`;
+`
 
 const LoginButton = styled.button`
   width: 100%;
@@ -118,113 +121,118 @@ const LoginButton = styled.button`
     color: #000;
     transition: 0.5s ease;
   }
-`;
+`
 
-export function Login({ onLoginSuccess, setIsForgotPassword }) {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
+export function Login ({ onLoginSuccess }) {
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
+  const [showPassword, setShowPassword] = useState(false)
 
   const enviarPeticion = async () => {
     const data = {
       email: username,
-      password: password,
-    };
+      password: password
+    }
 
     try {
-      const response = await login(data);
+      const response = await login(data)
 
       const {
         success,
-        data: { user, privileges },
-      } = response.data;
+        data: { user, privileges }
+      } = response.data
 
       if (!success) {
-        throw new Error("Credenciales incorrectas");
+        throw new Error('Credenciales incorrectas')
       }
 
-      const items = JSON.stringify({ privileges: [...privileges], user: user });
-      onLoginSuccess();
-      localStorage.setItem("user", items);
+      const items = JSON.stringify({ privileges: [...privileges], user })
+      onLoginSuccess()
+      localStorage.setItem('user', items)
     } catch (error) {
       const message =
         error?.response?.data?.message ||
-        "An unexpected error occurred. Please try again later.";
+        'An unexpected error occurred. Please try again later.'
 
-      toast.error(message);
+      toast.error(message)
     }
-  };
+  }
 
   const handleLogin = (e) => {
-    e.preventDefault();
-    enviarPeticion();
-  };
+    e.preventDefault()
+    if (!username || !password) {
+      toast.error('Todos los campos son obligatorios')
+      return
+    }
+
+    enviarPeticion()
+  }
 
   const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
-  };
+    setShowPassword(!showPassword)
+  }
 
   return (
     <LoginContainer>
       <LoginFormContainer>
         <LoginForm onSubmit={handleLogin}>
-          {" "}
+          {' '}
           {/* Agregamos el controlador de envío al formulario */}
           <Logocontent>
-            <img src="./src/assets/logo.webp" alt="Logo" />
+            <img src='./src/assets/logo.webp' alt='Logo' />
           </Logocontent>
-          <h1>Inicio de Sesión</h1>{" "}
+          <h1>Inicio de Sesión</h1>{' '}
           {/* Ajustamos el espacio alrededor del texto de inicio de sesión */}
           <Toaster
             toastOptions={{
-              className: "notification",
-              position: "bottom-center",
+              className: 'notification',
+              position: 'bottom-center',
               duration: 3000,
               iconTheme: {
-                primary: "#000",
+                primary: '#000'
               },
               style: {
-                fontSize: "1rem",
+                fontSize: '1rem',
                 fontWeight: 500,
-                borderRadius: "1rem",
-              },
+                borderRadius: '1rem'
+              }
             }}
           />
           <InputContainer>
             <LoginInput
-              type="text"
-              autoComplete="username"
-              placeholder="Usuario"
+              type='text'
+              autoComplete='username'
+              placeholder='Usuario'
               value={username}
               onChange={(e) => setUsername(e.target.value)}
             />
           </InputContainer>
           <InputContainer>
             <LoginInput
-              type={showPassword ? "text" : "password"}
-              placeholder="Password"
-              autoComplete="current-password"
+              type={showPassword ? 'text' : 'password'}
+              placeholder='Password'
+              autoComplete='current-password'
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
-            <ToggleButton type="button" onClick={togglePasswordVisibility}>
-              {" "}
+            <ToggleButton type='button' onClick={togglePasswordVisibility}>
+              {' '}
               {/* Cambiamos el tipo de botón a "button" */}
-              {showPassword ? (
-                <FaEyeSlash size={20} />
-              ) : (
-                <FaEye size={20} />
-              )}{" "}
+              {showPassword
+                ? (<FaEyeSlash size={20} />)
+                : (
+                  <FaEye size={20} />
+                  )}{' '}
               {/* Usamos íconos de React Icons */}
             </ToggleButton>
           </InputContainer>
-          <button type="button" onClick={() => setIsForgotPassword()}>
+          <button type='button' onClick={() => setIsForgotPassword()}>
             Recuperar contraseña
           </button>
-          <LoginButton type="submit">Iniciar sesión</LoginButton>{" "}
+          <LoginButton type='submit'>Iniciar sesión</LoginButton>{' '}
           {/* Cambiamos el tipo de botón a "submit" para enviar el formulario */}
         </LoginForm>
       </LoginFormContainer>
     </LoginContainer>
-  );
+  )
 }

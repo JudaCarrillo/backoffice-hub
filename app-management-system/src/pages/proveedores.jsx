@@ -67,13 +67,13 @@ export function Proveedores() {
         throw new Error(message);
       }
     } catch (error) {
-      console.error("Error al eliminar la categoría:", error);
+      console.error('Error al eliminar Proveedor:', error)
     }
-  };
+  }
   const handleReceiveRows = async (data) => {
     data.sort((a, b) => a.id - b.id);
     setProv(data);
-  };
+  }
 
   return (
     <Container>

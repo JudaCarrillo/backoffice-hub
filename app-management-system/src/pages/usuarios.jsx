@@ -39,7 +39,6 @@ export function Usuarios() {
           };
         });
 
-
         setColumns(columns);
         setUser(data);
         setLoading(false); // Indicar que los datos se han cargado

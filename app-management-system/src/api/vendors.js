@@ -2,7 +2,7 @@ import axios from 'axios'
 
 const url_base = process.env.API_BASE_URL_CATALOG
 const apiVersion = process.env.API_VERSION
-const subject = 'vendor/'
+const subject = 'supplier'
 
 export const getVendors = () => {
     return axios.get(`${url_base}${apiVersion}/${subject}`)
