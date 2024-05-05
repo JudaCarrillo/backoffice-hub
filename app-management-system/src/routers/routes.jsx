@@ -16,7 +16,7 @@ export function MyRoutes() {
       <Route path="/users" element={<Users />} />
       <Route path="/customers" element={<Customers />} />
       <Route path="/orders" element={<Orders />} />
-      <Route path="/orders-detail" element={<OrderDetail />} />
+      <Route path="/order-details" element={<OrderDetail />} />
     </Routes>
   );
 }

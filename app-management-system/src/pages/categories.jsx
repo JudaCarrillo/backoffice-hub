@@ -82,8 +82,8 @@ export function Categories() {
       <Cabecera title={"Category"}>
         {privilegesWrite.length > 0 && (
           <ModalCreateCategories
-            modalName={"Nueva Categoria"}
-            title={"Crear categoria"}
+            modalName={"New Category"}
+            title={"Create Category"}
             onReceiveRows={handleReceiveRows}
             label={"Create"}
           />

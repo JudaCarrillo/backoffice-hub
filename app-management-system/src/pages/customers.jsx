@@ -81,10 +81,10 @@ export function Customers() {
     <div className="w-full h-[100vh]">
       <Cabecera title="Customers">
         <ModalCreateCustomers
-          modalName={"Nuevo Customer"}
-          title={"Crear Nuevo Customer"}
+          modalName={"New Customer"}
+          title={"Create Customer"}
           onReceiveRows={handleReceiveRows}
-          label={"Crear"}
+          label={"Create"}
         />
       </Cabecera>
       {loading ? (

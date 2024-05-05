@@ -90,8 +90,8 @@ export function Suppliers() {
       <Cabecera title={"Suppliers"}>
         {privilegesWrite.length > 0 && (
           <ModalCreateSuppliers
-            modalName={"Nuevo Proveedor"}
-            title={"Crear proveedor"}
+            modalName={"New Supplier"}
+            title={"Create Supplier"}
             onReceiveRows={handleReceiveRows}
             label={"Create"}
           />
