@@ -30,7 +30,7 @@ export const deleteCustomer = (id) => {
 
 export const updateCustomer = (id, data) => {
   try {
-    return axios.put(`${url_base}/${apiVersion}/${subject}/${id}`, data);
+    return axios.put(`${url_base}/${apiVersion}/${subject}/update/${id}`, data);
   } catch (error) {
     console.error("Error al cargar la tabla:", error);
   }
