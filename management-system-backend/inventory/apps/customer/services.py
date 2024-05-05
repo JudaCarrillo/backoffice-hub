@@ -12,15 +12,15 @@ class CustomerService:
             'city', 'country', 'phone',
         )
 
-        return {'success': True, 'data': customers, 'message': 'Suppliers found'}
+        return {'success': True, 'data': customers, 'message': 'Customers found'}
 
     def get_by_id(self, id):
         customer = self._customer_exists('id', id)
         if not customer:
-            return {'success': False, 'data': None, 'message': 'Supplier not found'}
+            return {'success': False, 'data': None, 'message': 'Customer not found'}
 
         serializer = CustomerSerializer(customer).data
-        return {'success': True, 'data': serializer, 'message': 'Supplier found'}
+        return {'success': True, 'data': serializer, 'message': 'Customer found'}
 
     def _customer_exists(self, field, value):
         try:
@@ -46,22 +46,22 @@ class CustomerService:
                 fax=request_data.get('fax'),
             )
         except Exception as e:
-            return {'success': False, 'data': None, 'message': 'Error creating supplier. ' + str(e)}
+            return {'success': False, 'data': None, 'message': 'Error creating Customer. ' + str(e)}
 
-        return {'success': True, 'data': None, 'message': 'Supplier created'}
+        return {'success': True, 'data': None, 'message': 'Customer created'}
 
     def delete(self, id):
         customer = self._customer_exists('id', id)
         if not customer:
-            return {'success': False, 'data': None, 'message': 'Supplier not found'}
+            return {'success': False, 'data': None, 'message': 'Customer not found'}
 
         customer.delete()
-        return {'success': True, 'data': None, 'message': 'Supplier deleted'}
+        return {'success': True, 'data': None, 'message': 'Customer deleted'}
 
     def update(self, id, request_data):
         customer = self._customer_exists('id', id)
         if not customer:
-            return {'success': False, 'data': None, 'message': 'Supplier not found'}
+            return {'success': False, 'data': None, 'message': 'Customer not found'}
 
         fields_to_update = ['company_name', 'contact_name', 'contact_title', 'address',
                             'city', 'region', 'postal_code', 'country', 'phone', 'fax']
@@ -71,7 +71,7 @@ class CustomerService:
                 field, getattr(customer, field)))
 
         customer.save()
-        return {'success': True, 'data': None, 'message': 'Supplier updated'}
+        return {'success': True, 'data': None, 'message': 'Customer updated'}
 
     def export_to_csv(self, response):
         customers = Customers.objects.all()
