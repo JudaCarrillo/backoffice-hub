@@ -1,8 +1,9 @@
 import { useState } from "react";
 import styled from "styled-components";
+import { createCustomer, getCustomers } from "../../../services/Customers";
+import { generateRandomCode } from "../../../utils/logic";
 import { Modal } from "../../modals/modal";
 import Field from "../../molecules/Field/field";
-import { createCustomer, getCustomers } from "../../../services/Customers";
 
 export function ModalCreateCustomers({
   modalName,
@@ -12,6 +13,7 @@ export function ModalCreateCustomers({
 }) {
   const [showModal, setShowModal] = useState(false);
   const [customers, setCustomers] = useState({
+    id: "",
     company_name: "",
     contact_name: "",
     contact_title: "",
@@ -23,6 +25,11 @@ export function ModalCreateCustomers({
     phone: "",
     fax: "",
   });
+
+  useState(() => {
+    const id = generateRandomCode();
+    setCustomers({ ...customers, id: id });
+  }, []);
 
   const toggleModal = () => setShowModal(!showModal);
 
@@ -39,10 +46,8 @@ export function ModalCreateCustomers({
 
       if (success) {
         const rows = await getCustomers();
-        const {
-          data: { items },
-        } = rows.data;
-        onReceiveRows(items);
+        const { data } = rows.data;
+        onReceiveRows(data);
         toggleModal();
       } else {
         throw new Error(message);
@@ -71,6 +76,16 @@ export function ModalCreateCustomers({
             <FormContainer>
               <FormColumn>
                 <Field
+                  name="id"
+                  labelFor="id"
+                  labelText="ID:"
+                  inputId="CustomerIdInput"
+                  type="text"
+                  value={customers.id }
+                  readOnly
+                />
+
+                <Field
                   name="company_name"
                   labelFor="company_name"
                   labelText="Nombre de la compañia:"
@@ -96,7 +111,7 @@ export function ModalCreateCustomers({
                   labelText="Titulo de contacto:"
                   inputId="ContactTitleInput"
                   type="text"
-                  value={customers.contact_name}
+                  value={customers.contact_title}
                   onChange={handleChange}
                 />
 
@@ -119,7 +134,8 @@ export function ModalCreateCustomers({
                   value={customers.city}
                   onChange={handleChange}
                 />
-
+              </FormColumn>
+              <FormColumn>
                 <Field
                   name="region"
                   labelFor="region"
@@ -129,8 +145,7 @@ export function ModalCreateCustomers({
                   value={customers.region}
                   onChange={handleChange}
                 />
-              </FormColumn>
-              <FormColumn>
+
                 <Field
                   name="postal_code"
                   labelFor="postal_code"

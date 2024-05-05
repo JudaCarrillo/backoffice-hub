@@ -87,7 +87,6 @@ def delete(request, id):
 def create(request):
     try:
         result = services.create(
-            request_files=request.FILES,
             request_data=request.data
         )
 

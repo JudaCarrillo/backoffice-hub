@@ -33,6 +33,7 @@ class CustomerService:
 
         try:
             Customers.objects.create(
+                id=request_data.get('id'),
                 company_name=request_data.get('company_name'),
                 contact_name=request_data.get('contact_name'),
                 contact_title=request_data.get('contact_title'),

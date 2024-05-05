@@ -30,3 +30,14 @@ export const getPrivileges = (name) => {
 export const hasPrivileges = (privileges) => {
   return privileges.length > 0;
 };
+
+export const generateRandomCode = () => {
+  let code = "";
+  const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+  for (let i = 0; i < 5; i++) {
+    code += letters.charAt(Math.floor(Math.random() * letters.length));
+  }
+
+  return code;
+};
