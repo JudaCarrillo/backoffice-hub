@@ -152,6 +152,9 @@ export function UpdateProductModal({
                   type="text"
                   value={product.name}
                   onChange={handleChange}
+                  isRequired={true}
+                  minlength={1}
+                  maxlength={40}
                 />
                 <ComboBox
                   name="id_category"
@@ -173,6 +176,9 @@ export function UpdateProductModal({
                   type="text"
                   value={product.quantity_per_unit}
                   onChange={handleChange}
+                  isRequired={true}
+                  minlength={1}
+                  maxlength={20}
                 />
 
                 <Field

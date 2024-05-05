@@ -83,6 +83,9 @@ export function ModalCreateCategories({
                   type="text"
                   value={category.name}
                   onChange={handleChange}
+                  minLength={1}
+                  maxLength={255}
+                  isRequired={true}
                 />
                 <LongText
                   id="description"
@@ -92,6 +95,9 @@ export function ModalCreateCategories({
                   labelFor="description"
                   labelText="Descripción:"
                   placeholder="Descripción de la categoría..."
+                  minLength={1}
+                  maxLength={255}
+                  isRequired={true}
                 />
                 <Img_input
                   name="photo"
@@ -99,6 +105,7 @@ export function ModalCreateCategories({
                   onChange={handleImageChange}
                   accept="image/*"
                   chooseLabel="Seleccionar Archivo"
+                  isRequired={true}
                 />
               </FormColumn>
             </FormContainer>

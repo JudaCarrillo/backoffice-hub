@@ -113,6 +113,9 @@ export function UpdateCategoryModal({
                   type="text"
                   value={category.name}
                   onChange={handleChange}
+                  isRequired={true}
+                  minLength={1}
+                  maxLength={255}
                 />
                 <LongText
                   id="description"
@@ -122,6 +125,9 @@ export function UpdateCategoryModal({
                   labelFor="description"
                   labelText="Descripción:"
                   placeholder="Descripción de la categoría..."
+                  maxLength={255}
+                  minLength={1}
+                  isRequired={true}
                 />
               </FormColumn>
               <FormColumn>

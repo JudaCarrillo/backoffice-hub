@@ -79,6 +79,9 @@ export function ModalCreateSuppliers({
                   type="text"
                   value={suppliers.company_name}
                   onChange={handleChange}
+                  minlength={1}
+                  maxlength={40}
+                  isRequired={true}
                 />
 
                 <Field
@@ -89,6 +92,9 @@ export function ModalCreateSuppliers({
                   type="text"
                   value={suppliers.contact_name}
                   onChange={handleChange}
+                  minlength={1}
+                  maxlength={30}
+                  isRequired={true}
                 />
 
                 <Field
@@ -99,8 +105,12 @@ export function ModalCreateSuppliers({
                   type="text"
                   value={suppliers.contact_title}
                   onChange={handleChange}
+                  minlength={1}
+                  maxlength={30}
+                  isRequired={true}
                 />
-
+                </FormColumn>
+                <FormColumn>
                 <Field
                   name="address"
                   labelFor="address"
@@ -109,6 +119,9 @@ export function ModalCreateSuppliers({
                   type="text"
                   value={suppliers.address}
                   onChange={handleChange}
+                  minlength={1}
+                  maxlength={60}
+                  isRequired={true}
                 />
 
                 <Field
@@ -119,6 +132,9 @@ export function ModalCreateSuppliers({
                   type="text"
                   value={suppliers.city}
                   onChange={handleChange}
+                  minlength={1}
+                  maxlength={15}
+                  isRequired={true}
                 />
 
                 <Field
@@ -129,6 +145,9 @@ export function ModalCreateSuppliers({
                   type="text"
                   value={suppliers.region}
                   onChange={handleChange}
+                  minlength={1}
+                  maxlength={15}
+                  isRequired={true}
                 />
               </FormColumn>
               <FormColumn>
@@ -142,6 +161,9 @@ export function ModalCreateSuppliers({
                   required
                   value={suppliers.postal_code}
                   onChange={handleChange}
+                  minlength={1}
+                  maxlength={10}
+                  isRequired={true}
                 />
 
                 <Field
@@ -152,6 +174,9 @@ export function ModalCreateSuppliers({
                   type="text"
                   value={suppliers.country}
                   onChange={handleChange}
+                  minlength={1}
+                  maxlength={15}
+                  isRequired={true}
                 />
 
                 <Field
@@ -162,8 +187,11 @@ export function ModalCreateSuppliers({
                   type="tel"
                   value={suppliers.phone}
                   onChange={handleChange}
+                  minlength={1}
+                  maxlength={24}
                 />
-
+                </FormColumn>
+                <FormColumn>
                 <Field
                   name="fax"
                   labelFor="fax"
@@ -172,6 +200,9 @@ export function ModalCreateSuppliers({
                   type="text"
                   value={suppliers.fax}
                   onChange={handleChange}
+                  minlength={1}
+                  maxlength={24}
+                  isRequired={true}
                 />
 
                 <Field
@@ -182,7 +213,9 @@ export function ModalCreateSuppliers({
                   inputId="HomePageInput"
                   value={suppliers.home_page}
                   onChange={handleChange}
-                  required
+                  minlength={1}
+                  maxlength={200}
+                  isRequired={true}
                 />
               </FormColumn>
             </FormContainer>

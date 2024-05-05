@@ -191,6 +191,9 @@ export function UpdateUserModal({
                   type="text"
                   value={users.last_name}
                   onChange={handleChange}
+                  isRequired={true}
+                  minLength={1}
+                  maxLength={20}
                 />
 
                 <Field
@@ -201,6 +204,9 @@ export function UpdateUserModal({
                   type="text"
                   value={users.first_name}
                   onChange={handleChange}
+                  isRequired={true}
+                  minLength={1}
+                  maxLength={10}
                 />
 
                 <Field
@@ -211,6 +217,9 @@ export function UpdateUserModal({
                   type="text"
                   value={users.title}
                   onChange={handleChange}
+                  isRequired={true}
+                  minLength={1}
+                  maxLength={30}
                 />
 
                 <Field
@@ -221,6 +230,9 @@ export function UpdateUserModal({
                   type="text"
                   value={users.title_of_courtesy}
                   onChange={handleChange}
+                  isRequired={true}
+                  minLength={1}
+                  maxLength={25}
                 />
 
                 <Field
@@ -231,6 +243,7 @@ export function UpdateUserModal({
                   type="date"
                   value={users.birth_date}
                   onChange={handleChange}
+                  isRequired={true}
                 />
               </FormColumn>
 
@@ -243,6 +256,7 @@ export function UpdateUserModal({
                   type="date"
                   value={users.hire_date}
                   onChange={handleChange}
+                  isRequired={true}
                 />
 
                 <Field
@@ -253,6 +267,9 @@ export function UpdateUserModal({
                   type="text"
                   value={users.address}
                   onChange={handleChange}
+                  isRequired={true}
+                  minLength={1}
+                  maxLength={60}
                 />
 
                 <Field
@@ -263,7 +280,9 @@ export function UpdateUserModal({
                   type="text"
                   value={users.city}
                   onChange={handleChange}
-                  minLength={15}
+                  isRequired={true}
+                  minLength={1}
+                  maxLength={15}
                 />
 
                 <Field
@@ -274,6 +293,9 @@ export function UpdateUserModal({
                   type="text"
                   value={users.region}
                   onChange={handleChange}
+                  isRequired={true}
+                  minLength={1}
+                  maxLength={15}
                 />
 
                 <ComboBox
@@ -291,10 +313,12 @@ export function UpdateUserModal({
                   labelText="Código Postal:"
                   inputId="PostalCodeInput"
                   type="text"
-                  maxLength={10}
-                  required
                   value={users.postal_code}
                   onChange={handleChange}
+                  isRequired={true}
+                  maxLength={10}
+                  minLength={1}
+
                 />
 
                 <Field
@@ -305,6 +329,9 @@ export function UpdateUserModal({
                   type="text"
                   value={users.country}
                   onChange={handleChange}
+                  isRequired={true}
+                  minLength={1}
+                  maxLength={15}
                 />
 
                 <Field
@@ -315,6 +342,9 @@ export function UpdateUserModal({
                   type="tel"
                   value={users.home_phone}
                   onChange={handleChange}
+                  isRequired={true}
+                  minLength={1}
+                  maxLength={24}
                 />
 
                 <Field
@@ -325,6 +355,9 @@ export function UpdateUserModal({
                   type="text"
                   value={users.extension}
                   onChange={handleChange}
+                  isRequired={true}
+                  minLength={1}
+                  maxLength={4}
                 />
 
                 <LongText
@@ -335,6 +368,8 @@ export function UpdateUserModal({
                   labelFor="notes"
                   labelText="Notas:"
                   placeholder="Escribe notas..."
+                  minLength={1}
+                  maxLength={500}
                 />
               </FormColumn>
 
@@ -362,7 +397,9 @@ export function UpdateUserModal({
                   type="email"
                   value={users.email}
                   onChange={handleChange}
-                  required
+                  isRequired={true}
+                  minLength={1}
+                  maxLength={255}
                 />
 
                 <ChkBox
