@@ -9,8 +9,10 @@ import { InputComponent } from "../input";
 import { ModalParaUpdate } from "../modalparaUpdate";
 export function UpdateModal({ open, onClose, categoryId, onReceiveRows }) {
   const [categori, setCategori] = useState({
+    id:"",
     name: "",
     description: "",
+    pictura:"",
   });
 
   useEffect(() => {
@@ -22,8 +24,10 @@ export function UpdateModal({ open, onClose, categoryId, onReceiveRows }) {
           throw new Error(message);
         }
         setCategori({
+          id: data.id,
           name: data.name,
           description: data.description,
+          pictura: data.pictura,
         });
       } catch (error) {
         console.error("Error al obtener los detalles de la categoría:", error);
@@ -54,8 +58,10 @@ export function UpdateModal({ open, onClose, categoryId, onReceiveRows }) {
   };
   const clearFormFields = () => {
     setCategori({
+      id: "",
       name: "",
       description: "",
+      pictura: "",
     });
   };
 
@@ -65,34 +71,51 @@ export function UpdateModal({ open, onClose, categoryId, onReceiveRows }) {
   };
 
   return (
-    <ModalContainer open={open}>
-      <ModalParaUpdate
-        title="Actualizar Categoría"
-        showModalContent={() => (
-          <>
-            <InputComponent
-              name="name"
-              label="Nombre"
-              type="text"
-              id="name"
-              value={categori.name}
-              onChange={handleChange}
-            />
-            <InputComponent
-              name="description"
-              label="Descripción"
-              type="text"
-              id="description"
-              value={categori.description}
-              onChange={handleChange}
-            />
-          </>
+    <Container>
+      {open && categoryId && (
+    <Modal
+    label={label}
+    onClose={handleClose}
+    onAction={handleUpdate}
+    title={title}
+    showModalContent={(handleCloseModal) => (
+      <FormContainer className="bg-slate-400 p-5">
+      <FormColumn>
+      <Field 
+          name="CompanyName"
+          labelFor="CompanyName" 
+          labelText="Nombre de la empresa:" 
+          inputId="CompanyNameInput" 
+          type="text" 
+		      value={vendors.company_name}
+          onChange={handleChange}
+        />
+        <Field 
+          name="ContactName"
+          labelFor="ContactName" 
+          labelText="Nombre de contacto:" 
+          inputId="ContactNameInput" 
+		      type="text" 
+		      value={vendors.contact_title}
+          onChange={handleChange}
+        />
+        <Field 
+          name="ContactTitle"
+          labelFor="ContactTitle" 
+          labelText="Título de contacto:" 
+          inputId="ContactTitleInput" 
+		      type="text" 
+		      value={vendors.contact_title}
+          onChange={handleChange}
+        />
+        </FormColumn>
+    </FormContainer>
         )}
-        onClose={handleClose}
-        onUpdate={handleUpdate}
       />
-    </ModalContainer>
+      
+)}</Container>
   );
+  
 }
 
 const ModalContainer = styled.div`

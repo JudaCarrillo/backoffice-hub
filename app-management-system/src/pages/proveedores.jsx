@@ -117,7 +117,8 @@ export function Proveedores() {
             title={"Editar Proveedor"}
             onReceiveRows={handleReceiveRows}
             onClose={handleCloseEditModal}
-            vendorsId={editVendorId}
+            vendorId={editVendorId}
+            label={"update"}
           />
         </>
       )}
