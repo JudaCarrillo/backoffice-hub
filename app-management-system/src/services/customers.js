@@ -22,7 +22,7 @@ export const createCustomer = (data) => {
 
 export const deleteCustomer = (id) => {
   try {
-    return axios.delete(`${url_base}/${apiVersion}/${subject}/${id}`);
+    return axios.delete(`${url_base}/${apiVersion}/${subject}/delete/${id}`);
   } catch (error) {
     console.error("Error al cargar la tabla:", error);
   }
@@ -30,7 +30,7 @@ export const deleteCustomer = (id) => {
 
 export const updateCustomer = (id, data) => {
   try {
-    return axios.put(`${url_base}/${apiVersion}/${subject}/${id}`, data);
+    return axios.put(`${url_base}/${apiVersion}/${subject}/update/${id}`, data);
   } catch (error) {
     console.error("Error al cargar la tabla:", error);
   }

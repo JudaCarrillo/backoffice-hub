@@ -5,7 +5,7 @@ import { Cuerpo } from "../components/organisms/body/cuerpo";
 import { UpdateProductModal } from "../components/templates/updateModals/updateProducts";
 import { ModalCreateProducts } from "../components/templates/createModals/ModalCreateProducts";
 import {
-  deleteProduct,
+  desabiledProduct,
   exportProductsToCsv,
   getProducts,
 } from "../services/products";
@@ -60,7 +60,7 @@ export function Products() {
   // Función de eliminación
   const handleDelete = async (id) => {
     try {
-      const respuesta = await deleteProduct(id);
+      const respuesta = await desabiledProduct(id);
       const { success, message } = respuesta.data;
       if (success) {
         setPro(pro.filter((products) => products.id !== id));

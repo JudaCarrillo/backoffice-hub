@@ -41,9 +41,9 @@ export function ModalCreateCategories({
       if (success) {
         const rows = await getCategories();
         const {
-          data: { items },
+          data
         } = rows.data;
-        onReceiveRows(items);
+        onReceiveRows(data);
         toggleModal();
       } else {
         throw new Error(message);

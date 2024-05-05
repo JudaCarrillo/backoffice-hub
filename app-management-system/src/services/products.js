@@ -14,8 +14,8 @@ export const exportProductsToCsv = () => {
   });
 };
 
-export const deleteProduct = (id) => {
-  return axios.delete(`${url_base}/${apiVersion}/${subject}/delete/${id}`);
+export const desabiledProduct = (id) => {
+  return axios.patch(`${url_base}/${apiVersion}/${subject}/disabled/${id}`);
 };
 
 export const createProduct = (data) => {
