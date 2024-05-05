@@ -12,7 +12,12 @@ import Field from "../../molecules/Field/field";
 import Img_input from "../../molecules/Img/img_input";
 import LongText from "../../molecules/LongText/longText";
 
-export function ModalCreateEmployees({ modalName, title, onReceiveRows, label }) {
+export function ModalCreateEmployees({
+  modalName,
+  title,
+  onReceiveRows,
+  label,
+}) {
   const [showModal, setShowModal] = useState(false);
   const [userProfiles, setUserProfiles] = useState([]);
   const [usersToReport, setUsersToReport] = useState([]);
@@ -87,11 +92,15 @@ export function ModalCreateEmployees({ modalName, title, onReceiveRows, label })
   const handleCrearEmployee = async () => {
     try {
       const formData = new FormData();
-      
+
       Object.keys(users).forEach((key) => {
         formData.append(key, users[key]);
       });
-      formData.append("photo", photo);
+
+      if (photo) {
+        formData.delete("photo");
+        formData.append("photo", photo);
+      }
 
       const response = await createUsers(formData);
       const { success, data, message } = response.data;
@@ -143,6 +152,9 @@ export function ModalCreateEmployees({ modalName, title, onReceiveRows, label })
                   type="text"
                   value={users.last_name}
                   onChange={handleChange}
+                  isRequired={true}
+                  minLength={1}
+                  maxLength={20}
                 />
 
                 <Field
@@ -153,6 +165,9 @@ export function ModalCreateEmployees({ modalName, title, onReceiveRows, label })
                   type="text"
                   value={users.first_name}
                   onChange={handleChange}
+                  isRequired={true}
+                  minLength={1}
+                  maxLength={10}
                 />
 
                 <Field
@@ -163,6 +178,9 @@ export function ModalCreateEmployees({ modalName, title, onReceiveRows, label })
                   type="text"
                   value={users.title}
                   onChange={handleChange}
+                  isRequired={true}
+                  minLength={1}
+                  maxLength={30}
                 />
 
                 <Field
@@ -173,6 +191,9 @@ export function ModalCreateEmployees({ modalName, title, onReceiveRows, label })
                   type="text"
                   value={users.title_of_courtesy}
                   onChange={handleChange}
+                  isRequired={true}
+                  minLength={1}
+                  maxLength={25}
                 />
 
                 <Field
@@ -183,6 +204,7 @@ export function ModalCreateEmployees({ modalName, title, onReceiveRows, label })
                   type="date"
                   value={users.birth_date}
                   onChange={handleChange}
+                  isRequired={true}
                 />
               </FormColumn>
 
@@ -195,6 +217,7 @@ export function ModalCreateEmployees({ modalName, title, onReceiveRows, label })
                   type="date"
                   value={users.hire_date}
                   onChange={handleChange}
+                  isRequired={true}
                 />
 
                 <Field
@@ -205,6 +228,9 @@ export function ModalCreateEmployees({ modalName, title, onReceiveRows, label })
                   type="text"
                   value={users.address}
                   onChange={handleChange}
+                  isRequired={true}
+                  minLength={1}
+                  maxLength={20}
                 />
 
                 <Field
@@ -215,7 +241,9 @@ export function ModalCreateEmployees({ modalName, title, onReceiveRows, label })
                   type="text"
                   value={users.city}
                   onChange={handleChange}
-                  minLength={15}
+                  minLength={1}
+                  maxLength={15}
+                  isRequired={true}
                 />
 
                 <Field
@@ -226,6 +254,9 @@ export function ModalCreateEmployees({ modalName, title, onReceiveRows, label })
                   type="text"
                   value={users.region}
                   onChange={handleChange}
+                  isRequired={true}
+                  minLength={1}
+                  maxLength={15}
                 />
 
                 <ComboBox
@@ -233,6 +264,7 @@ export function ModalCreateEmployees({ modalName, title, onReceiveRows, label })
                   label="Seleccione un Usuario"
                   onChange={handleChangeReportsTo}
                   options={usersToReport}
+                  isRequired={true}
                 />
               </FormColumn>
 
@@ -243,10 +275,13 @@ export function ModalCreateEmployees({ modalName, title, onReceiveRows, label })
                   labelText="Código Postal:"
                   inputId="PostalCodeInput"
                   type="text"
+                  minLength={1}
                   maxLength={10}
                   required
                   value={users.postal_code}
                   onChange={handleChange}
+                  isRequired={true}
+                  
                 />
 
                 <Field
@@ -257,6 +292,9 @@ export function ModalCreateEmployees({ modalName, title, onReceiveRows, label })
                   type="text"
                   value={users.country}
                   onChange={handleChange}
+                  isRequired={true}
+                  minLength={1}
+                  maxLength={15}
                 />
 
                 <Field
@@ -267,6 +305,9 @@ export function ModalCreateEmployees({ modalName, title, onReceiveRows, label })
                   type="tel"
                   value={users.home_phone}
                   onChange={handleChange}
+                  isRequired={true}
+                  minLength={1}
+                  maxLength={24}
                 />
 
                 <Field
@@ -277,6 +318,9 @@ export function ModalCreateEmployees({ modalName, title, onReceiveRows, label })
                   type="text"
                   value={users.extension}
                   onChange={handleChange}
+                  isRequired={true}
+                  minLength={1}
+                  maxLength={4}
                 />
 
                 <LongText
@@ -287,6 +331,8 @@ export function ModalCreateEmployees({ modalName, title, onReceiveRows, label })
                   labelFor="notes"
                   labelText="Notas:"
                   placeholder="Escribe notas..."
+                  minLength={1}
+                  
                 />
               </FormColumn>
 
@@ -297,6 +343,7 @@ export function ModalCreateEmployees({ modalName, title, onReceiveRows, label })
                   onChange={handleImageChange}
                   accept="image/*"
                   chooseLabel="Seleccionar Archivo"
+                  isRequired={true}
                 />
 
                 <Field
@@ -307,7 +354,9 @@ export function ModalCreateEmployees({ modalName, title, onReceiveRows, label })
                   type="email"
                   value={users.email}
                   onChange={handleChange}
-                  required
+                  isRequired={true}
+                  minLength={1}
+                  maxLength={254}
                 />
 
                 <Field
@@ -318,7 +367,9 @@ export function ModalCreateEmployees({ modalName, title, onReceiveRows, label })
                   type="password"
                   value={users.password}
                   onChange={handleChange}
-                  required
+                  isRequired={true}
+                  minLength={1}
+                  maxLength={255}
                 />
 
                 <CheckBox
