@@ -6,15 +6,19 @@ const [totalSize, setTotalSize] = useState(0);
 
 return (
     <div className="flex justify-center">
-    <div className="bg-white border border-black rounded-lg shadow-md m-4 ">
+    <div className="rounded-lg  m-4 ">
     <FileUpload
+    chooseOptions={{ label: "Seleccionar"
+    , icon: "pi pi-fw pi-file h-12 -mr-4 justify-center w-4 flex items-center"
+    , className: "w-full h-12 p-2 bg-white text-black shadow-md rounded-lg"
+     }}
     mode="basic"
     name={name}
     id={id}
     accept={accept}
     onSelect={onChange}
     onClear={() => setTotalSize(0)}
-    className="p-1 m-3 w-10 rounded-lg"
+    className=" m-2 w-44 h-12 "
 />
     </div>
     </div>
