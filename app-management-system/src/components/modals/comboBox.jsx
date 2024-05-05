@@ -1,36 +1,31 @@
 import styled from "styled-components";
-import { Dropdown } from 'primereact/dropdown';
+import { Dropdown } from "primereact/dropdown";
 import React, { useState } from "react";
 import Label from "../atoms/Label/label";
-        
 
 const ComboBox = ({ options, label, onChange }) => {
   const [selectedValue, setSelectedValue] = useState(null);
 
   const handleSelectChange = (e) => {
-      const selectedOption = options.find(option => option.name === e.value);
-      setSelectedValue(selectedOption);
-      onChange(selectedOption.code);
+    const value = e.value;
+    const selectedOption = options.find((option) => option.name === value.name);
+    setSelectedValue(selectedOption);
+    onChange(value.id);
   };
 
   return (
-      <div className="card flex justify-content-center w-64"> {/* Ajusta el ancho según tus necesidades */}
-          <Dropdown 
-              value={selectedValue} 
-              onChange={handleSelectChange} 
-              options={options} 
-              optionLabel="name" 
-              placeholder={label} 
-              className="h-10 w-10 " 
-          />
-      </div>
-  )
+    <div className="card flex justify-content-center w-64">
+      <Dropdown
+        value={selectedValue}
+        onChange={handleSelectChange}
+        options={options}
+        optionLabel="name"
+        placeholder={label}
+        className="h-10 w-10 "
+      />
+    </div>
+  );
 };
-
-
-
-
-
 
 export default ComboBox;
 

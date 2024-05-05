@@ -80,15 +80,9 @@ export function Categoria() {
     <Container>
       <Cabecera title={"Category"}>
         {privilegesWrite.length > 0 && (
-<<<<<<< HEAD
-          <ModalProveedor
-            modalName={"New Category"}
-            title={"Create Category"}
-=======
           <ModalCreateCategory
             modalName={"Nueva Categoria"}
             title={"Crear categoria"}
->>>>>>> origin/feat/atomic-design-modals
             onReceiveRows={handleReceiveRows}
           />
         )}
@@ -108,13 +102,13 @@ export function Categoria() {
               getCsv({ callback: exportCategoriesToCsv, name: "categories_data" })
             }
           />
-          <UpdateVendorsModal
+          {/* <UpdateVendorsModal
             open={isEditModalOpen}
             title={"Edit Category"}
             onReceiveRows={handleReceiveRows}
             onClose={handleCloseEditModal}
             vendorsId={editCategoryId}
-          />
+          /> */}
         </>
       )}
     </Container>

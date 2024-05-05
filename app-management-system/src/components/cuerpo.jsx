@@ -67,7 +67,7 @@ export function Cuerpo({
             <Column
               key="actions"
               header="Acciones"
-              headerClassName="flex justify-center relative"
+              headerClassName="flex justify-center relative bg-white"
               bodyClassName="text-center"
               body={(rowData) => (
                 <ButtonsTable

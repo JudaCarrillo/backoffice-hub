@@ -281,7 +281,6 @@ export function ModalCreateEmployees({
                   value={users.postal_code}
                   onChange={handleChange}
                   isRequired={true}
-                  
                 />
 
                 <Field
@@ -332,7 +331,6 @@ export function ModalCreateEmployees({
                   labelText="Notas:"
                   placeholder="Escribe notas..."
                   minLength={1}
-                  
                 />
               </FormColumn>
 
@@ -407,7 +405,8 @@ const Container = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    background: ${(props) => props.buttonColor || props.theme.bgbtton}; /* Color de fondo del botón */
+    background: ${(props) =>
+      props.buttonColor || props.theme.bgbtton}; /* Color de fondo del botón */
     cursor: pointer;
     border: none;
     border-radius: 1rem;
@@ -415,11 +414,13 @@ const Container = styled.div`
     font-weight: 800; /* Peso de la fuente */
     color: ${(props) => props.theme.text}; /* Color del texto */
     box-shadow: 0.1rem 0.3rem #00000040; /* Sombra del botón */
-    
+
     /* Efecto hover */
     &:hover {
-      background: ${(props) => props.theme.gray700}; /* Cambia el color de fondo al pasar el ratón */
-      color: ${(props) => props.theme.body}; /* Cambia el color del texto al pasar el ratón */
+      background: ${(props) =>
+        props.theme.gray700}; /* Cambia el color de fondo al pasar el ratón */
+      color: ${(props) =>
+        props.theme.body}; /* Cambia el color del texto al pasar el ratón */
     }
   }
 `;
