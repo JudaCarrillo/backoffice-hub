@@ -9,8 +9,9 @@ import {
   exportProductsToCsv,
   getProducts,
 } from "../services/products";
-import { getCsv, getPrivileges } from "../utils/logic";
+import { getCsv, getPrivileges, hasPrivileges } from "../utils/logic";
 import { Preloader } from "./preloader";
+
 
 export function Productos() {
   const [pro, setPro] = useState([]);
@@ -95,7 +96,7 @@ export function Productos() {
         <>
           <Cuerpo
             columns={columns}
-            data={cat}
+            data={pro}
             handleEdit={handleEdit}
             handleDelete={handleDelete}
             showActions={hasPrivileges(privilegesWrite)}

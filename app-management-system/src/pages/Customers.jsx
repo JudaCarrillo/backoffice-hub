@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { Cabecera } from "../components/cabecera";
-import { getPrivileges } from "../utils/logic";
-import { ModalCreateEmployees } from "../components/organisms/CreateModals/ModalCreateEmployees";
-import { getCustomers } from "../services/Customers";
-import { Preloader } from "./preloader";
 import { Cuerpo } from "../components/cuerpo";
 import { UpdateUserModal } from "../components/modals/updateModal/updateUser";
+import { ModalCreateCustomers } from "../components/organisms/CreateModals/ModalCreateCustomers";
+import { getCustomers } from "../services/Customers";
+import { getPrivileges } from "../utils/logic";
+import { Preloader } from "./preloader";
 
 export function Customers() {
   const [Customers, setCustomers] = useState([]);
@@ -58,15 +58,12 @@ export function Customers() {
   const handleCloseEditModal = () => {
     setIsEditModalOpen(false);
     setEditCustomerId(null);
-  }
+  };
 
   const handleDelete = async (id) => {
     try {
       const respuesta = await deleteCustomer(id);
-      const {
-        success,
-        message
-      } = respuesta.data;
+      const { success, message } = respuesta.data;
       if (success) {
         alert(message);
       } else {
@@ -83,34 +80,33 @@ export function Customers() {
   return (
     <div className="w-full h-[100vh]">
       <Cabecera title="Customers">
-        <ModalCreateEmployees
+        <ModalCreateCustomers
           modalName={"Nuevo Customer"}
           title={"Crear Nuevo Customer"}
           onReceiveRows={handleReceiveRows}
+          label={"Crear"}
         />
       </Cabecera>
       {loading ? (
         <Preloader />
       ) : (
         <>
-        
-        <Cuerpo
-          columns={columns}
-          data={Customers}
-          showActions={true}
-          handleDelete={handleDelete}
-          handleEdit={handleEdit}
-          privilegesReport={privilegesReport}
-          privilegesWrite={privilegesWrite}
-        />
-        <UpdateUserModal
-          open={isEditModalOpen}
-          onClose={handleCloseEditModal}
-          userId={editCustomerId}
-          onReceiveRows={handleReceiveRows}
-          title={"Editar Customer"}
-        />
-        
+          <Cuerpo
+            columns={columns}
+            data={Customers}
+            showActions={true}
+            handleDelete={handleDelete}
+            handleEdit={handleEdit}
+            privilegesReport={privilegesReport}
+            privilegesWrite={privilegesWrite}
+          />
+          <UpdateUserModal
+            open={isEditModalOpen}
+            onClose={handleCloseEditModal}
+            userId={editCustomerId}
+            onReceiveRows={handleReceiveRows}
+            title={"Editar Customer"}
+          />
         </>
       )}
     </div>
