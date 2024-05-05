@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { getCategories } from "../../../services/categories";
-import { getProductById, updateProduct } from "../../../services/products";
+import { getProductById, updateProduct, getProducts } from "../../../services/products";
 import { getSuppliers } from "../../../services/suppliers";
 import ComboBox from "../../atoms/ComboBox/comboBox";
 import { Modal } from "../../organisms/modals/modal";

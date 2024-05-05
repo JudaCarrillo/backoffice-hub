@@ -3,7 +3,7 @@ import { Cabecera } from "../components/organisms/headers/cabecera";
 import { Cuerpo } from "../components/organisms/body/cuerpo";
 import { UpdateCustomerModal } from "../components/templates/updateModals/updateCustomers";
 import { ModalCreateCustomers } from "../components/templates/createModals/ModalCreateCustomers";
-import { getCustomers } from "../services/customers";
+import { deleteCustomer, getCustomers } from "../services/customers";
 import { getPrivileges } from "../utils/logic";
 import { Preloader } from "./preloader";
 
@@ -65,7 +65,7 @@ export function Customers() {
       const respuesta = await deleteCustomer(id);
       const { success, message } = respuesta.data;
       if (success) {
-        alert(message);
+        setCustomers(Customers.filter((customer) => customer.id !== id));
       } else {
         throw new Error(message);
       }
