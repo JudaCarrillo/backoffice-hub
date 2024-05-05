@@ -76,7 +76,6 @@ export function UpdateProductModal({
   useEffect(() => {
     const fetchVendorName = async () => {
       try {
-        const vendors = await getVendorsId(products.id_vendor);
         const { success, data, message } = vendors.data;
         if (success) {
           setVendorsName(data.name);

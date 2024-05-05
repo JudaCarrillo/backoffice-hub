@@ -51,7 +51,7 @@ export const updateCustomer = async (id, data) => {
 export const getCustomer = async (id) => {
   try {
     const response = await axios.get(
-      `${url_base}/${apiVersion}/${subject}/${id}/`
+      `${url_base}/${apiVersion}/${subject}/${id}`
     );
     return response;
   } catch (error) {

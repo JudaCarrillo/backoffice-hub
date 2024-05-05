@@ -19,7 +19,6 @@ export function UpdateVendorsModal({
   title,
 }) {
   const [vendors, setVendors] = useState({
-      id:  '', // Si es un autoincremento, déjalo vacío
       company_name: '',
       contact_name: '',
       contact_title: '',
@@ -45,7 +44,6 @@ useEffect(() => {
       }
 
       setVendors({
-        id: data.id,
         company_name: data.company_name,
         contact_name: data.contact_name,
         contact_title: data.contact_title,
@@ -87,18 +85,17 @@ useEffect(() => {
   };
   const clearFormFields = () => {
     setVendors({
-      id: data.id , // Si es un autoincremento, déjalo vacío
-      company_name: data.company_name ,
-      contact_name: data.contact_name,
-      contact_title: data.contact_title,
-      address: data.address,
-      city: data.city,
-      region: data.region,
-      postal_code: data.postal_code,
-      country: data.country,
-      phone: data.phone,
-      fax: data.fax,
-      home_page: data.home_page,
+      company_name: "" ,
+      contact_name: "",
+      contact_title: "",
+      address: "",
+      city: "",
+      region: "",
+      postal_code: "",
+      country: "",
+      phone: "",
+      fax: "",
+      home_page: "",
     });
   };
 
