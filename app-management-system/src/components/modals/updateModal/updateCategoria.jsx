@@ -5,12 +5,24 @@ import {
   getCategories,
   updateCategory,
 } from "../../../services/categories";
-import { InputComponent } from "../input";
-import { ModalParaUpdate } from "../modalparaUpdate";
-export function UpdateModal({ open, onClose, categoryId, onReceiveRows }) {
-  const [categori, setCategori] = useState({
+import Img_input from "../../molecules/Img/img_input";
+import { Modal } from "../../modals/modal";
+import Field from "../../molecules/Field/field";
+import LongText from "../../molecules/LongText/longText";
+
+export function UpdateCategoryModal({
+  title,
+  label,
+  open, 
+  onClose, 
+  categoryId, 
+  onReceiveRows 
+}) {
+  const [category, setCategory] = useState({
+    id:"",
     name: "",
     description: "",
+    picture:"",
   });
 
   useEffect(() => {
@@ -21,9 +33,11 @@ export function UpdateModal({ open, onClose, categoryId, onReceiveRows }) {
         if (!success) {
           throw new Error(message);
         }
-        setCategori({
+        setCategory({
+          id: data.id,
           name: data.name,
           description: data.description,
+          picture: data.picture,
         });
       } catch (error) {
         console.error("Error al obtener los detalles de la categoría:", error);
@@ -36,16 +50,19 @@ export function UpdateModal({ open, onClose, categoryId, onReceiveRows }) {
   }, [open, categoryId]);
 
   const handleChange = (e) => {
-    setCategori({
-      ...categori,
+    setCategory({
+      ...category,
       [e.target.name]: e.target.value,
     });
+  };
+  const handleImageChange = (event) => {
+    setPicture(event.files[0]);
   };
 
   const handleUpdate = async () => {
     try {
-      await updateCategory(categoryId, categori);
-      const rows = await getCategories();
+      await updateCategory(categoryId, category);
+      const rows = await getCategoriById();
       const { data } = rows.data;
       onReceiveRows(data);
     } catch (error) {
@@ -53,9 +70,11 @@ export function UpdateModal({ open, onClose, categoryId, onReceiveRows }) {
     }
   };
   const clearFormFields = () => {
-    setCategori({
+    setCategory({
+      id: "",
       name: "",
       description: "",
+      picture: "",
     });
   };
 
@@ -65,44 +84,93 @@ export function UpdateModal({ open, onClose, categoryId, onReceiveRows }) {
   };
 
   return (
-    <ModalContainer open={open}>
-      <ModalParaUpdate
-        title="Actualizar Categoría"
-        showModalContent={() => (
-          <>
-            <InputComponent
-              name="name"
-              label="Nombre"
-              type="text"
-              id="name"
-              value={categori.name}
-              onChange={handleChange}
-            />
-            <InputComponent
-              name="description"
-              label="Descripción"
-              type="text"
-              id="description"
-              value={categori.description}
-              onChange={handleChange}
-            />
-          </>
+    <Container>
+      {open && categoryId && (
+    <Modal
+    label={label}
+    onClose={handleClose}
+    onAction={handleUpdate}
+    title={title}
+    showModalContent={(handleCloseModal) => (
+      <FormContainer className="bg-slate-400 p-5">
+      <FormColumn>
+                <Field
+                  name="id"
+                  labelFor="id"
+                  labelText="Id de la categoria :"
+                  inputId="Idcategory"
+                  type="text"
+                  value={category.name}
+                  onChange={handleChange}
+                />
+                <Field
+                  name="name"
+                  labelFor="name"
+                  labelText="Nombre de la empresa:"
+                  inputId="CompanyNameInput"
+                  type="text"
+                  value={category.name}
+                  onChange={handleChange}
+                />
+                </FormColumn>
+                <FormColumn>
+                <LongText
+                  id="description"
+                  name="description"
+                  value={category.description}
+                  onChange={handleChange}
+                  labelFor="description"
+                  labelText="Descripción:"
+                  placeholder="Descripción de la categoría..."
+                />
+                <Img_input
+                  name="photo"
+                  id="photo"
+                  onChange={handleImageChange}
+                  accept="image/*"
+                  chooseLabel="Seleccionar Archivo"
+                />
+        </FormColumn>
+    </FormContainer>
         )}
-        onClose={handleClose}
-        onUpdate={handleUpdate}
       />
-    </ModalContainer>
+      
+)}</Container>
   );
+  
 }
 
-const ModalContainer = styled.div`
-  display: ${({ open }) => (open ? "block" : "none")};
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: white;
-  padding: 20px;
-  border: 1px solid #ccc;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+
+const Container = styled.div`
+  height: 45px;
+  width: 170px;
+  .button_head {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: ${(props) => props.buttonColor || props.theme.bgbtton};
+    cursor: pointer;
+    border: none;
+    border-radius: 1rem;
+    font-size: 17px;
+    font-weight: 800;
+    color: ${(props) => props.theme.text};
+    box-shadow: 0.1rem 0.3rem #00000040;
+    &:hover {
+      background: ${(props) => props.theme.gray700};
+      color: ${(props) => props.theme.body};
+    }
+  }
+`;
+
+const FormContainer = styled.div`
+  display: flex;
+  gap: 20px;
+`;
+
+const FormColumn = styled.div`
+  display: flex;
+  flex-direction: column;
 `;

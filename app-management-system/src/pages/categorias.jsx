@@ -10,6 +10,7 @@ import {
 import { getCsv, getPrivileges, hasPrivileges } from "../utils/logic";
 import { Preloader } from "./preloader";
 import { ModalCreateCategory } from "../components/organisms/CreateModals/ModalCreateCategory";
+import {UpdateCategoryModal} from "../components/modals/updateModal/updateCategoria";
 
 export function Categoria() {
   const [cat, setCat] = useState([]);
@@ -103,13 +104,13 @@ export function Categoria() {
               getCsv({ callback: exportCategoriesToCsv, name: "categories_data" })
             }
           />
-          {/* <UpdateVendorsModal
+          <UpdateCategoryModal
             open={isEditModalOpen}
             title={"Edit Category"}
             onReceiveRows={handleReceiveRows}
             onClose={handleCloseEditModal}
-            vendorsId={editCategoryId}
-          /> */}
+            categoryId={editCategoryId}
+          /> 
         </>
       )}
     </Container>
