@@ -18,7 +18,7 @@ export function ModalCreateProducts({
   const [category, setCategories] = useState([]);
   const [suppliers, setSuppliers] = useState([]);
   const [product, setProduct] = useState({
-    product_name: "",
+    name: "",
     id_supplier: "",
     id_category: "",
     quantity_per_unit: "",
@@ -115,12 +115,12 @@ export function ModalCreateProducts({
             <FormContainer className="bg-slate-400 p-5">
               <FormColumn>
                 <Field
-                  name="product_name"
-                  labelFor="product_name"
+                  name="name"
+                  labelFor="name"
                   labelText="Nombre del producto:"
                   inputId="ProductNameInput"
                   type="text"
-                  value={product.product_name}
+                  value={product.name}
                   onChange={handleChange}
                 />
                 <ComboBox
