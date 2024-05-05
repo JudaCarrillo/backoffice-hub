@@ -5,11 +5,9 @@ import {
   getVendorsId,
   updateVendor,
 } from "../../../services/vendors";
-import { InputComponent } from "../input";
-import { ModalParaUpdate } from "../modalparaUpdate";
 import { Modal } from "../../modals/modal";
 import Field from "../../molecules/Field/field";
-import TextAreaWithLabel from "../../molecules/TextAreaWithLabel/textwithlabel";
+
 export function UpdateVendorsModal({
   label,
   open,
@@ -19,54 +17,51 @@ export function UpdateVendorsModal({
   title,
 }) {
   const [vendors, setVendors] = useState({
-      id:  '', // Si es un autoincremento, déjalo vacío
-      company_name: '',
-      contact_name: '',
-      contact_title: '',
-      address: '',
-      city: '',
-      region: '',
-      postal_code: '',
-      country: '',
-      phone: '',
-      fax: '',
-      home_page: '',
+    company_name: "",
+    contact_name: "",
+    contact_title: "",
+    address: "",
+    city: "",
+    region: "",
+    postal_code: "",
+    country: "",
+    phone: "",
+    fax: "",
+    home_page: "",
   });
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const vendor = await getVendorsId(vendorId);
+        const { success, data, message } = vendor.data;
 
-useEffect(() => {
-  const fetchData = async () => {
-    try {
-      const vendor = await getVendorsId(vendorId); // Reemplaza getVendorById con la función adecuada para obtener detalles de un vendedor por su ID
-      const { success, data, message } = vendor.data;
+        if (!success) {
+          throw new Error(message);
+        }
 
-      if (!success) {
-        throw new Error(message);
+        setVendors({
+          company_name: data.company_name || "",
+          contact_name: data.contact_name || "",
+          contact_title: data.contact_title || "",
+          address: data.address || "",
+          city: data.city || "",
+          region: data.region || "",
+          postal_code: data.postal_code || "",
+          country: data.country || "",
+          phone: data.phone || "",
+          fax: data.fax || "",
+          home_page: data.home_page || "",
+        });
+      } catch (error) {
+        console.error("Error al obtener los detalles del vendedor:", error);
       }
+    };
 
-      setVendors({
-        id: data.id,
-        company_name: data.company_name,
-        contact_name: data.contact_name,
-        contact_title: data.contact_title,
-        address: data.address,
-        city: data.city,
-        region: data.region,
-        postal_code: data.postal_code,
-        country: data.country,
-        phone: data.phone,
-        fax: data.fax,
-        home_page: data.home_page,
-      });
-    } catch (error) {
-      console.error("Error al obtener los detalles del vendedor:", error);
+    if (open && vendorId) {
+      fetchData();
     }
-  };
-
-  if (open && vendorId) {
-    fetchData();
-  }
-}, [open, vendorId]);
+  }, [open, vendorId]);
 
   const handleChange = (e) => {
     setVendors({
@@ -77,7 +72,7 @@ useEffect(() => {
 
   const handleUpdate = async () => {
     try {
-      await updateVendor(vendorsId, vendors);
+      await updateVendor(vendorId, vendors);
       const rows = await getVendors();
       const { data } = rows.data;
       onReceiveRows(data);
@@ -87,156 +82,154 @@ useEffect(() => {
   };
   const clearFormFields = () => {
     setVendors({
-      id: data.id , // Si es un autoincremento, déjalo vacío
-      company_name: data.company_name ,
-      contact_name: data.contact_name,
-      contact_title: data.contact_title,
-      address: data.address,
-      city: data.city,
-      region: data.region,
-      postal_code: data.postal_code,
-      country: data.country,
-      phone: data.phone,
-      fax: data.fax,
-      home_page: data.home_page,
+      company_name: "",
+      contact_name: "",
+      contact_title: "",
+      address: "",
+      city: "",
+      region: "",
+      postal_code: "",
+      country: "",
+      phone: "",
+      fax: "",
+      home_page: "",
     });
   };
 
   const handleClose = () => {
-    clearFormFields(); // Limpia los campos del formulario
-    onClose(); // Cierra el modal
+    clearFormFields();
+    onClose();
   };
 
   return (
     <Container>
       {open && vendorId && (
-    <Modal
-    label={label}
-    onClose={handleClose}
-    onAction={handleUpdate}
-    title={title}
-    showModalContent={(handleCloseModal) => (
-      <FormContainer className="bg-slate-400 p-5">
-      <FormColumn>
-      <Field 
-          name="CompanyName"
-          labelFor="CompanyName" 
-          labelText="Nombre de la empresa:" 
-          inputId="CompanyNameInput" 
-          type="text" 
-		      value={vendors.company_name}
-          onChange={handleChange}
-        />
-        <Field 
-          name="ContactName"
-          labelFor="ContactName" 
-          labelText="Nombre de contacto:" 
-          inputId="ContactNameInput" 
-		      type="text" 
-		      value={vendors.contact_title}
-          onChange={handleChange}
-        />
-        <Field 
-          name="ContactTitle"
-          labelFor="ContactTitle" 
-          labelText="Título de contacto:" 
-          inputId="ContactTitleInput" 
-		      type="text" 
-		      value={vendors.contact_title}
-          onChange={handleChange}
-        />
-        </FormColumn>
+        <Modal
+          label={label}
+          onClose={handleClose}
+          onAction={handleUpdate}
+          title={title}
+          showModalContent={(handleCloseModal) => (
+            <FormContainer className="bg-slate-400 p-5">
               <FormColumn>
-        <Field 
-          name="Address"
-          labelFor="Address" 
-          labelText="Dirección:" 
-          inputId="AddressInput" 
-		      type="text" 
-		      value={vendors.address}
-          onChange={handleChange}
+                <Field
+                  name="company_name"
+                  labelFor="company_name"
+                  labelText="Nombre de la empresa:"
+                  inputId="CompanyNameInput"
+                  type="text"
+                  value={vendors.company_name}
+                  onChange={handleChange}
+                  isRequired={false}
+                />
+                <Field
+                  name="contact_name"
+                  labelFor="contact_name"
+                  labelText="Nombre de contacto:"
+                  inputId="ContactNameInput"
+                  type="text"
+                  value={vendors.contact_title}
+                  onChange={handleChange}
+                />
+                <Field
+                  name="contact_title"
+                  labelFor="contact_title"
+                  labelText="Título de contacto:"
+                  inputId="ContactTitleInput"
+                  type="text"
+                  value={vendors.contact_title}
+                  onChange={handleChange}
+                />
+              </FormColumn>
+              <FormColumn>
+                <Field
+                  name="address"
+                  labelFor="address"
+                  labelText="Dirección:"
+                  inputId="AddressInput"
+                  type="text"
+                  value={vendors.address}
+                  onChange={handleChange}
+                />
+
+                <Field
+                  name="city"
+                  labelFor="city"
+                  labelText="Ciudad:"
+                  inputId="CityInput"
+                  type="text"
+                  value={vendors.city}
+                  onChange={handleChange}
+                />
+
+                <Field
+                  name="region"
+                  labelFor="region"
+                  labelText="Región:"
+                  inputId="RegionInput"
+                  type="text"
+                  value={vendors.region}
+                  onChange={handleChange}
+                />
+              </FormColumn>
+              <FormColumn>
+                <Field
+                  name="postal_code"
+                  labelFor="postal_code"
+                  labelText="Código Postal:"
+                  inputId="PostalCodeInput"
+                  type="text"
+                  maxLength={10}
+                  value={vendors.postal_code}
+                  onChange={handleChange}
+                />
+
+                <Field
+                  name="country"
+                  labelFor="country"
+                  labelText="País:"
+                  inputId="CountryInput"
+                  type="text"
+                  value={vendors.country}
+                  onChange={handleChange}
+                />
+                <Field
+                  name="phone"
+                  labelFor="phone"
+                  labelText="Teléfono:"
+                  inputId="PhoneInput"
+                  type="tel"
+                  value={vendors.phone}
+                  onChange={handleChange}
+                />
+              </FormColumn>
+              <FormColumn>
+                <Field
+                  name="fax"
+                  labelFor="fax"
+                  labelText="Fax:"
+                  inputId="FaxInput"
+                  type="text"
+                  pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+                  value={vendors.fax}
+                  onChange={handleChange}
+                />
+                <Field
+                  name="home_page"
+                  labelFor="home_page"
+                  labelText="Página de inicio:"
+                  inputId="HomePageInput"
+                  type="url"
+                  value={vendors.home_page}
+                  onChange={handleChange}
+                />
+              </FormColumn>
+            </FormContainer>
+          )}
         />
-      
-        <Field 
-          name="City"
-          labelFor="City" 
-          labelText="Ciudad:" 
-          inputId="CityInput" 
-		      type="text" 
-		      value={vendors.city}
-          onChange={handleChange}
-        />
-	  
-        <Field 
-          name="Region"
-          labelFor="Region" 
-          labelText="Región:" 
-          inputId="RegionInput" 
-		      type="text" 
-          value={vendors.region}
-          onChange={handleChange}
-        />
-         
-	  </FormColumn>
-      <FormColumn>
-        <Field 
-          name="PostalCode"
-          labelFor="PostalCode" 
-          labelText="Código Postal:" 
-          inputId="PostalCodeInput" 
-          type="text" 
-		      maxLength={10} 
-		      value={vendors.postal_code}
-          onChange={handleChange}
-        />
-	 
-        <Field 
-          name="Country"
-          labelFor="Country" 
-          labelText="País:" 
-          inputId="CountryInput" 
-          type="text" 
-		      value={vendors.country}
-          onChange={handleChange}
-        />
-        <Field 
-          name="Phone"
-          labelFor="Phone" 
-          labelText="Teléfono:" 
-          inputId="PhoneInput" 
-          type="tel" 
-		  value={vendors.phone}
-          onChange={handleChange}
-        />
-        </FormColumn>
-          <FormColumn>
-        <Field 
-          name="Fax"
-          labelFor="Fax" 
-          labelText="Fax:" 
-          inputId="FaxInput" 
-          type="text" 
-		  pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
-		  value={vendors.fax}
-          onChange={handleChange}
-        /> 
-		<TextAreaWithLabel
-			id="homePage"
-			name="homePage"
-			value={vendors.home_page}
-			onChange={handleChange}
-			placeholder="Ingresa la URL de la página de inicio..."
-			labelFor="homePage"
-			labelText="Página de inicio:"
-        />
-      </FormColumn>
-    </FormContainer>
-        )}
-      />
-      
-)}</Container>
+      )}
+    </Container>
   );
-  
 }
 
 const Container = styled.div`

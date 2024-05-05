@@ -93,6 +93,7 @@ export function Proveedores() {
             modalName={"Nuevo Proveedor"}
             title={"Crear proveedor"}
             onReceiveRows={handleReceiveRows}
+            label={"Create"}
           />
         )}
       </Cabecera>
@@ -118,7 +119,7 @@ export function Proveedores() {
             onReceiveRows={handleReceiveRows}
             onClose={handleCloseEditModal}
             vendorId={editVendorId}
-            label={"update"}
+            label={"Save"}
           />
         </>
       )}

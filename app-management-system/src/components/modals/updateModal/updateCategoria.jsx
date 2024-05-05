@@ -5,25 +5,25 @@ import {
   getCategories,
   updateCategory,
 } from "../../../services/categories";
-import Img_input from "../../molecules/Img/img_input";
 import { Modal } from "../../modals/modal";
 import Field from "../../molecules/Field/field";
+import Img_input from "../../molecules/Img/img_input";
 import LongText from "../../molecules/LongText/longText";
 
 export function UpdateCategoryModal({
   title,
   label,
-  open, 
-  onClose, 
-  categoryId, 
-  onReceiveRows 
+  open,
+  onClose,
+  categoryId,
+  onReceiveRows,
 }) {
   const [category, setCategory] = useState({
-    id:"",
     name: "",
     description: "",
-    picture:"",
+    picture: "",
   });
+  const [picture, setPicture] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -61,8 +61,19 @@ export function UpdateCategoryModal({
 
   const handleUpdate = async () => {
     try {
-      await updateCategory(categoryId, category);
-      const rows = await getCategoriById();
+      const formData = new FormData();
+
+      Object.keys(category).forEach((key) => {
+        formData.append(key, category[key]);
+      });
+
+      if (picture) {
+        formData.delete("picture");
+        formData.append("picture", picture);
+      }
+
+      await updateCategory(categoryId, formData);
+      const rows = await getCategories();
       const { data } = rows.data;
       onReceiveRows(data);
     } catch (error) {
@@ -86,23 +97,14 @@ export function UpdateCategoryModal({
   return (
     <Container>
       {open && categoryId && (
-    <Modal
-    label={label}
-    onClose={handleClose}
-    onAction={handleUpdate}
-    title={title}
-    showModalContent={(handleCloseModal) => (
-      <FormContainer className="bg-slate-400 p-5">
-      <FormColumn>
-                <Field
-                  name="id"
-                  labelFor="id"
-                  labelText="Id de la categoria :"
-                  inputId="Idcategory"
-                  type="text"
-                  value={category.name}
-                  onChange={handleChange}
-                />
+        <Modal
+          label={label}
+          onClose={handleClose}
+          onAction={handleUpdate}
+          title={title}
+          showModalContent={(handleCloseModal) => (
+            <FormContainer className="bg-slate-400 p-5">
+              <FormColumn>
                 <Field
                   name="name"
                   labelFor="name"
@@ -112,8 +114,6 @@ export function UpdateCategoryModal({
                   value={category.name}
                   onChange={handleChange}
                 />
-                </FormColumn>
-                <FormColumn>
                 <LongText
                   id="description"
                   name="description"
@@ -123,23 +123,31 @@ export function UpdateCategoryModal({
                   labelText="Descripción:"
                   placeholder="Descripción de la categoría..."
                 />
-                <Img_input
-                  name="photo"
-                  id="photo"
-                  onChange={handleImageChange}
-                  accept="image/*"
-                  chooseLabel="Seleccionar Archivo"
-                />
-        </FormColumn>
-    </FormContainer>
-        )}
-      />
-      
-)}</Container>
-  );
-  
-}
+              </FormColumn>
+              <FormColumn>
+                <div className="flex flex-col items-center justify-center">
+                  <img
+                    src={category.picture}
+                    alt={category.name}
+                    className="rounded-full w-28 h-28"
+                  />
 
+                  <Img_input
+                    name="photo"
+                    id="photo"
+                    onChange={handleImageChange}
+                    accept="image/*"
+                    chooseLabel="Seleccionar Archivo"
+                  />
+                </div>
+              </FormColumn>
+            </FormContainer>
+          )}
+        />
+      )}
+    </Container>
+  );
+}
 
 const Container = styled.div`
   height: 45px;

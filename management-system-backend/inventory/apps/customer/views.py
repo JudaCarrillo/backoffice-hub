@@ -44,6 +44,8 @@ def get_by_id(request, id):
 
         if not result.get('success'):
             return Response(result, status=status.HTTP_400_BAD_REQUEST)
+        
+        return Response(result, status=status.HTTP_200_OK)
     except Exception as e:
         print(e)
         return Response({'success': False, 'data': None, 'message': 'Internal Server Error'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
