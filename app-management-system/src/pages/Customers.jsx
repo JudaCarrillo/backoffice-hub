@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { Cabecera } from "../components/cabecera";
 import { Cuerpo } from "../components/cuerpo";
-import { UpdateUserModal } from "../components/modals/updateModal/updateUser";
 import { ModalCreateCustomers } from "../components/organisms/CreateModals/ModalCreateCustomers";
 import { getCustomers } from "../services/Customers";
 import { getPrivileges } from "../utils/logic";
 import { Preloader } from "./preloader";
+import { UpdateCustomerModal } from "../components/modals/updateModal/updateCustomers";
 
 export function Customers() {
   const [Customers, setCustomers] = useState([]);
@@ -100,12 +100,13 @@ export function Customers() {
             privilegesReport={privilegesReport}
             privilegesWrite={privilegesWrite}
           />
-          <UpdateUserModal
+          <UpdateCustomerModal
             open={isEditModalOpen}
             onClose={handleCloseEditModal}
-            userId={editCustomerId}
+            customerId={editCustomerId}
             onReceiveRows={handleReceiveRows}
             title={"Editar Customer"}
+            label={"Actualizar"}
           />
         </>
       )}
