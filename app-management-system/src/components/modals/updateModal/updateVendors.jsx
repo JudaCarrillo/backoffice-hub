@@ -33,7 +33,6 @@ export function UpdateVendorsModal({
       home_page: '',
   });
 
-const [vendorDetails, setVendorDetails] = useState({});
 
 useEffect(() => {
   const fetchData = async () => {
@@ -45,7 +44,7 @@ useEffect(() => {
         throw new Error(message);
       }
 
-      setVendorDetails({
+      setVendors({
         id: data.id,
         company_name: data.company_name,
         contact_name: data.contact_name,
