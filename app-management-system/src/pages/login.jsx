@@ -123,7 +123,7 @@ const LoginButton = styled.button`
   }
 `
 
-export function Login ({ onLoginSuccess, setIsForgotPassword }) {
+export function Login ({ onLoginSuccess }) {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)

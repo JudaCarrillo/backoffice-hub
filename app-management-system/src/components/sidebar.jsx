@@ -173,6 +173,7 @@ const Container = styled.div`
   background: ${(props) => props.theme.bg};
   position: sticky;
   padding-top: ${({ isopen }) => (isopen ? "30%" : "100px")};
+  max-height: 100vh;
   .sidebarButton {
     position: absolute;
     top: 10px;
