@@ -124,18 +124,28 @@ export function Sidebar({ sidebarOpen, setSidebarOpen, setIsLoggedIn }) {
           </div>
         ))}
         <Divider />
-
-        <div className="w-full h-10">
+        <div className="relative -ml-10 w-full h-10">
           <div className="flex items-center justify-center gap-4 w-full h-full">
-            <img
-              className="w-14 h-14 rounded-full"
-              src={userState.photo}
-              alt={userState.name}
-            />
             {sidebarOpen && (
-              <span className="font-normal from-neutral-800 text-xl">
-                {userState.name}
-              </span>
+              <>
+                <img
+                  className={`w-14 h-14 rounded-full ${
+                    sidebarOpen ? "" : "ml-20"
+                  }`}
+                  src={userState.photo}
+                  alt={userState.name}
+                />
+                <span className="font-semibold text-xl text-neutral-800">
+                  {userState.name}
+                </span>
+              </>
+            )}
+            {!sidebarOpen && (
+              <img
+                className="ml-20 w-14 h-14 rounded-full"
+                src={userState.photo}
+                alt={userState.name}
+              />
             )}
           </div>
         </div>
@@ -163,6 +173,7 @@ const Container = styled.div`
   background: ${(props) => props.theme.bg};
   position: sticky;
   padding-top: ${({ isopen }) => (isopen ? "30%" : "100px")};
+  max-height: 100vh;
   .sidebarButton {
     position: absolute;
     top: 10px;

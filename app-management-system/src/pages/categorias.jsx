@@ -1,17 +1,16 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { ButtonHead } from "../components/button";
 import { Cabecera } from "../components/cabecera";
 import { Cuerpo } from "../components/cuerpo";
-import { CategoryModal } from "../components/modals/CrearModales/modalCategoria";
-import { UpdateModal } from "../components/modals/updateModal/updateCategoria";
 import {
   deleteCategory,
   exportCategoriesToCsv,
   getCategories,
 } from "../services/categories";
-import { getCsv, getPrivileges } from "../utils/logic";
+import { getCsv, getPrivileges, hasPrivileges } from "../utils/logic";
 import { Preloader } from "./preloader";
+import { UpdateVendorsModal } from "../components/modals/updateModal/updateVendors";
+import ModalProveedor from "../components/modals/CrearModales/modalProveedor";
 
 export function Categoria() {
   const [cat, setCat] = useState([]);
@@ -80,23 +79,11 @@ export function Categoria() {
 
   return (
     <Container>
-      <Cabecera title={"Categoria"}>
-        {privilegesReport.length > 0 && (
-          <ButtonHead
-            name={"Descargar"}
-            onClick={() =>
-              getCsv({
-                callback: exportCategoriesToCsv,
-                name: "categories_data",
-              })
-            }
-            buttonColor="#969593"
-          />
-        )}
+      <Cabecera title={"Category"}>
         {privilegesWrite.length > 0 && (
-          <CategoryModal
-            modalName={"Nueva Categoria"}
-            title={"Crear categoria"}
+          <ModalProveedor
+            modalName={"New Category"}
+            title={"Create Category"}
             onReceiveRows={handleReceiveRows}
           />
         )}
@@ -110,12 +97,18 @@ export function Categoria() {
             data={cat}
             handleEdit={handleEdit}
             handleDelete={handleDelete}
+            showActions={hasPrivileges(privilegesWrite)}
+            showActionForDownload={hasPrivileges(privilegesReport)}
+            handleDownload={() =>
+              getCsv({ callback: exportCategoriesToCsv, name: "categories_data" })
+            }
           />
-          <UpdateModal
+          <UpdateVendorsModal
             open={isEditModalOpen}
-            onClose={handleCloseEditModal}
-            categoryId={editCategoryId}
+            title={"Edit Category"}
             onReceiveRows={handleReceiveRows}
+            onClose={handleCloseEditModal}
+            vendorsId={editCategoryId}
           />
         </>
       )}

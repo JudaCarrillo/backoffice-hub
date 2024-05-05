@@ -21,32 +21,38 @@ export function Cuerpo({
 
   return (
     <div
-      className={`relative bg-white top-36 w-11/12 p-4 h-550 left-24 -m-10 rounded-2xl overflow-hidden shadow-md transition-max-w duration-500 ease-in-out lg:max-w-full md:max-w-[80vw] sm:max-w-[70vw] xs:max-w-[60vw] 2xs:max-w-[55vw]`}
+      className={`relative bg-white top-[130px] w-11/12 p-4 h-550 left-24 -m-10 rounded-2xl overflow-hidden shadow-md transition-max-w duration-500 ease-in-out lg:max-w-full md:max-w-[80vw] sm:max-w-[70vw] xs:max-w-[60vw] 2xs:max-w-[55vw]`}
     >
       <div className="min-w-[600px] w-full p-2">
         <DataTable
           value={data}
           paginator
-          rows={10}
+          rows={5}
           paginatorRight={paginatorRight}
           tableStyle={{
             minWidth: "50rem",
+            overflow: "auto",
           }}
+          className="w-full table-auto"
         >
           {columns.map((column) => (
             <Column
-              className="p-3 h-20 text-left"
-              style={{ minWidth: "25%" }}
+              className="p-2 text-left h-[70px]"
+              style={{ 
+                minWidth: "25%",
+                overflow: "visible",
+                
+               }}
               key={column.data}
               field={column.data}
               header={column.title}
-              headerClassName="text-left w-40 bg-white"
+              headerClassName="text-left w-96 bg-white border-none px-2"
               sortable
               body={(rowData) => {
                 if (column.title === "Photo") {
                   return (
                     <img
-                      className="w-8 rounded-full"
+                      className="relative -left-3 w-9 h-10 max-w-10 max-h-10 rounded-full"
                       src={rowData[column.data]}
                       alt="user"
                     />
@@ -61,7 +67,8 @@ export function Cuerpo({
             <Column
               key="actions"
               header="Acciones"
-              headerClassName="text-left bg-white"
+              headerClassName="flex justify-center relative"
+              bodyClassName="text-center"
               body={(rowData) => (
                 <ButtonsTable
                   onEdit={() => handleEdit(rowData.id)}

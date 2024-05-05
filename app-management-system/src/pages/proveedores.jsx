@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { ButtonHead } from "../components/button";
 import { Cabecera } from "../components/cabecera";
 import { Cuerpo } from "../components/cuerpo";
 import ModalProveedor from "../components/modals/CrearModales/modalProveedor";
@@ -88,11 +87,11 @@ export function Proveedores() {
 
   return (
     <Container>
-      <Cabecera title={"Proveedores"}>
+      <Cabecera title={"Suppliers"}>
         {privilegesWrite.length > 0 && (
           <ModalProveedor
-            modalName={"Nuevo Proveedor"}
-            title={"Crear proveedor"}
+            modalName={"New Supplier"}
+            title={"Create Supplier"}
             onReceiveRows={handleReceiveRows}
           />
         )}
