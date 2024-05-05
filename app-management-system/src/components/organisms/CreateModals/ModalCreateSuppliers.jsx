@@ -92,7 +92,7 @@ export function ModalCreateSuppliers ({ modalName, title, onReceiveRows, label }
                   labelText="Titulo de contacto:"
                   inputId="ContactTitleInput"
                   type="text"
-                  value={suppliers.contact_name}
+                  value={suppliers.contact_title}
                   onChange={handleChange}
                 />
 
