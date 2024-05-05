@@ -24,7 +24,10 @@ export function Modal({ title, showModalContent, onClose, onAction, label }) {
             <div className="separacion">
               <ul>
                 <li>
-                  <ButtonModal type="button" onClick={handleCloseModal} name="cerrar"
+                  <ButtonModal
+                    type="button"
+                    onClick={handleCloseModal}
+                    name="cerrar"
                   />
                 </li>
                 <li>
@@ -51,7 +54,7 @@ const Container = styled.div`
     justify-content: center;
     align-items: center;
     z-index: 999;
-    
+
     .modal {
       background-color: rgba(148, 163, 184, 1); /* Color de fondo del modal */
       padding: 9px;
@@ -62,7 +65,7 @@ const Container = styled.div`
       align-items: center;
       max-width: 100%; /* Ajustar el ancho máximo al 100% del viewport */
       overflow-y: auto; /* Agregar desplazamiento vertical si el contenido excede el tamaño del modal */
-      
+
       .cabeza {
         width: 100%;
         display: flex;
@@ -70,10 +73,10 @@ const Container = styled.div`
         align-items: center;
         gap: 20px;
         margin-bottom: 20px; /* Agregar espacio inferior */
-        
+
         h2 {
           color: black;
-          font-size: 1.80rem;
+          font-size: 1.8rem;
           font-weight: 800;
         }
       }
@@ -85,13 +88,13 @@ const Container = styled.div`
       align-items: center; /* Centrar los elementos horizontalmente */
       gap: 20px;
       width: 100%;
-      
+
       ul {
         display: flex;
         flex-wrap: wrap; /* Permitir que los elementos se envuelvan en varias líneas */
         justify-content: center;
         gap: 20px;
-        
+
         li {
           list-style: none;
         }

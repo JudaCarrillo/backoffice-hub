@@ -24,5 +24,5 @@ export const updateVendor = (id, data) => {
   return axios.put(`${url_base}/${apiVersion}/${subject}update/${id}`, data);
 };
 export const getVendorsId = (id) => {
-  return axios.get(`${url_base}/${apiVersion}/${subject}${id}`);
+  return axios.get(`${url_base}/${apiVersion}/${subject}/${id}`);
 };

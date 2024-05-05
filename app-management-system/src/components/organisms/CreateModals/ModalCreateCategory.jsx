@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { createCategory, getCategories } from "../../../services/categories";
+import { Modal } from "../../modals/modal";
 import Field from "../../molecules/Field/field";
 import Img_input from "../../molecules/Img/img_input";
-import { Modal } from "../../modals/modal";
 import LongText from "../../molecules/LongText/longText";
-
 
 export function ModalCreateCategory({
   modalName,
@@ -14,11 +13,11 @@ export function ModalCreateCategory({
   label,
 }) {
   const [showModal, setShowModal] = useState(false);
-  const [photo, setPhoto] = useState(null);
+  const [picture, setPicture] = useState(null);
   const [category, setCategories] = useState({
-    category_name: "",
+    name: "",
     description: "",
-    photo: "",
+    picture: "",
   });
 
   const toggleModal = () => setShowModal(!showModal);
@@ -30,7 +29,11 @@ export function ModalCreateCategory({
       Object.keys(category).forEach((key) => {
         formData.append(key, category[key]);
       });
-      formData.append("photo", photo);
+
+      if (picture) {
+        formData.delete("picture");
+        formData.append("picture", picture);
+      }
 
       const response = await createCategory(formData);
       const { success, data, message } = response.data;
@@ -55,7 +58,7 @@ export function ModalCreateCategory({
   }
 
   const handleImageChange = (event) => {
-    setPhoto(event.files[0]);
+    setPicture(event.files[0]);
   };
 
   return (
@@ -73,12 +76,12 @@ export function ModalCreateCategory({
             <FormContainer className="bg-slate-400 p-5">
               <FormColumn>
                 <Field
-                  name="category_name"
-                  labelFor="category_name"
+                  name="name"
+                  labelFor="name"
                   labelText="Nombre de la empresa:"
                   inputId="CompanyNameInput"
                   type="text"
-                  value={category.category_name}
+                  value={category.name}
                   onChange={handleChange}
                 />
                 <LongText
