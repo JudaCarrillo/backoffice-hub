@@ -2,59 +2,55 @@ import { useState } from "react";
 import styled from "styled-components";
 import { Modal } from "../../modals/modal";
 import Field from "../../molecules/Field/field";
-import { createUsers, getUsuarios } from "../../../api/auth"; // Asegúrate de importar createCategory y getCategories
 
 export function ModalCreateCustomers({ modalName, title, onReceiveRows }) {
   const [showModal, setShowModal] = useState(false);
-  const [customerData, setCustomerData] = useState({
-    CustomerID: "",
-    CompanyName: "",
-    ContactName: "",
-    ContactTitle: "",
-    Address: "",
-    City: "",
-    Region: "",
-    PostalCode: "",
-    Country: "",
-    Phone: "",
-    Fax: "",
+  const [customers, setCustomers] = useState({
+    company_name: "",
+    contact_name: "",
+    contact_title: "",
+    address: "",
+    city: "",
+    region: "",
+    postal_code: "",
+    country: "",
+    phone: "",
+    fax: "",
   });
+
 
   const toggleModal = () => setShowModal(!showModal);
 
-  const handleCrear = async () => {
+  const handleCrearCustomers = async () => {
     try {
-      const data2 = {
-        CompanyName: customerData.CompanyName,
-        ContactName: customerData.ContactName,
-        ContactTitle: customerData.ContactTitle,
-        Address: customerData.Address,
-        City: customerData.City,
-        Region: customerData.Region,
-        PostalCode: customerData.PostalCode,
-        Country: customerData.Country,
-        Phone: customerData.Phone,
-        Fax: customerData.Fax,
-      };
-      const response = await createUsers(data2); // Utiliza customerData en lugar de categori
+      const formData = new FormData();
+      
+      Object.keys(customers).forEach((key) => {
+        formData.append(key, customers[key]);
+      });
+
+      const response = await createCustomers(formData);
       const { success, data, message } = response.data;
+
       if (success) {
-        const rows = await getUsuarios();
-        const { data } = rows.data;
-        onReceiveRows(data);
-        toggleModal(); // Cierra el modal después de la creación exitosa
+        const rows = await getCustomers();
+        const {
+          data: { items },
+        } = rows.data;
+        onReceiveRows(items);
+        toggleModal();
       } else {
         throw new Error(message);
       }
     } catch (error) {
-      console.error("Error al crear la categoría:", error);
+      console.error("Error al crear el cliente:", error);
     }
-  };
+  };  
 
   const handleChange = (e) => {
-    setCustomerData({ ...customerData, [e.target.name]: e.target.value });
+    setCustomers({ ...customers, [e.target.name]: e.target.value });
   };
-
+  
   return (
     <Container>
       <button className="button_head" onClick={toggleModal}>
@@ -62,100 +58,118 @@ export function ModalCreateCustomers({ modalName, title, onReceiveRows }) {
       </button>
       {showModal && (
         <Modal
+          label={label}
+          onClose={toggleModal}
+          onAction={handleCrearCustomers}
           title={title}
           showModalContent={(handleCloseModal) => (
-            <>
               <FormContainer>
                 <FormColumn>
                   <Field
-                    name="CompanyName"
-                    labelFor="CompanyName"
-                    labelText="Nombre de la empresa:"
+                    name="company_name"
+                    labelFor="company_name"
+                    labelText="Nombre de la compañia:"
                     inputId="CompanyNameInput"
                     type="text"
-                    onChange={handleChange}
-                  />
-                  <Field
-                    name="ContactName"
-                    labelFor="ContactName"
-                    labelText="Nombre de contacto:"
-                    inputId="ContactNameInput"
-                    type="text"
-                    onChange={handleChange}
-                  />
-                  <Field
-                    name="ContactTitle"
-                    labelFor="ContactTitle"
-                    labelText="Título de contacto:"
-                    inputId="ContactTitleInput"
-                    type="text"
-                    onChange={handleChange}
-                  />
-                  <Field
-                    name="Address"
-                    labelFor="Address"
-                    labelText="Dirección:"
-                    inputId="AddressInput"
-                    type="text"
-                    onChange={handleChange}
-                  />
-                  <Field
-                    name="City"
-                    labelFor="City"
-                    labelText="Ciudad:"
-                    inputId="CityInput"
-                    type="text"
-                    onChange={handleChange}
-                  />
-                </FormColumn>
-                <FormColumn>
-                  <Field
-                    name="Region"
-                    labelFor="Region"
-                    labelText="Región:"
-                    inputId="RegionInput"
-                    type="text"
-                    onChange={handleChange}
-                  />
-                  <Field
-                    name="PostalCode"
-                    labelFor="PostalCode"
-                    labelText="Código Postal:"
-                    inputId="PostalCodeInput"
-                    type="text"
+                    value={customers.company_name}
                     onChange={handleChange}
                   />
 
                   <Field
-                    name="Country"
-                    labelFor="Country"
+                    name="contact_name"
+                    labelFor="contact_name"
+                    labelText="Nombre de contacto:"
+                    inputId="ContactNameInput"
+                    type="text"
+                    value={customers.contact_name}
+                    onChange={handleChange}
+                  />
+
+                  <Field
+                    name="contact_title"
+                    labelFor="contact_title"
+                    labelText="Titulo de contacto:"
+                    inputId="ContactTitleInput"
+                    type="text"
+                    value={customers.contact_name}
+                    onChange={handleChange}
+                  />
+
+                  <Field
+                    name="address"
+                    labelFor="address"
+                    labelText="Dirección:"
+                    inputId="AddressInput"
+                    type="text"
+                    value={customers.address}
+                    onChange={handleChange}
+                  />
+
+                  <Field
+                    name="city"
+                    labelFor="city"
+                    labelText="Ciudad:"
+                    inputId="CityInput"
+                    type="text"
+                    value={customers.city}
+                    onChange={handleChange}
+                  />
+
+                  <Field
+                    name="region"
+                    labelFor="region"
+                    labelText="Región:"
+                    inputId="RegionInput"
+                    type="text"
+                    value={customers.region}
+                    onChange={handleChange}
+                  />
+                </FormColumn>
+                <FormColumn>
+                  <Field
+                    name="postal_code"
+                    labelFor="postal_code"
+                    labelText="Código Postal:"
+                    inputId="PostalCodeInput"
+                    type="text"
+                    maxLength={10}
+                    required
+                    value={customers.postal_code}
+                    onChange={handleChange}
+                  />
+
+                  <Field
+                    name="country"
+                    labelFor="country"
                     labelText="País:"
                     inputId="CountryInput"
                     type="text"
+                    value={customers.country}
                     onChange={handleChange}
                   />
+
                   <Field
-                    name="Phone"
-                    labelFor="Phone"
+                    name="phone"
+                    labelFor="phone"
                     labelText="Teléfono:"
                     inputId="PhoneInput"
                     type="tel"
+                    value={customers.phone}
                     onChange={handleChange}
                   />
-                  <Field
-                    name="Fax"
-                    labelFor="Fax"
-                    labelText="Fax:"
-                    inputId="FaxInput"
-                    type="text"
+
+                  <Field 
+                    name="fax"
+                    labelFor="fax" 
+                    labelText="Fax:" 
+                    inputId="FaxInput" 
+                    type="text" 
+                    value={customers.fax}
                     onChange={handleChange}
                   />
                 </FormColumn>
               </FormContainer>
-            </>
           )}
-          onClose={toggleModal}
-          onCreate={handleCrear}
         />
       )}
     </Container>

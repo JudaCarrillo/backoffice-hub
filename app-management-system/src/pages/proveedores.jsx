@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { ButtonHead } from "../components/button";
 import { Cabecera } from "../components/cabecera";
 import { Cuerpo } from "../components/cuerpo";
-import ModalProveedor from "../components/modals/CrearModales/modalProveedor";
 import { UpdateVendorsModal } from "../components/modals/updateModal/updateVendors";
 import {
   deleteVendor,
@@ -12,6 +10,7 @@ import {
 } from "../services/vendors";
 import { getCsv, getPrivileges, hasPrivileges } from "../utils/logic";
 import { Preloader } from "./preloader";
+import { ModalCreateSuppliers } from "../components/organisms/CreateModals/ModalCreateSuppliers";
 
 export function Proveedores() {
   const [prov, setProv] = useState([]);
@@ -88,9 +87,9 @@ export function Proveedores() {
 
   return (
     <Container>
-      <Cabecera title={"Proveedores"}>
+      <Cabecera title={"Suppliers"}>
         {privilegesWrite.length > 0 && (
-          <ModalProveedor
+          <ModalCreateSuppliers
             modalName={"Nuevo Proveedor"}
             title={"Crear proveedor"}
             onReceiveRows={handleReceiveRows}

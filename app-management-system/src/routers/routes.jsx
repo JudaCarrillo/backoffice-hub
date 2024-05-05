@@ -3,6 +3,7 @@ import { Categoria } from "../pages/categorias";
 import { Productos } from "../pages/productos";
 import { Proveedores } from "../pages/proveedores";
 import { Usuarios } from "../pages/usuarios";
+import { Customers } from "../pages/Customers";
 export function MyRoutes() {
   return (
     <Routes>
@@ -11,7 +12,7 @@ export function MyRoutes() {
       <Route path="/categories" element={<Categoria />} />
       <Route path="/suppliers" element={<Proveedores />} />
       <Route path="/users" element={<Usuarios />} />
-      <Route path="/customers" element={<Usuarios />} />
+      <Route path="/customers" element={<Customers />} />
     </Routes>
   );
 }

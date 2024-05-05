@@ -29,7 +29,7 @@ export function ButtonsTable({ onEdit, onDelete }) {
   )
 }
 
-const Container = styled.td`
+const Container = styled.div`
   width: 250px;
   .container-wrapper {
     display: flex;

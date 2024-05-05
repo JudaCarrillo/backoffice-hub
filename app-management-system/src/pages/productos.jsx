@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { ButtonHead } from "../components/button";
 import { Cabecera } from "../components/cabecera";
 import { Cuerpo } from "../components/cuerpo";
-import { ModalProductos } from "../components/modals/CrearModales/modalProductos";
 import { UpdateProductModal } from "../components/modals/updateModal/updateProducts";
 import {
   deleteProduct,
@@ -12,6 +10,7 @@ import {
 } from "../services/products";
 import { getCsv, getPrivileges } from "../utils/logic";
 import { Preloader } from "./preloader";
+import ModalProveedor from "../components/modals/CrearModales/modalProveedor";
 
 export function Productos() {
   const [pro, setPro] = useState([]);
@@ -79,20 +78,11 @@ export function Productos() {
 
   return (
     <Container>
-      <Cabecera title="Productos">
-        {privilegesReport.length > 0 && (
-          <ButtonHead
-            name="Descargar"
-            onClick={() =>
-              getCsv({ callback: exportProductsToCsv, name: "products_data" })
-            }
-            buttonColor="#969593"
-          />
-        )}
-        {privilegesWrite.length > 0 && (
-          <ModalProductos
-            modalName="Nuevo producto"
-            title="Crear producto"
+      <Cabecera title="Products">
+      {privilegesWrite.length > 0 && (
+          <ModalProveedor
+            modalName={"New Product"}
+            title={"Create Product"}
             onReceiveRows={handleReceiveRows}
           />
         )}
@@ -104,12 +94,18 @@ export function Productos() {
         <>
           <Cuerpo
             columns={columns}
-            data={pro}
+            data={cat}
             handleEdit={handleEdit}
             handleDelete={handleDelete}
+            showActions={hasPrivileges(privilegesWrite)}
+            showActionForDownload={hasPrivileges(privilegesReport)}
+            handleDownload={() =>
+              getCsv({
+                callback: exportProductsToCsv, name: "products_data"})
+              }
           />
           <UpdateProductModal
-            title="Editar Producto"
+            title="Edit Product"
             productId={editProductId}
             onReceiveRows={handleReceiveRows}
             onClose={handleCloseEditModal}

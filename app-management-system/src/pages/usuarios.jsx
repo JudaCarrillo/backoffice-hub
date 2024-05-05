@@ -70,6 +70,7 @@ export function Usuarios() {
         message,
       } = respuesta.data;
       if (success) {
+        setUser(user.filter((users) => users.id !== id));
         cargartabla();
       } else {
         throw new Error(message);
