@@ -1,80 +1,76 @@
-import React, { useEffect, useState } from 'react'
-import { BrowserRouter } from 'react-router-dom'
-import styled, { ThemeProvider } from 'styled-components'
-import { Sidebar } from './components/sidebar'
-import { Login } from './pages/login'
-import { MyRoutes } from './routers/routes'
-import { Dark, Light } from './styles/theme'
+import React, { useEffect, useState } from "react";
+import { BrowserRouter } from "react-router-dom";
+import styled, { ThemeProvider } from "styled-components";
+import { Sidebar } from "./components/organisms/sidebar/sidebar";
+import { Login } from "./pages/login";
+import { MyRoutes } from "./routers/routes";
+import { Dark, Light } from "./styles/theme";
 
-export const ThemeContext = React.createContext(null)
+export const ThemeContext = React.createContext(null);
 
-function App () {
-  const [theme, setTheme] = useState('light')
-  const themeStyle = theme === 'light' ? Light : Dark
+function App() {
+  const [theme, setTheme] = useState("light");
+  const themeStyle = theme === "light" ? Light : Dark;
 
-  const [sidebarOpen, setSidebarOpen] = useState(true)
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
-  const [forgotPassword, setIsForgotPassword] = useState(false)
+  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [forgotPassword, setIsForgotPassword] = useState(false);
 
   useEffect(() => {
-    const mediaQuery = window.matchMedia('(max-width: 1300px)')
+    const mediaQuery = window.matchMedia("(max-width: 1300px)");
 
     const handleMediaChange = (e) => {
-      setSidebarOpen(!e.matches)
-    }
+      setSidebarOpen(!e.matches);
+    };
 
-    mediaQuery.addEventListener('change', handleMediaChange)
-    return () => mediaQuery.removeEventListener('change', handleMediaChange)
-  }, [])
+    mediaQuery.addEventListener("change", handleMediaChange);
+    return () => mediaQuery.removeEventListener("change", handleMediaChange);
+  }, []);
 
   useEffect(() => {
-    const loggedInState = localStorage.getItem('isLoggedIn')
-    if (loggedInState === 'true') {
-      setIsLoggedIn(true)
+    const loggedInState = localStorage.getItem("isLoggedIn");
+    if (loggedInState === "true") {
+      setIsLoggedIn(true);
     }
-  }, [])
+  }, []);
 
   const handleLoginSuccess = () => {
-    setIsLoggedIn(true)
-    localStorage.setItem('isLoggedIn', 'true')
-  }
+    setIsLoggedIn(true);
+    localStorage.setItem("isLoggedIn", "true");
+  };
 
   const setIsForgotPasswordFnc = () => {
     setIsForgotPassword(true);
-  }
+  };
 
   return (
     <>
       <ThemeContext.Provider value={{ setTheme, theme }}>
         <ThemeProvider theme={themeStyle}>
           <BrowserRouter>
-            {isLoggedIn
-              ? (
-                <Container className={sidebarOpen ? 'sidebarState active' : ''}>
-                  <Sidebar
-                    sidebarOpen={sidebarOpen}
-                    setSidebarOpen={setSidebarOpen}
-                    setIsLoggedIn={setIsLoggedIn}
-                  />
-                  <MyRoutes />
-                </Container>
-                )
-              : forgotPassword
-                ? (
-                  <div> hola mundo </div>
-                  )
-                : (
-                  <Login
-                    setIsForgotPassword={setIsForgotPasswordFnc}
-                    setIsLoggedIn={setIsLoggedIn}
-                    onLoginSuccess={handleLoginSuccess}
-                  />
-                  )}
+            {isLoggedIn ? (
+              <Container className={sidebarOpen ? "sidebarState active" : ""}>
+                <Sidebar
+                  sidebarOpen={sidebarOpen}
+                  setSidebarOpen={setSidebarOpen}
+                  setIsLoggedIn={setIsLoggedIn}
+                />
+                <MyRoutes />
+              </Container>
+            ) : forgotPassword ? (
+              <div> hola mundo </div>
+            ) : (
+              <Login
+                setIsForgotPassword={setIsForgotPasswordFnc}
+                setIsLoggedIn={setIsLoggedIn}
+                onLoginSuccess={handleLoginSuccess}
+              />
+            )}
           </BrowserRouter>
         </ThemeProvider>
       </ThemeContext.Provider>
     </>
-  )
+  );
 }
 const Container = styled.div`
   display: grid;
@@ -85,5 +81,5 @@ const Container = styled.div`
     grid-template-columns: 300px auto;
   }
   // color: ${({ theme }) => theme.text}
-`
-export default App
+`;
+export default App;
