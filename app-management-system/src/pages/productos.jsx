@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Cabecera } from "../components/cabecera";
 import { Cuerpo } from "../components/cuerpo";
 import { UpdateProductModal } from "../components/modals/updateModal/updateProducts";
+import { ModalCreateProducts } from "../components/organisms/CreateModals/ModalCreateProducts";
 import {
   deleteProduct,
   exportProductsToCsv,
@@ -10,7 +11,6 @@ import {
 } from "../services/products";
 import { getCsv, getPrivileges } from "../utils/logic";
 import { Preloader } from "./preloader";
-import ModalProveedor from "../components/modals/CrearModales/modalProveedor";
 
 export function Productos() {
   const [pro, setPro] = useState([]);
@@ -50,7 +50,7 @@ export function Productos() {
   }, []);
 
   const handleEdit = (id) => {
-    setEditProductId(id); // Almacena el ID de la categoría a editar
+    setEditProductId(id);
     setIsEditModalOpen(true);
   };
   const handleCloseEditModal = () => {
@@ -79,11 +79,12 @@ export function Productos() {
   return (
     <Container>
       <Cabecera title="Products">
-      {privilegesWrite.length > 0 && (
-          <ModalProveedor
+        {privilegesWrite.length > 0 && (
+          <ModalCreateProducts
             modalName={"New Product"}
             title={"Create Product"}
             onReceiveRows={handleReceiveRows}
+            label={"Create"}
           />
         )}
       </Cabecera>
@@ -101,8 +102,10 @@ export function Productos() {
             showActionForDownload={hasPrivileges(privilegesReport)}
             handleDownload={() =>
               getCsv({
-                callback: exportProductsToCsv, name: "products_data"})
-              }
+                callback: exportProductsToCsv,
+                name: "products_data",
+              })
+            }
           />
           <UpdateProductModal
             title="Edit Product"

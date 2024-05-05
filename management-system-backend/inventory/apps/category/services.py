@@ -9,7 +9,7 @@ class CategoryService:
 
     def get_all(self, base_url):
         categories = Categories.objects.values(
-            'picture', 'name', 'description'
+            'id', 'picture', 'name', 'description'
         )
 
         for category in categories:
@@ -25,7 +25,7 @@ class CategoryService:
         serializer = CategorySerializer(category).data
         serializer['picture'] = f'{base_url}{serializer["picture"]}'
 
-        return {'success': True, 'data': serializer.data, 'message': 'Category found'}
+        return {'success': True, 'data': serializer, 'message': 'Category found'}
 
     def _category_exists(self, field, value):
         try:

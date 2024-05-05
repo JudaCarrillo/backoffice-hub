@@ -12,6 +12,9 @@ class SupplierService:
             'address', 'city', 'region', 'country', 'phone'
         )
 
+        for supplier in suppliers:
+            supplier['name'] = supplier.pop('company_name')
+
         return {'success': True, 'data': suppliers, 'message': 'Suppliers found'}
 
     def get_by_id(self, id):

@@ -49,7 +49,7 @@ export function Cuerpo({
               headerClassName="text-left w-96 bg-white border-none px-2"
               sortable
               body={(rowData) => {
-                if (column.title === "Photo") {
+                if (column.title === "Photo" || column.title === "Picture") {
                   return (
                     <img
                       className="relative -left-3 w-9 h-10 max-w-10 max-h-10 rounded-full"
