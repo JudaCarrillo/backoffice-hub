@@ -12,6 +12,7 @@ import {
 } from "../services/categories";
 import { getCsv, getPrivileges } from "../utils/logic";
 import { Preloader } from "./preloader";
+import { ModalCreateCategory } from "../components/organisms/CreateModals/ModalCreateCategory";
 
 export function Categoria() {
   const [cat, setCat] = useState([]);
@@ -94,7 +95,7 @@ export function Categoria() {
           />
         )}
         {privilegesWrite.length > 0 && (
-          <CategoryModal
+          <ModalCreateCategory
             modalName={"Nueva Categoria"}
             title={"Crear categoria"}
             onReceiveRows={handleReceiveRows}

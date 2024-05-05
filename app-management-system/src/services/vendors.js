@@ -18,7 +18,7 @@ export const deleteVendor = (id) => {
 };
 
 export const createVendor = (data) => {
-  return axios.post(`${url_base}/${apiVersion}/${subject}create`, data);
+  return axios.post(`${url_base}/${apiVersion}/${subject}/create`, data);
 };
 export const updateVendor = (id, data) => {
   return axios.put(`${url_base}/${apiVersion}/${subject}update/${id}`, data);
