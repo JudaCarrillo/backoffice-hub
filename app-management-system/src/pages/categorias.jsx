@@ -85,7 +85,7 @@ export function Categoria() {
             modalName={"Nueva Categoria"}
             title={"Crear categoria"}
             onReceiveRows={handleReceiveRows}
-            label={"Crear"}
+            label={"Create"}
           />
         )}
       </Cabecera>
@@ -110,6 +110,7 @@ export function Categoria() {
             onReceiveRows={handleReceiveRows}
             onClose={handleCloseEditModal}
             categoryId={editCategoryId}
+            label={"Save"}
           /> 
         </>
       )}

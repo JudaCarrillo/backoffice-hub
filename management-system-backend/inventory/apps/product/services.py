@@ -40,6 +40,7 @@ class ProductService():
         units_on_order = request_data.get('units_on_order')
         reorder_level = request_data.get('reorder_level')
         discontinued = request_data.get('discontinued')
+        discontinued = True if discontinued == 'true' else False
         id_category = request_data.get('id_category')
         id_supplier = request_data.get('id_supplier')
 

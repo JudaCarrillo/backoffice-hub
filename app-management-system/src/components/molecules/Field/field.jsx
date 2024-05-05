@@ -21,7 +21,6 @@ const Field = ({
         value={value}
         onChange={onChange}
         required={isRequired}
-        accept="image/*"
       />
     </div>
   );

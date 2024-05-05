@@ -14,14 +14,14 @@ export const exportVendorsToCsv = () => {
   });
 };
 export const deleteVendor = (id) => {
-  return axios.delete(`${url_base}/${apiVersion}/${subject}delete/${id}`);
+  return axios.delete(`${url_base}/${apiVersion}/${subject}/delete/${id}`);
 };
 
 export const createVendor = (data) => {
   return axios.post(`${url_base}/${apiVersion}/${subject}/create`, data);
 };
 export const updateVendor = (id, data) => {
-  return axios.put(`${url_base}/${apiVersion}/${subject}update/${id}`, data);
+  return axios.put(`${url_base}/${apiVersion}/${subject}/update/${id}`, data);
 };
 export const getVendorsId = (id) => {
   return axios.get(`${url_base}/${apiVersion}/${subject}/${id}`);

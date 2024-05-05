@@ -106,6 +106,7 @@ export function Customers() {
             customerId={editCustomerId}
             onReceiveRows={handleReceiveRows}
             title={"Editar Customer"}
+            label={"Actualizar"}
           />
         </>
       )}

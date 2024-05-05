@@ -12,7 +12,6 @@ import {
 import { getCsv, getPrivileges, hasPrivileges } from "../utils/logic";
 import { Preloader } from "./preloader";
 
-
 export function Productos() {
   const [pro, setPro] = useState([]);
   const [columns, setColumns] = useState([]);
@@ -114,6 +113,7 @@ export function Productos() {
             onReceiveRows={handleReceiveRows}
             onClose={handleCloseEditModal}
             open={isEditModalOpen}
+            label={"Actulizar"}
           />
         </>
       )}
