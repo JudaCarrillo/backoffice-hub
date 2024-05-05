@@ -181,13 +181,6 @@ export function UpdateUserModal({
           title={title}
           showModalContent={(handleCloseModal) => (
             <FormContainer className="bg-slate-400 p-5">
-              <img
-                src={users.photo}
-                alt={users.first_name}
-                width="500px"
-                className="rounded-full"
-              />
-
               <FormColumn>
                 <Field
                   name="last_name"
@@ -345,13 +338,20 @@ export function UpdateUserModal({
               </FormColumn>
 
               <FormColumn>
-                <Img_input
-                  name="photo"
-                  id="photo"
-                  onChange={handleImageChange}
-                  accept="image/*"
-                  chooseLabel="Seleccionar Archivo"
-                />
+                <div className="flex flex-col items-center justify-center">
+                  <img
+                    src={users.photo}
+                    alt={users.first_name}
+                    className="rounded-full w-28 h-28"
+                  />
+                  <Img_input
+                    name="photo"
+                    id="photo"
+                    onChange={handleImageChange}
+                    accept="image/*"
+                    chooseLabel="Seleccionar Archivo"
+                  />
+                </div>
 
                 <Field
                   name="email"
