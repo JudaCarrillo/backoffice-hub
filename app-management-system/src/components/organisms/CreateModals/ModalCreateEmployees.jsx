@@ -7,7 +7,7 @@ import {
 } from "../../../services/auth";
 import ComboBox from "../../modals/comboBox";
 import { Modal } from "../../modals/modal";
-import ChkBox from "../../molecules/CheckBox/checkbox";
+import CheckBox from "../../molecules/CheckBox/checkbox";
 import Field from "../../molecules/Field/field";
 import Img_input from "../../molecules/Img/img_input";
 import LongText from "../../molecules/LongText/longText";
@@ -33,9 +33,9 @@ export function ModalCreateEmployees({
     address: "",
     city: "",
     region: "",
-    postal_code: 0,
+    postal_code: "",
     country: "",
-    home_phone: 0,
+    home_phone: "",
     extension: "",
     notes: "",
     email: "",
@@ -153,6 +153,8 @@ export function ModalCreateEmployees({
                   value={users.last_name}
                   onChange={handleChange}
                   isRequired={true}
+                  minLength={1}
+                  maxLength={20}
                 />
 
                 <Field
@@ -163,6 +165,9 @@ export function ModalCreateEmployees({
                   type="text"
                   value={users.first_name}
                   onChange={handleChange}
+                  isRequired={true}
+                  minLength={1}
+                  maxLength={10}
                 />
 
                 <Field
@@ -173,6 +178,9 @@ export function ModalCreateEmployees({
                   type="text"
                   value={users.title}
                   onChange={handleChange}
+                  isRequired={true}
+                  minLength={1}
+                  maxLength={30}
                 />
 
                 <Field
@@ -183,6 +191,9 @@ export function ModalCreateEmployees({
                   type="text"
                   value={users.title_of_courtesy}
                   onChange={handleChange}
+                  isRequired={true}
+                  minLength={1}
+                  maxLength={25}
                 />
 
                 <Field
@@ -193,6 +204,7 @@ export function ModalCreateEmployees({
                   type="date"
                   value={users.birth_date}
                   onChange={handleChange}
+                  isRequired={true}
                 />
               </FormColumn>
 
@@ -205,6 +217,7 @@ export function ModalCreateEmployees({
                   type="date"
                   value={users.hire_date}
                   onChange={handleChange}
+                  isRequired={true}
                 />
 
                 <Field
@@ -215,6 +228,9 @@ export function ModalCreateEmployees({
                   type="text"
                   value={users.address}
                   onChange={handleChange}
+                  isRequired={true}
+                  minLength={1}
+                  maxLength={20}
                 />
 
                 <Field
@@ -225,7 +241,9 @@ export function ModalCreateEmployees({
                   type="text"
                   value={users.city}
                   onChange={handleChange}
-                  minLength={15}
+                  minLength={1}
+                  maxLength={15}
+                  isRequired={true}
                 />
 
                 <Field
@@ -236,6 +254,9 @@ export function ModalCreateEmployees({
                   type="text"
                   value={users.region}
                   onChange={handleChange}
+                  isRequired={true}
+                  minLength={1}
+                  maxLength={15}
                 />
 
                 <ComboBox
@@ -243,6 +264,7 @@ export function ModalCreateEmployees({
                   label="Seleccione un Usuario"
                   onChange={handleChangeReportsTo}
                   options={usersToReport}
+                  isRequired={true}
                 />
               </FormColumn>
 
@@ -253,10 +275,13 @@ export function ModalCreateEmployees({
                   labelText="Código Postal:"
                   inputId="PostalCodeInput"
                   type="text"
+                  minLength={1}
                   maxLength={10}
                   required
                   value={users.postal_code}
                   onChange={handleChange}
+                  isRequired={true}
+                  
                 />
 
                 <Field
@@ -267,6 +292,9 @@ export function ModalCreateEmployees({
                   type="text"
                   value={users.country}
                   onChange={handleChange}
+                  isRequired={true}
+                  minLength={1}
+                  maxLength={15}
                 />
 
                 <Field
@@ -277,6 +305,9 @@ export function ModalCreateEmployees({
                   type="tel"
                   value={users.home_phone}
                   onChange={handleChange}
+                  isRequired={true}
+                  minLength={1}
+                  maxLength={24}
                 />
 
                 <Field
@@ -287,6 +318,9 @@ export function ModalCreateEmployees({
                   type="text"
                   value={users.extension}
                   onChange={handleChange}
+                  isRequired={true}
+                  minLength={1}
+                  maxLength={4}
                 />
 
                 <LongText
@@ -297,6 +331,8 @@ export function ModalCreateEmployees({
                   labelFor="notes"
                   labelText="Notas:"
                   placeholder="Escribe notas..."
+                  minLength={1}
+                  
                 />
               </FormColumn>
 
@@ -307,6 +343,7 @@ export function ModalCreateEmployees({
                   onChange={handleImageChange}
                   accept="image/*"
                   chooseLabel="Seleccionar Archivo"
+                  isRequired={true}
                 />
 
                 <Field
@@ -317,7 +354,9 @@ export function ModalCreateEmployees({
                   type="email"
                   value={users.email}
                   onChange={handleChange}
-                  required
+                  isRequired={true}
+                  minLength={1}
+                  maxLength={254}
                 />
 
                 <Field
@@ -328,14 +367,16 @@ export function ModalCreateEmployees({
                   type="password"
                   value={users.password}
                   onChange={handleChange}
-                  required
+                  isRequired={true}
+                  minLength={1}
+                  maxLength={255}
                 />
 
-                <ChkBox
+                <CheckBox
                   name="is_active"
                   type="checkbox"
                   labelFor="is_active"
-                  labelText="Activo:"
+                  labelText="Estado:"
                   value={users.is_active}
                   onChange={handleChange}
                 />
@@ -355,35 +396,42 @@ export function ModalCreateEmployees({
   );
 }
 const Container = styled.div`
+  /* Estilos para el contenedor principal */
   height: 45px;
   width: 170px;
+
   .button_head {
+    /* Estilos para el botón dentro del contenedor */
     height: 100%;
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    background: ${(props) => props.buttonColor || props.theme.bgbtton};
+    background: ${(props) => props.buttonColor || props.theme.bgbtton}; /* Color de fondo del botón */
     cursor: pointer;
     border: none;
     border-radius: 1rem;
-    font-size: 17px;
-    font-weight: 800;
-    color: ${(props) => props.theme.text};
-    box-shadow: 0.1rem 0.3rem #00000040;
+    font-size: 17px; /* Tamaño de la fuente */
+    font-weight: 800; /* Peso de la fuente */
+    color: ${(props) => props.theme.text}; /* Color del texto */
+    box-shadow: 0.1rem 0.3rem #00000040; /* Sombra del botón */
+    
+    /* Efecto hover */
     &:hover {
-      background: ${(props) => props.theme.gray700};
-      color: ${(props) => props.theme.body};
+      background: ${(props) => props.theme.gray700}; /* Cambia el color de fondo al pasar el ratón */
+      color: ${(props) => props.theme.body}; /* Cambia el color del texto al pasar el ratón */
     }
   }
 `;
 
 const FormContainer = styled.div`
+  /* Estilos para el contenedor del formulario */
   display: flex;
-  gap: 20px;
+  gap: 25px; /* Espacio entre elementos hijos */
 `;
 
 const FormColumn = styled.div`
+  /* Estilos para una columna dentro del formulario */
   display: flex;
-  flex-direction: column;
+  flex-direction: column; /* Orientación de los elementos: vertical */
 `;

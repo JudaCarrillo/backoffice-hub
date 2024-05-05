@@ -9,8 +9,7 @@ import {
 } from "../services/categories";
 import { getCsv, getPrivileges, hasPrivileges } from "../utils/logic";
 import { Preloader } from "./preloader";
-import { UpdateVendorsModal } from "../components/modals/updateModal/updateVendors";
-import ModalProveedor from "../components/modals/CrearModales/modalProveedor";
+import { ModalCreateCategory } from "../components/organisms/CreateModals/ModalCreateCategory";
 
 export function Categoria() {
   const [cat, setCat] = useState([]);
@@ -81,9 +80,15 @@ export function Categoria() {
     <Container>
       <Cabecera title={"Category"}>
         {privilegesWrite.length > 0 && (
+<<<<<<< HEAD
           <ModalProveedor
             modalName={"New Category"}
             title={"Create Category"}
+=======
+          <ModalCreateCategory
+            modalName={"Nueva Categoria"}
+            title={"Crear categoria"}
+>>>>>>> origin/feat/atomic-design-modals
             onReceiveRows={handleReceiveRows}
           />
         )}
