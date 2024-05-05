@@ -128,7 +128,7 @@ export function UpdateVendorsModal({
                   labelText="Nombre de contacto:"
                   inputId="ContactNameInput"
                   type="text"
-                  value={vendors.contact_title}
+                  value={vendors.contact_name}
                   onChange={handleChange}
                 />
                 <Field

@@ -22,7 +22,7 @@ export const createCustomer = (data) => {
 
 export const deleteCustomer = (id) => {
   try {
-    return axios.delete(`${url_base}/${apiVersion}/${subject}/${id}`);
+    return axios.delete(`${url_base}/${apiVersion}/${subject}/delete/${id}`);
   } catch (error) {
     console.error("Error al cargar la tabla:", error);
   }

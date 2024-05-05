@@ -64,7 +64,7 @@ export function Categories() {
       const respuesta = await deleteCategory(id);
       const { success, data, message } = respuesta.data;
       if (success) {
-        setCat(cat.filter((categoria) => categoria.id !== id));
+        setCat(cat.filter((category) => category.id !== id));
       } else {
         throw new Error(message);
       }

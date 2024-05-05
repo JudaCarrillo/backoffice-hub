@@ -134,7 +134,7 @@ export function UpdateCustomerModal({
                   labelText="Titulo de contacto:"
                   inputId="ContactTitleInput"
                   type="text"
-                  value={customer.contact_name}
+                  value={customer.contact_title}
                   onChange={handleChange}
                 />
 
