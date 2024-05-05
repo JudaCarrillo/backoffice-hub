@@ -2,30 +2,27 @@ import axios from "axios";
 
 const url_base = process.env.API_BASE_URL_CATALOG;
 const apiVersion = process.env.API_VERSION;
-const subject = "products";
+const subject = "suppliers";
 
-export const getProducts = () => {
+export const getSuppliers = () => {
   return axios.get(`${url_base}/${apiVersion}/${subject}/`);
 };
 
-export const exportProductsToCsv = () => {
+export const exportSuppliersToCsv = () => {
   return axios.get(`${url_base}/${apiVersion}/${subject}/export`, {
     responseType: "blob",
   });
 };
-
-export const deleteProduct = (id) => {
+export const deleteSupplier = (id) => {
   return axios.delete(`${url_base}/${apiVersion}/${subject}/delete/${id}`);
 };
 
-export const createProduct = (data) => {
+export const createSupplier = (data) => {
   return axios.post(`${url_base}/${apiVersion}/${subject}/create`, data);
 };
-
-export const updateProduct = (id, data) => {
+export const updateSupplier = (id, data) => {
   return axios.put(`${url_base}/${apiVersion}/${subject}/update/${id}`, data);
 };
-
-export const getProductById = (id) => {
+export const getSupplierById = (id) => {
   return axios.get(`${url_base}/${apiVersion}/${subject}/${id}`);
 };

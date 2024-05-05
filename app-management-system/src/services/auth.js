@@ -8,7 +8,7 @@ const auth_subject = "auth";
 
 // user service
 
-export const getUsuarios = () => {
+export const getUsers = () => {
   return axios.get(`${url_base}/${apiVersion}/${main_subject}/`);
 };
 
@@ -16,17 +16,17 @@ export const getUsersToReport = () => {
   return axios.get(`${url_base}/${apiVersion}/${main_subject}/to-report`);
 };
 
-export const disabledUser = (id) => {
+export const disableUser = (id) => {
   return axios.patch(
     `${url_base}/${apiVersion}/${main_subject}/disabled/${id}`
   );
 };
 
-export const createUsers = (data) => {
+export const createUser = (data) => {
   return axios.post(`${url_base}/${apiVersion}/${main_subject}/create`, data);
 };
 
-export const updateUsers = (id, data) => {
+export const updateUser = (id, data) => {
   return axios.put(
     `${url_base}/${apiVersion}/${main_subject}/update/${id}`,
     data
