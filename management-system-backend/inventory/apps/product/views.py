@@ -116,7 +116,6 @@ def update(request, id):
     try:
         result = services.update(
             id,
-            request_files=request.FILES,
             request_data=request.data
         )
         if not result.get('success'):
