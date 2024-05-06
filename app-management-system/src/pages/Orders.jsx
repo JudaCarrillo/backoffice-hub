@@ -2,22 +2,21 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Cabecera } from "../components/organisms/headers/cabecera";
 import { Cuerpo } from "../components/organisms/body/cuerpo";
-import {
-  deleteCategory,
-  exportCategoriesToCsv,
-  getCategories,
-} from "../services/categories";
+import { UpdateProductModal } from "../components/templates/updateModals/updateProducts";
+import { ModalCreateProducts } from "../components/templates/createModals/ModalCreateProducts";
+
 import { getCsv, getPrivileges, hasPrivileges } from "../utils/logic";
 import { Preloader } from "./preloader";
-import { ModalCreateCategories } from "../components/templates/createModals/ModalCreateCategories";
-import { UpdateCategoryModal } from "../components/templates/updateModals/updateCategoria";
+import { deleteOrder, getOrders, exportOrdersToCsv } from "../services/orders";
+import { UpdateOrderModal } from "../components/templates/updateModals/updateOrder";
+import { ModalCreateOrder } from "../components/templates/createModals/ModalCreateOrder";
 
-export function Categories() {
-  const [cat, setCat] = useState([]);
+export function Orders() {
+  const [orders, setOrders] = useState([]);
   const [columns, setColumns] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const [editCategoryId, setEditCategoryId] = useState(null);
+  const [editOrdersId, setEditOrdersId] = useState(null);
 
   const privilegesReport = getPrivileges("Report");
   const privilegesWrite = getPrivileges("Write");
@@ -25,7 +24,7 @@ export function Categories() {
   useEffect(() => {
     const cargartabla = async () => {
       try {
-        const respuesta = await getCategories();
+        const respuesta = await getOrders();
         const { success, data, message } = respuesta.data;
         if (success) {
           data.sort((a, b) => a.id - b.id);
@@ -33,10 +32,10 @@ export function Categories() {
           const nuevasColumnas = userKeys.map((key) => ({
             title: key.charAt(0).toUpperCase() + key.slice(1),
             data: key,
-            key: key,
+            key,
           }));
           setColumns(nuevasColumnas);
-          setCat(data);
+          setOrders(data);
           setLoading(false);
         } else {
           throw new Error(message);
@@ -48,23 +47,22 @@ export function Categories() {
 
     cargartabla();
   }, []);
-  // Función de edición
+
   const handleEdit = (id) => {
-    setEditCategoryId(id); // Almacena el ID de la categoría a editar
+    setEditOrdersId(id);
     setIsEditModalOpen(true);
   };
   const handleCloseEditModal = () => {
     setIsEditModalOpen(false);
-    setEditCategoryId(null);
+    setEditOrdersId(null);
   };
-
   // Función de eliminación
   const handleDelete = async (id) => {
     try {
-      const respuesta = await deleteCategory(id);
-      const { success, data, message } = respuesta.data;
+      const respuesta = await deleteOrder(id);
+      const { success, message } = respuesta.data;
       if (success) {
-        setCat(cat.filter((category) => category.id !== id));
+        setOrders(orders.filter((Orders) => Orders.id !== id));
       } else {
         throw new Error(message);
       }
@@ -74,52 +72,54 @@ export function Categories() {
   };
   const handleReceiveRows = async (data) => {
     data.sort((a, b) => a.id - b.id);
-    setCat(data);
+    setOrders(data);
   };
 
   return (
     <Container>
-      <Cabecera title={"Category"}>
+      <Cabecera title="Orders">
         {privilegesWrite.length > 0 && (
-          <ModalCreateCategories
-            modalName={"New Category"}
-            title={"Create Category"}
+          <ModalCreateOrder
+            modalName={"New Order"}
+            title={"Create Order"}
             onReceiveRows={handleReceiveRows}
             label={"Create"}
           />
         )}
       </Cabecera>
+
       {loading ? (
         <Preloader />
       ) : (
         <>
           <Cuerpo
             columns={columns}
-            data={cat}
+            data={orders}
             handleEdit={handleEdit}
             handleDelete={handleDelete}
             showActions={hasPrivileges(privilegesWrite)}
             showActionForDownload={hasPrivileges(privilegesReport)}
             handleDownload={() =>
               getCsv({
-                callback: exportCategoriesToCsv,
-                name: "categories_data",
+                callback: exportOrdersToCsv,
+                name: "Orders_data",
               })
             }
           />
-          <UpdateCategoryModal
-            open={isEditModalOpen}
-            title={"Edit Category"}
+          <UpdateOrderModal
+            title="Edit Order"
+            orderId={editOrdersId}
             onReceiveRows={handleReceiveRows}
             onClose={handleCloseEditModal}
-            categoryId={editCategoryId}
-            label={"Save"}
+            open={isEditModalOpen}
+            label={"Actulizar"}
           />
         </>
       )}
     </Container>
   );
 }
+
 const Container = styled.div`
   height: 100vh;
 `;

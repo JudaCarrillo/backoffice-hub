@@ -9,9 +9,11 @@ export default function CheckBox({ name, htmlfor, labelText }) {
     <div className="p-4 w-12 h-15">
       <Label htmlFor={htmlfor} text={labelText} />
       <Checkbox
+        
         onChange={(e) => setChecked(e.checked)}
         checked={checked}
         name={name}
+        className="h-6 border-1 border"
       ></Checkbox>
     </div>
   );

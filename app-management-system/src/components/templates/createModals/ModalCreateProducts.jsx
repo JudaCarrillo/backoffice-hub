@@ -112,7 +112,7 @@ export function ModalCreateProducts({
           onAction={handleCrearProducts}
           title={title}
           showModalContent={(handleCloseModal) => (
-            <FormContainer className="bg-slate-400 p-5">
+            <FormContainer className=" p-5">
               <FormColumn>
                 <Field
                   name="name"
@@ -122,19 +122,24 @@ export function ModalCreateProducts({
                   type="text"
                   value={product.name}
                   onChange={handleChange}
+                  minlength={1}
+                  maxlength={40}
+                  isRequired={true}
                 />
-                <ComboBox
-                  name="id_category"
-                  label="Seleccione la categoría"
-                  onChange={handleChangeCategory}
-                  options={category}
-                />
-                <ComboBox
-                  name="id_vendor"
-                  label="Seleccione el proveedor"
-                  onChange={handleChangeSupplier}
-                  options={suppliers}
-                />
+                <div className="flex flex-col gap-4">
+                  <ComboBox
+                    name="id_category"
+                    label="Seleccione la categoría"
+                    onChange={handleChangeCategory}
+                    options={category}
+                  />
+                  <ComboBox
+                    name="id_vendor"
+                    label="Seleccione el proveedor"
+                    onChange={handleChangeSupplier}
+                    options={suppliers}
+                  />
+                </div>
                 <Field
                   name="quantity_per_unit"
                   labelFor="quantity_per_unit"
@@ -143,6 +148,9 @@ export function ModalCreateProducts({
                   type="text"
                   value={product.quantity_per_unit}
                   onChange={handleChange}
+                  isRequired={true}
+                  minlength={1}
+                  maxlength={20}
                 />
 
                 <Field
@@ -156,6 +164,7 @@ export function ModalCreateProducts({
                   required
                   value={product.unit_price}
                   onChange={handleChange}
+                  isRequired={true}
                 />
               </FormColumn>
               <FormColumn>
@@ -168,6 +177,7 @@ export function ModalCreateProducts({
                   min="0"
                   value={product.units_in_stock}
                   onChange={handleChange}
+                  isRequired={true}
                 />
                 <Field
                   name="units_on_order"
@@ -180,6 +190,7 @@ export function ModalCreateProducts({
                   required
                   value={product.units_on_order}
                   onChange={handleChange}
+                  isRequired={true}
                 />
 
                 <Field
@@ -193,6 +204,7 @@ export function ModalCreateProducts({
                   required
                   value={product.reorder_level}
                   onChange={handleChange}
+                  isRequired={true}
                 />
 
                 <CheckBox
@@ -201,6 +213,7 @@ export function ModalCreateProducts({
                   labelText="Descatalogado:"
                   value={product.discontinued}
                   onChange={handleChange}
+                  isRequired={true}
                 />
               </FormColumn>
             </FormContainer>

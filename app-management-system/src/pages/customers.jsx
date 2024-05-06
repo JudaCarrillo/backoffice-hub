@@ -4,8 +4,10 @@ import { Cuerpo } from "../components/organisms/body/cuerpo";
 import { UpdateCustomerModal } from "../components/templates/updateModals/updateCustomers";
 import { ModalCreateCustomers } from "../components/templates/createModals/ModalCreateCustomers";
 import { deleteCustomer, getCustomers } from "../services/customers";
-import { getPrivileges } from "../utils/logic";
 import { Preloader } from "./preloader";
+import { exportCategoriesToCsv } from "../services/categories";
+import { getCsv, getPrivileges, hasPrivileges } from "../utils/logic";
+
 
 export function Customers() {
   const [Customers, setCustomers] = useState([]);
@@ -81,10 +83,10 @@ export function Customers() {
     <div className="w-full h-[100vh]">
       <Cabecera title="Customers">
         <ModalCreateCustomers
-          modalName={"Nuevo Customer"}
-          title={"Crear Nuevo Customer"}
+          modalName={"New Customer"}
+          title={"Create Customer"}
           onReceiveRows={handleReceiveRows}
-          label={"Crear"}
+          label={"Create"}
         />
       </Cabecera>
       {loading ? (
@@ -94,11 +96,16 @@ export function Customers() {
           <Cuerpo
             columns={columns}
             data={Customers}
-            showActions={true}
             handleDelete={handleDelete}
             handleEdit={handleEdit}
-            privilegesReport={privilegesReport}
-            privilegesWrite={privilegesWrite}
+            showActions={hasPrivileges(privilegesWrite)}
+            showActionForDownload={hasPrivileges(privilegesReport)}
+            handleDownload={() =>
+              getCsv({
+                callback: exportCategoriesToCsv,
+                name: "Customers_data",
+              })
+            }
           />
           <UpdateCustomerModal
             open={isEditModalOpen}

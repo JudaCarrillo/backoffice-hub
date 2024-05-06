@@ -106,7 +106,7 @@ export function UpdateCustomerModal({
           onAction={handleUpdate}
           title={title}
           showModalContent={(handleCloseModal) => (
-            <FormContainer className="bg-slate-400 p-5">
+            <FormContainer className="p-5">
               <FormColumn>
                 <Field
                   name="company_name"
@@ -116,6 +116,9 @@ export function UpdateCustomerModal({
                   type="text"
                   value={customer.company_name}
                   onChange={handleChange}
+                  isRequired={true}
+                  minLength={1}
+                  maxLength={40}
                 />
 
                 <Field
@@ -126,6 +129,9 @@ export function UpdateCustomerModal({
                   type="text"
                   value={customer.contact_name}
                   onChange={handleChange}
+                  isRequired={true}
+                  minLength={1}
+                  maxLength={30}
                 />
 
                 <Field
@@ -136,6 +142,9 @@ export function UpdateCustomerModal({
                   type="text"
                   value={customer.contact_title}
                   onChange={handleChange}
+                  isRequired={true}
+                  minLength={1}
+                  maxLength={30}
                 />
 
                 <Field
@@ -146,6 +155,9 @@ export function UpdateCustomerModal({
                   type="text"
                   value={customer.address}
                   onChange={handleChange}
+                  isRequired={true}
+                  minLength={1}
+                  maxLength={60}
                 />
 
                 <Field
@@ -156,6 +168,9 @@ export function UpdateCustomerModal({
                   type="text"
                   value={customer.city}
                   onChange={handleChange}
+                  isRequired={true}
+                  minLength={1}
+                  maxLength={15}
                 />
 
                 <Field
@@ -166,6 +181,9 @@ export function UpdateCustomerModal({
                   type="text"
                   value={customer.region}
                   onChange={handleChange}
+                  isRequired={true}
+                  minLength={1}
+                  maxLength={15}
                 />
               </FormColumn>
               <FormColumn>
@@ -175,10 +193,11 @@ export function UpdateCustomerModal({
                   labelText="Código Postal:"
                   inputId="PostalCodeInput"
                   type="text"
-                  maxLength={10}
-                  required
                   value={customer.postal_code}
                   onChange={handleChange}
+                  isRequired={true}
+                  minLength={1}
+                  maxLength={10}
                 />
 
                 <Field
@@ -189,6 +208,9 @@ export function UpdateCustomerModal({
                   type="text"
                   value={customer.country}
                   onChange={handleChange}
+                  isRequired={true}
+                  minLength={1}
+                  maxLength={15}
                 />
 
                 <Field
@@ -199,6 +221,9 @@ export function UpdateCustomerModal({
                   type="tel"
                   value={customer.phone}
                   onChange={handleChange}
+                  isRequired={true}
+                  minLength={1}
+                  maxLength={24}
                 />
 
                 <Field
@@ -209,6 +234,9 @@ export function UpdateCustomerModal({
                   type="text"
                   value={customer.fax}
                   onChange={handleChange}
+                  isRequired={true}
+                  minLength={1}
+                  maxLength={24}
                 />
               </FormColumn>
             </FormContainer>

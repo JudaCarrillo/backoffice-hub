@@ -110,7 +110,7 @@ export function UpdateVendorsModal({
           onAction={handleUpdate}
           title={title}
           showModalContent={(handleCloseModal) => (
-            <FormContainer className="bg-slate-400 p-5">
+            <FormContainer className=" p-5">
               <FormColumn>
                 <Field
                   name="company_name"
@@ -120,7 +120,9 @@ export function UpdateVendorsModal({
                   type="text"
                   value={vendors.company_name}
                   onChange={handleChange}
-                  isRequired={false}
+                  isRequired={true}
+                  minLength={1}
+                  maxLength={40}
                 />
                 <Field
                   name="contact_name"
@@ -130,6 +132,9 @@ export function UpdateVendorsModal({
                   type="text"
                   value={vendors.contact_name}
                   onChange={handleChange}
+                  isRequired={true}
+                  minLength={1}
+                  maxLength={30}
                 />
                 <Field
                   name="contact_title"
@@ -139,6 +144,9 @@ export function UpdateVendorsModal({
                   type="text"
                   value={vendors.contact_title}
                   onChange={handleChange}
+                  isRequired={true}
+                  minLength={1}
+                  maxLength={30}
                 />
               </FormColumn>
               <FormColumn>
@@ -150,6 +158,9 @@ export function UpdateVendorsModal({
                   type="text"
                   value={vendors.address}
                   onChange={handleChange}
+                  isRequired={true}
+                  minLength={1}
+                  maxLength={60}
                 />
 
                 <Field
@@ -160,6 +171,9 @@ export function UpdateVendorsModal({
                   type="text"
                   value={vendors.city}
                   onChange={handleChange}
+                  isRequired={true}
+                  minLength={1}
+                  maxLength={15}
                 />
 
                 <Field
@@ -170,6 +184,9 @@ export function UpdateVendorsModal({
                   type="text"
                   value={vendors.region}
                   onChange={handleChange}
+                  isRequired={true}
+                  minLength={1}
+                  maxLength={15}
                 />
               </FormColumn>
               <FormColumn>
@@ -179,9 +196,11 @@ export function UpdateVendorsModal({
                   labelText="Código Postal:"
                   inputId="PostalCodeInput"
                   type="text"
-                  maxLength={10}
                   value={vendors.postal_code}
                   onChange={handleChange}
+                  isRequired={true}
+                  minLength={1}
+                  maxLength={10}
                 />
 
                 <Field
@@ -192,6 +211,9 @@ export function UpdateVendorsModal({
                   type="text"
                   value={vendors.country}
                   onChange={handleChange}
+                  isRequired={true}
+                  minLength={1}
+                  maxLength={15}
                 />
                 <Field
                   name="phone"
@@ -201,6 +223,9 @@ export function UpdateVendorsModal({
                   type="tel"
                   value={vendors.phone}
                   onChange={handleChange}
+                  isRequired={true}
+                  minLength={1}
+                  maxLength={24}
                 />
               </FormColumn>
               <FormColumn>
@@ -213,6 +238,9 @@ export function UpdateVendorsModal({
                   pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
                   value={vendors.fax}
                   onChange={handleChange}
+                  isRequired={true}
+                  minLength={1}
+                  maxLength={24}
                 />
                 <Field
                   name="home_page"
@@ -222,6 +250,9 @@ export function UpdateVendorsModal({
                   type="url"
                   value={vendors.home_page}
                   onChange={handleChange}
+                  isRequired={true}
+                  minLength={1}
+                  maxLength={200}
                 />
               </FormColumn>
             </FormContainer>

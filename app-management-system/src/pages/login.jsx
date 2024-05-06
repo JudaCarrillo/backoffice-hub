@@ -179,7 +179,7 @@ export function Login({ onLoginSuccess }) {
           <Logocontent>
             <img src="./src/assets/logo.webp" alt="Logo" />
           </Logocontent>
-          <h1>Inicio de Sesión</h1>
+          <h1 className="text-3xl font-bold">Inicio de Sesión</h1>
           <Toaster
             toastOptions={{
               className: "notification",
@@ -216,9 +216,6 @@ export function Login({ onLoginSuccess }) {
               {showPassword ? <FaEyeSlash size={20} /> : <FaEye size={20} />}
             </ToggleButton>
           </InputContainer>
-          <button type="button" onClick={() => setIsForgotPassword()}>
-            Recuperar contraseña
-          </button>
           <LoginButton type="submit">Iniciar sesión</LoginButton>
         </LoginForm>
       </LoginFormContainer>

@@ -83,6 +83,9 @@ export function ModalCreateCustomers({
                   type="text"
                   value={customers.id}
                   readOnly
+                  minlength={1}
+                  maxlength={5}
+                  isRequired={true}
                 />
 
                 <Field
@@ -93,6 +96,9 @@ export function ModalCreateCustomers({
                   type="text"
                   value={customers.company_name}
                   onChange={handleChange}
+                  minlength={1}
+                  maxlength={40}
+                  isRequired={true}
                 />
 
                 <Field
@@ -103,6 +109,9 @@ export function ModalCreateCustomers({
                   type="text"
                   value={customers.contact_name}
                   onChange={handleChange}
+                  minlength={1}
+                  maxlength={30}
+                  isRequired={true}
                 />
 
                 <Field
@@ -113,6 +122,9 @@ export function ModalCreateCustomers({
                   type="text"
                   value={customers.contact_title}
                   onChange={handleChange}
+                  minlength={1}
+                  maxlength={30}
+                  isRequired={true}
                 />
 
                 <Field
@@ -123,6 +135,9 @@ export function ModalCreateCustomers({
                   type="text"
                   value={customers.address}
                   onChange={handleChange}
+                  minlength={1}
+                  maxlength={60}
+                  isRequired={true}
                 />
 
                 <Field
@@ -133,6 +148,9 @@ export function ModalCreateCustomers({
                   type="text"
                   value={customers.city}
                   onChange={handleChange}
+                  minlength={1}
+                  maxlength={15}
+                  isRequired={true}
                 />
               </FormColumn>
               <FormColumn>
@@ -144,6 +162,9 @@ export function ModalCreateCustomers({
                   type="text"
                   value={customers.region}
                   onChange={handleChange}
+                  minlength={1}
+                  maxlength={15}
+                  isRequired={true}
                 />
 
                 <Field
@@ -153,9 +174,11 @@ export function ModalCreateCustomers({
                   inputId="PostalCodeInput"
                   type="text"
                   maxLength={10}
-                  required
                   value={customers.postal_code}
                   onChange={handleChange}
+                  minlength={1}
+                  maxlength={10}
+                  isRequired={true}
                 />
 
                 <Field
@@ -166,6 +189,9 @@ export function ModalCreateCustomers({
                   type="text"
                   value={customers.country}
                   onChange={handleChange}
+                  minlength={1}
+                  maxlength={15}
+                  isRequired={true}
                 />
 
                 <Field
@@ -176,6 +202,9 @@ export function ModalCreateCustomers({
                   type="tel"
                   value={customers.phone}
                   onChange={handleChange}
+                  minlength={1}
+                  maxlength={24}
+                  isRequired={true}
                 />
 
                 <Field
@@ -186,6 +215,9 @@ export function ModalCreateCustomers({
                   type="text"
                   value={customers.fax}
                   onChange={handleChange}
+                  minlength={1}
+                  maxlength={24}
+                  isRequired={true}
                 />
               </FormColumn>
             </FormContainer>

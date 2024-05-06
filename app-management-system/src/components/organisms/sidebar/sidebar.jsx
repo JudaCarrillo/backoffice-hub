@@ -6,7 +6,9 @@ import { ImExit } from "react-icons/im";
 import { NavLink } from "react-router-dom";
 import styled, { StyleSheetManager } from "styled-components";
 import { ThemeContext } from "../../../App";
-import logo from "../../../assets/logo.webp";
+import { RiCustomerService2Fill } from "react-icons/ri";
+import { VscListUnordered } from "react-icons/vsc";
+import { TbListDetails } from "react-icons/tb";
 import { v } from "../../../styles/variables";
 
 export function Sidebar({ sidebarOpen, setSidebarOpen, setIsLoggedIn }) {
@@ -43,6 +45,12 @@ export function Sidebar({ sidebarOpen, setSidebarOpen, setIsLoggedIn }) {
         return <FaPeopleCarry />;
       case "FaRegUser":
         return <FaRegUser />;
+      case "RiCustomerService2Fill":
+        return <RiCustomerService2Fill />;
+      case "VscListUnordered":
+        return <VscListUnordered />;
+      case "TbListDetails":
+        return <TbListDetails />;
       default:
         return null;
     }
@@ -73,12 +81,7 @@ export function Sidebar({ sidebarOpen, setSidebarOpen, setIsLoggedIn }) {
         <button className="sidebarButton" onClick={ModSidebarOpen}>
           <AiOutlineLeft />
         </button>
-        <div className="LogoContent">
-          <div className="imgContent">
-            <img src={logo} alt="Logo de la aplicación" />
-          </div>
-          <h2 className="text-2xl font-bold">ROMER</h2>
-        </div>
+       
         {linksArray.map(({ icon, label, to }) => (
           <div className="LinkContainer" key={label}>
             <NavLink
@@ -172,7 +175,8 @@ const Container = styled.div`
   color: ${(props) => props.theme.text};
   background: ${(props) => props.theme.bg};
   position: sticky;
-  padding-top: ${({ isopen }) => (isopen ? "30%" : "100px")};
+  border-right: 1px solid ${(props) => props.theme.bg3};
+  padding-top: ${({ isopen }) => (isopen ? "15%" : "60px")};
   max-height: 100vh;
   .sidebarButton {
     position: absolute;
@@ -201,30 +205,8 @@ const Container = styled.div`
     }
   }
 
-  .LogoContent {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding-bottom: 30px;
-    gap: 20px;
-    .imgContent {
-      display: flex;
-      img {
-        max-width: 100%;
-        width: 40px;
-        height: auto;
-      }
-      cursor: pointer;
-      transition: all 0.3s;
-      transform: ${({ isopen }) => (isopen ? "scale(1.9)" : "scale(1.9)")};
-    }
-    h2 {
-      display: ${({ isopen }) => (isopen ? "block" : "none")};
-    }
-  }
-
   .LinkContainer {
-    margin: 30px 0;
+    margin: 20px 0;
     padding: 0 15%;
 
     :hover {
@@ -266,7 +248,8 @@ const Container = styled.div`
     left: 1px;
   }
   .ThemeContent {
-    padding: ${({ isopen }) => (isopen ? "1% 15%" : "")};
+    padding: ${({ isopen }) => (isopen ? "1% 15%" : "10%")};
+    margin-top: ${({ isopen }) => (isopen ? "-10px" : "")};
     display: flex;
     align-items: center;
     justify-content: space-between;

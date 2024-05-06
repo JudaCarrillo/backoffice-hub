@@ -57,8 +57,6 @@ function App() {
                 />
                 <MyRoutes />
               </Container>
-            ) : forgotPassword ? (
-              <div> hola mundo </div>
             ) : (
               <Login
                 setIsForgotPassword={setIsForgotPasswordFnc}

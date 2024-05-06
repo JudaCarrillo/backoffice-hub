@@ -81,12 +81,12 @@ export function Users() {
 
   return (
     <Container>
-      <Cabecera title={"Usuarios"}>
+      <Cabecera title={"Users"}>
         <ModalCreateUsers
-          modalName={"Nuevo Usuarios"}
-          title={"Crear nuevo usuario"}
+          modalName={"New User"}
+          title={"Create user"}
           onReceiveRows={handleReceiveRows}
-          label={"Crear"}
+          label={"Create"}
         />
       </Cabecera>
       {loading ? (
@@ -104,7 +104,7 @@ export function Users() {
             open={isEditModalOpen}
             userId={editUserId}
             onClose={handleCloseEditModal}
-            label={"Actualizar"}
+            label={"Update"}
             title={"Editar usuario"}
             onReceiveRows={handleReceiveRows}
           />
