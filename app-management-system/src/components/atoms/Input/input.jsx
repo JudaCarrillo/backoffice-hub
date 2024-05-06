@@ -1,5 +1,4 @@
 import React from 'react';
-import styled from 'styled-components';
 import { InputText } from "primereact/inputtext";
 
 const Input = ({ required, id, name, type, value, onChange }) => {
@@ -7,7 +6,16 @@ const Input = ({ required, id, name, type, value, onChange }) => {
     <InputText 
       id={id} 
       name={name} 
-      type={type} 
+      type={type}
+      style={{
+        width: '100%',
+        backgroundColor: 'white',
+        paddingLeft: '10px',
+        color: 'black',
+        fontSize: '16px',
+        border: '1px solid black'
+      }}
+      
       value={value} 
       onChange={onChange} 
       className="w-15 h-10" // Esto aplica un ancho completo y una altura de 12 unidades
@@ -19,16 +27,3 @@ const Input = ({ required, id, name, type, value, onChange }) => {
 
 
 export default Input;
-const StyledInput = styled.input`
-  padding: 10px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  font-size: 10px;
-  margin-bottom: 10px;
-  width: 400px;
-
-  &:focus {
-    outline: none;
-    border-color: #01050c;;
-  }
-`;

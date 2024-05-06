@@ -13,7 +13,7 @@ const ComboBox = ({ options, label, onChange }) => {
           <option value="">{label}</option>
           {options &&
             options.map((option) => (
-              <option key={option.id} value={option.id}>
+              <option className="bg-neutral-100" key={option.id} value={option.id}>
                 {option.name}{" "}
               </option>
             ))}
@@ -36,13 +36,12 @@ const Select = styled.select`
   width: 230px;
   padding: 8px;
   border: 1px solid #ccc;
-  border-radius: 5px;
+  border-radius: 1rem;
   font-size: 16px;
   outline: none;
   transition: border-color 0.3s;
 
-  &:hover,
-  &:focus {
+  &:hover{
     border-color: #007bff;
   }
 `;

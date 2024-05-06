@@ -181,7 +181,7 @@ export function UpdateUserModal({
           onAction={handleUpdate}
           title={title}
           showModalContent={(handleCloseModal) => (
-            <FormContainer className="bg-slate-400 p-5">
+            <FormContainer className=" p-5">
               <FormColumn>
                 <Field
                   name="last_name"

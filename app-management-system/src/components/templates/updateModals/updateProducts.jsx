@@ -1,7 +1,11 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { getCategories } from "../../../services/categories";
-import { getProductById, updateProduct, getProducts } from "../../../services/products";
+import {
+  getProductById,
+  updateProduct,
+  getProducts,
+} from "../../../services/products";
 import { getSuppliers } from "../../../services/suppliers";
 import ComboBox from "../../atoms/ComboBox/comboBox";
 import { Modal } from "../../organisms/modals/modal";
@@ -142,7 +146,7 @@ export function UpdateProductModal({
           onAction={handleUpdate}
           title={title}
           showModalContent={(handleCloseModal) => (
-            <FormContainer className="bg-slate-400 p-5">
+            <FormContainer className=" p-5">
               <FormColumn>
                 <Field
                   name="name"
@@ -156,18 +160,20 @@ export function UpdateProductModal({
                   minlength={1}
                   maxlength={40}
                 />
-                <ComboBox
-                  name="id_category"
-                  label="Seleccione la categoría"
-                  onChange={handleChangeCategory}
-                  options={category}
-                />
-                <ComboBox
-                  name="id_supplier"
-                  label="Seleccione el proveedor"
-                  onChange={handleChangeSupplier}
-                  options={suppliers}
-                />
+                <div className="flex flex-col gap-4">
+                  <ComboBox
+                    name="id_category"
+                    label="Seleccione la categoría"
+                    onChange={handleChangeCategory}
+                    options={category}
+                  />
+                  <ComboBox
+                    name="id_supplier"
+                    label="Seleccione el proveedor"
+                    onChange={handleChangeSupplier}
+                    options={suppliers}
+                  />
+                </div>
                 <Field
                   name="quantity_per_unit"
                   labelFor="quantity_per_unit"
