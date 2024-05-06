@@ -1,17 +1,16 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { getCategories } from "../../../services/categories";
-import {getOrderDetailById, 
-    updateOrderDetail,
-    getOrderDetailById,
-    getOrderDetails,
-} 
-    from "../../../services/order-detail";
-import { getSuppliers } from "../../../services/suppliers";
+import {
+  getOrderDetailById,
+  getOrderDetails,
+  updateOrderDetail,
+} from "../../../services/order-detail";
+
+import { getOrders } from "../../../services/orders";
+import { getProducts } from "../../../services/products";
 import ComboBox from "../../atoms/ComboBox/comboBox";
-import { Modal } from "../../organisms/modals/modal";
-import CheckBox from "../../molecules/CheckBox/checkbox";
 import Field from "../../molecules/Field/field";
+import { Modal } from "../../organisms/modals/modal";
 export function UpdateOrderDetailtModal({
   orderdetailId,
   open,
@@ -33,7 +32,7 @@ export function UpdateOrderDetailtModal({
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const ordendetail = await get(orderdetailId);
+        const ordendetail = await getOrderDetailById(orderdetailId);
         const { success, data, message } = ordendetail.data;
 
         if (!success) {
@@ -52,36 +51,31 @@ export function UpdateOrderDetailtModal({
     };
 
     const fetchProducts = async () => {
-        const response = await getProducts();
-        const { success, data, message } = response.data;
-        if (success) {
-          setProduct(data);
-        } else {
-          throw new Error(message);
-        }
-      };
-  
-      const fetchOrders = async () => {
-        const response = await getOrders();
-        const { success, data, message } = response.data;
-        if (success) {
-          setOrder(data);
-        } else {
-          throw new Error(message);
-        }
-      };
-  
-      if (showModal) {
-        fetchProducts();
-        fetchOrders();
+      const response = await getProducts();
+      const { success, data, message } = response.data;
+      if (success) {
+        setProduct(data);
+      } else {
+        throw new Error(message);
       }
+    };
 
-    if (open && productId) {
+    const fetchOrders = async () => {
+      const response = await getOrders();
+      const { success, data, message } = response.data;
+      if (success) {
+        setOrder(data);
+      } else {
+        throw new Error(message);
+      }
+    };
+
+    if (open && orderdetailId) {
       fetchData();
       fetchProducts();
       fetchOrders();
     }
-  }, [open, productId]);
+  }, [open, orderdetailId]);
 
   const handleChangeProduct = (selectedProduc) => {
     setOrdenDetail((prevOrdersDetail) => ({
@@ -106,7 +100,7 @@ export function UpdateOrderDetailtModal({
 
   const handleUpdate = async () => {
     try {
-      await updateProduct(orderdetailId, ordendetail);
+      await updateOrderDetail(orderdetailId, ordendetail);
       const rows = await getOrderDetails();
       const { data } = rows.data;
       onReceiveRows(data);
@@ -140,7 +134,7 @@ export function UpdateOrderDetailtModal({
           showModalContent={(handleCloseModal) => (
             <FormContainer className=" p-5">
               <FormColumn>
-              <div className="flex flex-col gap-4">
+                <div className="flex flex-col gap-4">
                   <ComboBox
                     name="order_id"
                     label="Select Order:"
@@ -160,7 +154,7 @@ export function UpdateOrderDetailtModal({
                   labelText="Precio unitario:"
                   inputId="UnitPriceInput"
                   type="number"
-                  value={orderDetailsData.unit_price}
+                  value={ordendetail.unit_price}
                   onChange={handleChange}
                   minlength={1}
                   maxlength={40}
@@ -173,7 +167,7 @@ export function UpdateOrderDetailtModal({
                   labelText="Cantidad:"
                   inputId="QuantityInput"
                   type="number"
-                  value={orderDetailsData.quantity}
+                  value={ordendetail.quantity}
                   onChange={handleChange}
                   minlength={1}
                   maxlength={40}
@@ -186,7 +180,7 @@ export function UpdateOrderDetailtModal({
                   labelFor="discount"
                   labelText="Descuento:"
                   inputId="DiscountInput"
-                  value={orderDetailsData.discount}
+                  value={ordendetail.discount}
                   onChange={handleChange}
                   minlength={1}
                   maxlength={40}

@@ -46,6 +46,7 @@ urlpatterns = [
          cache_timeout=0), name='schema-swagger-ui'),
 
     path('admin/', admin.site.urls),
+    path(f'{VERSION}/orders/', include('apps.order.urls_orders')),
+    path(f'{VERSION}/shippers/', include('apps.order.urls_shippers')),
     # path(f'{VERSION}/order-details/', include('apps.category.urls')),
-    # path(f'{VERSION}/orders/', include('apps.supplier.urls')),
 ]

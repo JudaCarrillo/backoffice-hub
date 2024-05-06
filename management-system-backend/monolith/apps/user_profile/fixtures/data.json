@@ -1,0 +1,26 @@
+[
+    {
+        "model": "user_profile.userprofile",
+        "pk": 1,
+        "fields": {
+            "name": "Administrator",
+            "is_active": true
+        }
+    },
+    {
+        "model": "user_profile.userprofile",
+        "pk": 2,
+        "fields": {
+            "name": "Operator",
+            "is_active": true
+        }
+    },
+    {
+        "model": "user_profile.userprofile",
+        "pk": 3,
+        "fields": {
+            "name": "Supervisor",
+            "is_active": true
+        }
+    }
+]

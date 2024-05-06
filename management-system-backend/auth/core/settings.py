@@ -35,7 +35,7 @@ SECRET_KEY = F'django-insecure-{KEY}'
 DEBUG = os.environ.get('DEBUG')
 
 HOST_DEV = os.environ.get('HOST_DEV')
-ALLOWED_HOSTS = [HOST_DEV]
+ALLOWED_HOSTS = [HOST_DEV, 'backoffice_auth']
 
 # Application definition
 

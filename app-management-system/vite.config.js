@@ -7,7 +7,7 @@ export default defineConfig({
   plugins: [
     react(),
     EnvironmentPlugin([
-      'API_VERSION', 'API_BASE_URL_CATALOG', 'API_BASE_URL_AUTH'
+      'API_VERSION', 'API_BASE_URL'
     ])
   ],
 })

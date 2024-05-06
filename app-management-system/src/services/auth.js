@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const url_base = process.env.API_BASE_URL_AUTH;
+const url_base = process.env.API_BASE_URL;
 const apiVersion = process.env.API_VERSION;
 const main_subject = "users";
 const profile_subject = "user_profiles";

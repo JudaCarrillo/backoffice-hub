@@ -60,11 +60,11 @@ export function ModalCreateOrderDetails({
     try {
       const formData = new FormData();
 
-      Object.keys(product).forEach((key) => {
-        formData.append(key, product[key]);
+      Object.keys(orderDetailsData).forEach((key) => {
+        formData.append(key, orderDetailsData[key]);
       });
 
-      const response = await CreateOrderDetails(formData);
+      const response = await createOrderDetail(formData);
       const { success, data, message } = response.data;
 
       if (success) {

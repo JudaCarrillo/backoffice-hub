@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 const ComboBox = ({ options, label, onChange }) => {
   const handleSelectChange = (e) => {
+    console.log(e.target.value);
     const selectedValue = e.target.value;
     onChange(selectedValue);
   };

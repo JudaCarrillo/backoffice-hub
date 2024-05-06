@@ -27,6 +27,14 @@ export const getPrivileges = (name) => {
   return permissions;
 };
 
+export const getUserEmail = () => {
+  const item = localStorage.getItem("user");
+  const {
+    user: { email },
+  } = JSON.parse(item);
+  return email;
+};
+
 export const hasPrivileges = (privileges) => {
   return privileges.length > 0;
 };

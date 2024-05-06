@@ -1,16 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { getOrders, createOrder } from "../../../services/orders";
+import { getOrders, createOrder, getShippers } from "../../../services/orders";
+import { getCustomers } from "../../../services/customers";
+import { getUserEmail } from "../../../utils/logic";
 import { Modal } from "../../organisms/modals/modal";
 import Field from "../../molecules/Field/field";
+import ComboBox from "../../atoms/ComboBox/comboBox";
 
 export function ModalCreateOrder({ modalName, title, onReceiveRows, label }) {
   const [order, setOrder] = useState({
-    id: "",
     order_date: "",
     required_date: "",
     customer_id: "",
-    employee_id: "",
+    employee_id: 0,
     shipped_date: "",
     ship_via: "",
     freight: "",
@@ -23,7 +25,36 @@ export function ModalCreateOrder({ modalName, title, onReceiveRows, label }) {
   });
 
   const [showModal, setShowModal] = useState(false);
+  const [shippers, setShippers] = useState([]);
+  const [customers, setCustomers] = useState([]);
   const toggleModal = () => setShowModal(!showModal);
+
+  useEffect(() => {
+    const fetchShippers = async () => {
+      const response = await getShippers();
+      const { success, data, message } = response.data;
+      if (success) {
+        setShippers(data);
+      } else {
+        throw new Error(message);
+      }
+    };
+
+    const fetchCustomers = async () => {
+      const response = await getCustomers();
+      const { success, data, message } = response.data;
+      if (success) {
+        setCustomers(data);
+      } else {
+        throw new Error(message);
+      }
+    };
+
+    if (showModal) {
+      fetchShippers();
+      fetchCustomers();
+    }
+  }, [showModal]);
 
   const handleCrearOrder = async () => {
     try {
@@ -32,6 +63,8 @@ export function ModalCreateOrder({ modalName, title, onReceiveRows, label }) {
       Object.keys(order).forEach((key) => {
         formData.append(key, order[key]);
       });
+
+      formData.append("email", getUserEmail());
 
       const response = await createOrder(formData);
       const { success, data, message } = response.data;
@@ -48,6 +81,15 @@ export function ModalCreateOrder({ modalName, title, onReceiveRows, label }) {
       console.error("Error al crear una orden:", error);
     }
   };
+
+  const handleChangeShipper = (selectedShipper) => {
+    setOrder({ ...order, ship_via: selectedShipper });
+  };
+
+  const handleChangeCustomer = (selectedCustomer) => {
+    setOrder({ ...order, customer_id: selectedCustomer });
+  };
+
   function handleChange(e) {
     const { name, value } = e.target;
     setOrder({ ...order, [name]: value });
@@ -68,10 +110,10 @@ export function ModalCreateOrder({ modalName, title, onReceiveRows, label }) {
             <FormContainer className="p-5">
               <FormColumn>
                 <Field
-                  name="OrderDate"
-                  labelFor="OrderDate"
+                  name="order_date"
+                  labelFor="order_date"
                   labelText="Fecha del pedido:"
-                  inputId="OrderDateInput"
+                  inputId="order_date"
                   type="date"
                   value={order.order_date}
                   onChange={handleChange}
@@ -79,10 +121,10 @@ export function ModalCreateOrder({ modalName, title, onReceiveRows, label }) {
                 />
 
                 <Field
-                  name="RequiredDate"
-                  labelFor="RequiredDate"
+                  name="required_date"
+                  labelFor="required_date"
                   labelText="Fecha requerida"
-                  inputId="RequiredDateInput"
+                  inputId="required_date"
                   type="date"
                   value={order.required_date}
                   onChange={handleChange}
@@ -90,32 +132,37 @@ export function ModalCreateOrder({ modalName, title, onReceiveRows, label }) {
                 />
 
                 <Field
-                  name="ShippedDate"
-                  labelFor="ShippedDate"
+                  name="shipped_date"
+                  labelFor="shipped_date"
                   labelText="Fecha de envío"
-                  inputId="ShippedDateInput"
+                  inputId="shipped_date"
                   type="date"
                   value={order.shipped_date}
                   onChange={handleChange}
                   isRequired={true}
                 />
 
-                <Field
-                  name="ShipVia"
-                  labelFor="ShipVia"
-                  labelText="Método de envío"
-                  inputId="ShipViaInput"
-                  type="text"
-                  value={order.ship_via}
-                  onChange={handleChange}
-                  isRequired={true}
+                <ComboBox
+                  name="customer_id"
+                  label="Seleccione el cliente"
+                  inputId="customer_id"
+                  options={customers}
+                  onChange={handleChangeCustomer}
+                />
+
+                <ComboBox
+                  name="ship_via"
+                  label="Métodos de envío"
+                  inputId="ship_via"
+                  options={shippers}
+                  onChange={handleChangeShipper}
                 />
 
                 <Field
-                  name="Freight"
-                  labelFor="Freight"
+                  name="freight"
+                  labelFor="freight"
                   labelText="Flete"
-                  inputId="FreightInput"
+                  inputId="freight"
                   type="number"
                   id="freight"
                   step="0.01"
@@ -127,10 +174,10 @@ export function ModalCreateOrder({ modalName, title, onReceiveRows, label }) {
                 />
 
                 <Field
-                  name="ShipName"
-                  labelFor="ShipName"
+                  name="ship_name"
+                  labelFor="ship_name"
                   labelText="Nombre del destinatario"
-                  inputId="ShipNameInput"
+                  inputId="ship_name"
                   type="text"
                   value={order.ship_name}
                   onChange={handleChange}
@@ -139,10 +186,10 @@ export function ModalCreateOrder({ modalName, title, onReceiveRows, label }) {
               </FormColumn>
               <FormColumn>
                 <Field
-                  name="ShipAddress"
-                  labelFor="ShipAddress"
+                  name="ship_address"
+                  labelFor="ship_address"
                   labelText="Dirección de envío"
-                  inputId="ShipAddressInput"
+                  inputId="ship_address"
                   type="text"
                   value={order.ship_address}
                   onChange={handleChange}
@@ -150,10 +197,10 @@ export function ModalCreateOrder({ modalName, title, onReceiveRows, label }) {
                 />
 
                 <Field
-                  name="ShipCity"
-                  labelFor="ShipCity"
+                  name="ship_city"
+                  labelFor="ship_city"
                   labelText="Ciudad de envío"
-                  inputId="ShipCityInput"
+                  inputId="ship_city"
                   type="text"
                   value={order.ship_city}
                   onChange={handleChange}
@@ -161,10 +208,10 @@ export function ModalCreateOrder({ modalName, title, onReceiveRows, label }) {
                 />
 
                 <Field
-                  name="ShipRegion"
-                  labelFor="ShipRegion"
+                  name="ship_region"
+                  labelFor="ship_region"
                   labelText="Región de envío"
-                  inputId="ShipRegionInput"
+                  inputId="ship_region"
                   type="text"
                   placeholder="ShipRegion"
                   value={order.ship_region}
@@ -173,10 +220,10 @@ export function ModalCreateOrder({ modalName, title, onReceiveRows, label }) {
                 />
 
                 <Field
-                  name="ShipPostalCode"
-                  labelFor="ShipPostalCode"
+                  name="ship_postal_code"
+                  labelFor="ship_postal_code"
                   labelText="Código postal de envío"
-                  inputId="ShipPostalCodeInput"
+                  inputId="ship_postal_code"
                   type="text"
                   maxLength={10}
                   value={order.ship_postal_code}
@@ -185,10 +232,10 @@ export function ModalCreateOrder({ modalName, title, onReceiveRows, label }) {
                 />
 
                 <Field
-                  name="ShipCountry"
-                  labelFor="ShipCountry"
+                  name="ship_country"
+                  labelFor="ship_country"
                   labelText="País de envío"
-                  inputId="ShipCountryInput"
+                  inputId="ship_country"
                   type="text"
                   placeholder="ShipCountry"
                   value={order.ship_country}
