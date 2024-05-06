@@ -19,8 +19,8 @@ export function UpdateProductModal({
   title,
   label,
 }) {
-  const [category, setCategories] = useState([]);
   const [suppliers, setSuppliers] = useState([]);
+  const [category, setCategories] = useState([]);
   const [product, setProduct] = useState({
     name: "",
     id_supplier: "",

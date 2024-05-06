@@ -14,7 +14,7 @@ export const exportOrdersToCsv = () => {
     });
 }
 export const createOrder = () => {
-    return axios.get(`${url_base}/${apiVersion}/${subject}/export`, {
+    return axios.get(`${url_base}/${apiVersion}/${subject}/create`, {
         responseType: "blob",
     });
 }

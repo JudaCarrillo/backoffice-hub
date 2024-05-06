@@ -1,30 +1,25 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { getOrders,createOrder} from "../../../services/orders";
+import { getOrders, createOrder } from "../../../services/orders";
 import { Modal } from "../../organisms/modals/modal";
 import Field from "../../molecules/Field/field";
 
-export function ModalCreateOrder({
-  modalName,
-  title,
-  onReceiveRows,
-  label,
-}) {
+export function ModalCreateOrder({ modalName, title, onReceiveRows, label }) {
   const [order, setOrder] = useState({
-    OrderID: "",
-    CustomerID: "",
-    EmployeeID: "",
-    OrderDate: "",
-    RequiredDate: "",
-    ShippedDate: "",
-    ShipVia: "",
-    Freight: 0,
-    ShipName: "",
-    ShipAddress: "",
-    ShipCity: "",
-    ShipRegion: "",
-    ShipPostalCode: "",
-    ShipCountry: "",
+    id: "",
+    order_date: "",
+    required_date: "",
+    customer_id: "",
+    employee_id: "",
+    shipped_date: "",
+    ship_via: "",
+    freight: "",
+    ship_name: "",
+    ship_address: "",
+    ship_city: "",
+    ship_region: "",
+    ship_postal_code: "",
+    ship_country: "",
   });
 
   const [showModal, setShowModal] = useState(false);
@@ -38,16 +33,12 @@ export function ModalCreateOrder({
         formData.append(key, order[key]);
       });
 
-      
-
       const response = await createOrder(formData);
       const { success, data, message } = response.data;
 
       if (success) {
         const rows = await getOrders();
-        const {
-          data
-        } = rows.data;
+        const { data } = rows.data;
         onReceiveRows(data);
         toggleModal();
       } else {
@@ -62,8 +53,6 @@ export function ModalCreateOrder({
     setOrder({ ...order, [name]: value });
   }
 
- 
-
   return (
     <Container>
       <button className="button_head" onClick={toggleModal}>
@@ -76,136 +65,136 @@ export function ModalCreateOrder({
           onAction={handleCrearOrder}
           title={title}
           showModalContent={(handleCloseModal) => (
-            <FormContainer className="bg-slate-400 p-5">
+            <FormContainer className="p-5">
               <FormColumn>
-              <Field
-          name="OrderDate"
-          labelFor="OrderDate"
-          labelText="Fecha del pedido:"
-          inputId="OrderDateInput"
-          type="date"
-          value={order.OrderDate}
-          onChange={handleChange}
-          isRequired={true}
-          />
+                <Field
+                  name="OrderDate"
+                  labelFor="OrderDate"
+                  labelText="Fecha del pedido:"
+                  inputId="OrderDateInput"
+                  type="date"
+                  value={order.order_date}
+                  onChange={handleChange}
+                  isRequired={true}
+                />
 
-        <Field
-          name="RequiredDate"
-          labelFor="RequiredDate"
-          labelText="Fecha requerida"
-          inputId="RequiredDateInput"
-          type="date"
-          value={order.RequiredDate}
-          onChange={handleChange}
-          isRequired={true}
-          />
+                <Field
+                  name="RequiredDate"
+                  labelFor="RequiredDate"
+                  labelText="Fecha requerida"
+                  inputId="RequiredDateInput"
+                  type="date"
+                  value={order.required_date}
+                  onChange={handleChange}
+                  isRequired={true}
+                />
 
-        <Field
-          name="ShippedDate"
-          labelFor="ShippedDate"
-          labelText="Fecha de envío"
-          inputId="ShippedDateInput"
-          type="date"
-          value={order.ShipAddress}
-          onChange={handleChange}
-          isRequired={true}
-          />
+                <Field
+                  name="ShippedDate"
+                  labelFor="ShippedDate"
+                  labelText="Fecha de envío"
+                  inputId="ShippedDateInput"
+                  type="date"
+                  value={order.shipped_date}
+                  onChange={handleChange}
+                  isRequired={true}
+                />
 
-        <Field
-          name="ShipVia"
-          labelFor="ShipVia"
-          labelText="Método de envío"
-          inputId="ShipViaInput"
-          type=""
-          value={order.ShipVia}
-          onChange={handleChange}
-          isRequired={true}
-          />
+                <Field
+                  name="ShipVia"
+                  labelFor="ShipVia"
+                  labelText="Método de envío"
+                  inputId="ShipViaInput"
+                  type="text"
+                  value={order.ship_via}
+                  onChange={handleChange}
+                  isRequired={true}
+                />
 
-        <Field
-          name="Freight"
-          labelFor="Freight"
-          labelText="Flete"
-          inputId="FreightInput"
-          type="number"
-          id="freight"
-          step="0.01"
-          required
-          min="0"
-          value={order.Freight}
-          onChange={handleChange}
-          isRequired={true}
-          />
+                <Field
+                  name="Freight"
+                  labelFor="Freight"
+                  labelText="Flete"
+                  inputId="FreightInput"
+                  type="number"
+                  id="freight"
+                  step="0.01"
+                  required
+                  min="0"
+                  value={order.freight}
+                  onChange={handleChange}
+                  isRequired={true}
+                />
 
-        <Field
-          name="ShipName"
-          labelFor="ShipName"
-          labelText="Nombre del destinatario"
-          inputId="ShipNameInput"
-          type="text"
-          value={order.ShipName}
-          onChange={handleChange}
-          isRequired={true}
-          />
-      </FormColumn>
-      <FormColumn>
-        <Field
-          name="ShipAddress"
-          labelFor="ShipAddress"
-          labelText="Dirección de envío"
-          inputId="ShipAddressInput"
-          type="text"
-          value={order.ShipAddress}
-          onChange={handleChange}
-          isRequired={true}
-          />
+                <Field
+                  name="ShipName"
+                  labelFor="ShipName"
+                  labelText="Nombre del destinatario"
+                  inputId="ShipNameInput"
+                  type="text"
+                  value={order.ship_name}
+                  onChange={handleChange}
+                  isRequired={true}
+                />
+              </FormColumn>
+              <FormColumn>
+                <Field
+                  name="ShipAddress"
+                  labelFor="ShipAddress"
+                  labelText="Dirección de envío"
+                  inputId="ShipAddressInput"
+                  type="text"
+                  value={order.ship_address}
+                  onChange={handleChange}
+                  isRequired={true}
+                />
 
-        <Field
-          name="ShipCity"
-          labelFor="ShipCity"
-          labelText="Ciudad de envío"
-          inputId="ShipCityInput"
-          type="text"
-          value={order.ShipCity}
-          onChange={handleChange}
-          isRequired={true}
-          />
+                <Field
+                  name="ShipCity"
+                  labelFor="ShipCity"
+                  labelText="Ciudad de envío"
+                  inputId="ShipCityInput"
+                  type="text"
+                  value={order.ship_city}
+                  onChange={handleChange}
+                  isRequired={true}
+                />
 
-        <Field
-          name="ShipRegion"
-          labelFor="ShipRegion"
-          labelText="Región de envío"
-          inputId="ShipRegionInput"
-          type="text"
-          placeholder="ShipRegion"
-          value={order.ShipRegion}
-          onChange={handleChange}
-          isRequired={true}
-          />
+                <Field
+                  name="ShipRegion"
+                  labelFor="ShipRegion"
+                  labelText="Región de envío"
+                  inputId="ShipRegionInput"
+                  type="text"
+                  placeholder="ShipRegion"
+                  value={order.ship_region}
+                  onChange={handleChange}
+                  isRequired={true}
+                />
 
-        <Field
-          name="ShipPostalCode"
-          labelFor="ShipPostalCode"
-          labelText="Código postal de envío"
-          inputId="ShipPostalCodeInput"
-          type="text"
-          maxLength={10}
-          value={order.ShipPostalCode}
-          onChange={handleChange}
-          isRequired={true}
-          />
+                <Field
+                  name="ShipPostalCode"
+                  labelFor="ShipPostalCode"
+                  labelText="Código postal de envío"
+                  inputId="ShipPostalCodeInput"
+                  type="text"
+                  maxLength={10}
+                  value={order.ship_postal_code}
+                  onChange={handleChange}
+                  isRequired={true}
+                />
 
-        <Field
-          name="ShipCountry"
-          labelFor="ShipCountry"
-          labelText="País de envío"
-          inputId="ShipCountryInput"
-          type="text"
-          placeholder="ShipCountry"
-          value={order.ShipCountry}
-          onChange={handleChange}
-          isRequired={true}
-          />
+                <Field
+                  name="ShipCountry"
+                  labelFor="ShipCountry"
+                  labelText="País de envío"
+                  inputId="ShipCountryInput"
+                  type="text"
+                  placeholder="ShipCountry"
+                  value={order.ship_country}
+                  onChange={handleChange}
+                  isRequired={true}
+                />
               </FormColumn>
             </FormContainer>
           )}

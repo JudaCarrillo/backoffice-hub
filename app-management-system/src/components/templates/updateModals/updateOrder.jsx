@@ -17,17 +17,17 @@ export function UpdateOrderModal({
 }) {
   const [order, setOrder] = useState({
 
-    OrderDate: "",
-    RequiredDate: "",
-    ShippedDate: "",
-    ShipVia: "",
-    Freight: "",
-    ShipName: "",
-    ShipAddress: "",
-    ShipCity: "",
-    ShipRegion: "",
-    ShipPostalCode: "",
-    ShipCountry: "",
+    order_date: "",
+    required_date: "",
+    shipped_date: "",
+    ship_via: "",
+    freight: "",
+    ship_name: "",
+    ship_address: "",
+    ship_city: "",
+    ship_region: "",
+    ship_postal_code: "",
+    ship_country: "",
   });
 
   useEffect(() => {
@@ -40,17 +40,17 @@ export function UpdateOrderModal({
           throw new Error(message);
         }
         setOrder({
-          OrderDate: data.order_date,
-          RequiredDate: data.required_date,
-          ShippedDate: data.shipped_date,
-          ShipVia: data.ship_via,
-          Freight: data.freight,
-          ShipName: data.ship_name,
-          ShipAddress: data.ship_address,
-          ShipCity: data.ship_city,
-          ShipRegion: data.ship_region,
-          ShipPostalCode: data.ship_postal_code,
-          ShipCountry: data.ship_country,
+          order_date: data.order_date,
+          required_date: data.required_date,
+          shipped_date: data.shipped_date,
+          ship_via: data.ship_via,
+          freight: data.freight,
+          ship_name: data.ship_name,
+          ship_address: data.ship_address,
+          ship_city: data.ship_city,
+          ship_region: data.ship_region,
+          ship_postalCode: data.ship_postal_code,
+          ship_country: data.ship_country,
         });
       } catch (error) {
         console.error("Error al obtener los detalles del vendedor:", error);
@@ -81,17 +81,17 @@ export function UpdateOrderModal({
   };
   const clearFormFields = () => {
     setOrder({
-      OrderDate: "",
-      RequiredDate: "",
-      ShippedDate: "",
-      ShipVia: "",
-      Freight: "",
-      ShipName: "",
-      ShipAddress: "",
-      ShipCity: "",
-      ShipRegion: "",
-      ShipPostalCode: "",
-      ShipCountry: "",  
+      order_date: "",
+      required_date: "",
+      shipped_date: "",
+      ship_via: "",
+      freight: "",
+      ship_name: "",
+      ship_address: "",
+      ship_city: "",
+      ship_region: "",
+      ship_postal_code: "",
+      ship_country: "",  
     });
   };
 
@@ -139,7 +139,7 @@ export function UpdateOrderModal({
           labelText="Fecha de envío"
           inputId="ShippedDateInput"
           type="date"
-          value={order.ShipAddress}
+          value={order.shipped_date}
           onChange={handleChange}
           isRequired={true}
           />
@@ -150,7 +150,7 @@ export function UpdateOrderModal({
           labelText="Método de envío"
           inputId="ShipViaInput"
           type="text"
-          value={order.ShipVia}
+          value={order.ship_via}
           onChange={handleChange}
           isRequired={true}
           />
@@ -165,7 +165,7 @@ export function UpdateOrderModal({
           step="0.01"
           required
           min="0"
-          value={order.Freight}
+          value={order.freight}
           onChange={handleChange}
           isRequired={true}
           />
@@ -176,7 +176,7 @@ export function UpdateOrderModal({
           labelText="Nombre del destinatario"
           inputId="ShipNameInput"
           type="text"
-          value={order.ShipName}
+          value={order.ship_name}
           onChange={handleChange}
           isRequired={true}
           />
@@ -188,7 +188,7 @@ export function UpdateOrderModal({
           labelText="Dirección de envío"
           inputId="ShipAddressInput"
           type="text"
-          value={order.ShipAddress}
+          value={order.ship_address}
           onChange={handleChange}
           isRequired={true}
           />
@@ -199,7 +199,7 @@ export function UpdateOrderModal({
           labelText="Ciudad de envío"
           inputId="ShipCityInput"
           type="text"
-          value={order.ShipCity}
+          value={order.ship_city}
           onChange={handleChange}
           isRequired={true}
           />
@@ -211,7 +211,7 @@ export function UpdateOrderModal({
           inputId="ShipRegionInput"
           type="text"
           placeholder="ShipRegion"
-          value={order.ShipRegion}
+          value={order.ship_region}
           onChange={handleChange}
           isRequired={true}
           />
@@ -223,7 +223,7 @@ export function UpdateOrderModal({
           inputId="ShipPostalCodeInput"
           type="text"
           maxLength={10}
-          value={order.ShipPostalCode}
+          value={order.ship_postal_code}
           onChange={handleChange}
           isRequired={true}
           />
@@ -235,7 +235,7 @@ export function UpdateOrderModal({
           inputId="ShipCountryInput"
           type="text"
           placeholder="ShipCountry"
-          value={order.ShipCountry}
+          value={order.ship_country}
           onChange={handleChange}
           isRequired={true}
           />

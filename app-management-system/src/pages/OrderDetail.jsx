@@ -3,11 +3,10 @@ import styled from "styled-components";
 import { Cabecera } from "../components/organisms/headers/cabecera";
 import { Cuerpo } from "../components/organisms/body/cuerpo";
 import { UpdateProductModal } from "../components/templates/updateModals/updateProducts";
-import { ModalCreateProducts } from "../components/templates/createModals/ModalCreateProducts";
-
 import { getCsv, getPrivileges, hasPrivileges } from "../utils/logic";
 import { Preloader } from "./preloader";
 import { deleteOrderDetail, exportOrderDetailToCsv, getOrderDetails } from "../services/order-detail";
+import { ModalCreateOrderDetails } from "../components/templates/createModals/ModalCreateOrderDetails";
 
 
 export function OrderDetail() {
@@ -78,7 +77,7 @@ export function OrderDetail() {
       <Container>
         <Cabecera title="Orders Detail">
           {privilegesWrite.length > 0 && (
-            <ModalCreateProducts
+            <ModalCreateOrderDetails
               modalName={"New Order Detail"}
               title={"Create Order Detail"}
               onReceiveRows={handleReceiveRows}
