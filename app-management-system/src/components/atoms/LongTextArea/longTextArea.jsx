@@ -18,10 +18,16 @@ function LongTextArea({ id, name, value, onChange, placeholder }) {
 export default LongTextArea;
 const StyledLongTextArea = styled.textarea`
   width: 100%;
-  min-height: 150px; /* Ajusta la altura según tus preferencias */
+  min-height: 150px;
   padding: 8px;
-  font-size: 10px;
-  border: 1px solid #ccc;
+  background-color: white;
+  color: black;
+  font-size: 16px;
+  border: 1px solid black;
   border-radius: 4px;
   resize: vertical;
+  outline: none;
+    &::placeholder {
+      color: black;
+    }
 `;

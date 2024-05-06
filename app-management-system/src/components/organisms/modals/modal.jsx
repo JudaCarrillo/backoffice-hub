@@ -13,10 +13,10 @@ export function Modal({ title, showModalContent, onClose, onAction, label }) {
   };
 
   return (
-    <Container>
+    <Container >
       <div className="modal-overlay">
         <form onSubmit={handleAction}>
-          <div className="modal">
+          <div className="modal bg-neutral-100">
             <div className="cabeza">
               <h2>{title}</h2>
             </div>
@@ -56,10 +56,9 @@ const Container = styled.div`
     z-index: 999;
 
     .modal {
-      background-color: rgba(148, 163, 184, 1); /* Color de fondo del modal */
+      
       padding: 9px;
       border-radius: 2rem;
-      border: 5px solid ${(props) => props.theme.borderColor}; /* Agrega un borde de 10px */
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -70,14 +69,15 @@ const Container = styled.div`
         width: 100%;
         display: flex;
         justify-content: center;
+        position: relative;
         align-items: center;
-        gap: 20px;
+        top: 20px;
         margin-bottom: 20px; /* Agregar espacio inferior */
 
         h2 {
-          color: black;
+          color: ${({ theme }) => theme.text};
           font-size: 1.8rem;
-          font-weight: 800;
+          font-weight: 500;
         }
       }
     }
