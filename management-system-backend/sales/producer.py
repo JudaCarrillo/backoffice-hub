@@ -3,15 +3,14 @@ import pika
 # Conexión al servidor RabbitMQ
 credentials = pika.PlainCredentials('admin', 'admin')
 
-parameters = pika.URLParameters('amqp://admin:admin@172.18.0.1:5672/%2F')
+# parameters = pika.URLParameters('amqp://guest:guest@localhost:5672/%2F')
 
-""" parameters = pika.ConnectionParameters(
-    # host='127.0.0.1',
-    host='172.18.0.2',
+parameters = pika.ConnectionParameters(
+    host='main',
     virtual_host='/',
-    port=5671,
+    port=5672,
     credentials=credentials
-) """
+)
 
 connection = pika.BlockingConnection(parameters)
 
