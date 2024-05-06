@@ -4,10 +4,16 @@ import { Cabecera } from "../components/organisms/headers/cabecera";
 import { Cuerpo } from "../components/organisms/body/cuerpo";
 import { UpdateProductModal } from "../components/templates/updateModals/updateProducts";
 import { ModalCreateProducts } from "../components/templates/createModals/ModalCreateProducts";
-
+import {
+desabiledProduct,
+exportProductsToCsv,
+getProducts,
+} from "../services/products";
 import { getCsv, getPrivileges, hasPrivileges } from "../utils/logic";
 import { Preloader } from "./preloader";
-import { deleteOrder, getOrders, exportOrdersToCsv } from "../services/orders";
+import { UpdateOrderModal } from "../components/templates/updateModals/updateOrder";
+import { ModalCreateOrder } from "../components/templates/createModals/ModalCreateOrder";
+
 
 export function Orders() {
   const [orders, setOrders] = useState([]);
@@ -22,7 +28,7 @@ export function Orders() {
   useEffect(() => {
     const cargartabla = async () => {
       try {
-        const respuesta = await getOrders();
+        const respuesta = await getProducts();
         const { success, data, message } = respuesta.data;
         if (success) {
           data.sort((a, b) => a.id - b.id);
@@ -57,7 +63,7 @@ export function Orders() {
   // Función de eliminación
   const handleDelete = async (id) => {
     try {
-      const respuesta = await deleteOrder(id);
+      const respuesta = await desabiledProduct(id);
       const { success, message } = respuesta.data;
       if (success) {
         setOrders(orders.filter((Orders) => Orders.id !== id));
@@ -77,7 +83,7 @@ export function Orders() {
     <Container>
       <Cabecera title="Orders">
         {privilegesWrite.length > 0 && (
-          <ModalCreateProducts
+          <ModalCreateOrder
             modalName={"New Order"}
             title={"Create Order"}
             onReceiveRows={handleReceiveRows}
@@ -99,14 +105,14 @@ export function Orders() {
             showActionForDownload={hasPrivileges(privilegesReport)}
             handleDownload={() =>
               getCsv({
-                callback: exportOrdersToCsv,
+                callback: exportProductsToCsv,
                 name: "Orders_data",
               })
             }
           />
-          <UpdateProductModal
+          <UpdateOrderModal
             title="Edit Order"
-            productId={editOrdersId}
+            orderId={editOrdersId}
             onReceiveRows={handleReceiveRows}
             onClose={handleCloseEditModal}
             open={isEditModalOpen}

@@ -13,7 +13,11 @@ export const exportOrdersToCsv = () => {
         responseType: "blob",
     });
 }
-
+export const createOrder = () => {
+    return axios.get(`${url_base}/${apiVersion}/${subject}/export`, {
+        responseType: "blob",
+    });
+}
 export const deleteOrder = (id) => {
     return axios.delete(`${url_base}/${apiVersion}/${subject}/delete/${id}`);
 }
