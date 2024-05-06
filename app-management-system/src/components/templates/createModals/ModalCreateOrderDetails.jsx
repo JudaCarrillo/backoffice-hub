@@ -68,7 +68,7 @@ export function ModalCreateOrderDetails({
       const { success, data, message } = response.data;
 
       if (success) {
-        const rows = await getOrders();
+        const rows = await getOrderDetails();
         const { data } = rows.data;
         onReceiveRows(data);
         toggleModal();

@@ -92,9 +92,10 @@ export function UpdateOrderDetailtModal({
   };
 
   const handleChange = (e) => {
-    setProduct({
-      ...product,
-      [e.target.name]: e.target.value,
+    const { value, name } = e.target;
+    setOrdenDetail({
+      ...ordendetail,
+      [name]: value,
     });
   };
 
