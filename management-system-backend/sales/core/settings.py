@@ -15,7 +15,16 @@ import os
 from dotenv import load_dotenv
 
 load_dotenv()
-# import environ
+
+env_config = {
+    
+}
+
+print(os.environ.get('RABBIT_HOST'))
+print(os.environ.get('RABBIT_PORT'))
+print(os.environ.get('RABBIT_USERNAME'))
+print(os.environ.get('RABBIT_PASSWORD'))
+print(os.environ.get('RABBIT_NAME_EXCHANGE'))
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -49,6 +58,7 @@ DJANGO_APPS = [
 PROJECT_APPS = [
     'apps.order',
     'apps.order_detail',
+    'apps.broker',
 ]
 
 THIRD_PARTY_APPS = [

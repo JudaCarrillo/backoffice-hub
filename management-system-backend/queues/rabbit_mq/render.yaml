@@ -1,0 +1,15 @@
+services:
+    - type: web
+      runtime: docker
+      name: rabbitmq
+      envVars:
+          - key: RABBITMQ_ERLANG_COOKIE
+            generateValue: true
+          - key: RABBITMQ_DEFAULT_USER
+            value: admin
+          - key: RABBITMQ_DEFAULT_PASS
+            generateValue: true
+      disk:
+          name: rabbitmq
+          mountPath: /var/lib/rabbitmq
+          sizeGB: 10
