@@ -177,7 +177,7 @@ export function Login({ onLoginSuccess }) {
       <LoginFormContainer>
         <LoginForm onSubmit={handleLogin}>
           <Logocontent>
-            <img src="./src/assets/logo.webp" alt="Logo" />
+            <img src="./logo.webp" alt="Logo" />
           </Logocontent>
           <h1 className="text-3xl font-bold">Inicio de Sesión</h1>
           <Toaster
