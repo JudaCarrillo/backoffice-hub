@@ -20,6 +20,9 @@ load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+MEDIA_ROOT = ''
+MEDIA_URL = ''
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
@@ -32,7 +35,7 @@ SECRET_KEY = F'django-insecure-{KEY}'
 DEBUG = os.environ.get('DEBUG')
 
 HOST_DEV = os.environ.get('HOST_DEV')
-ALLOWED_HOSTS = [HOST_DEV]
+ALLOWED_HOSTS = [HOST_DEV, 'backoffice_auth']
 
 # Application definition
 
@@ -47,7 +50,7 @@ DJANGO_APPS = [
 ]
 
 PROJECT_APPS = [
-    'apps.user',
+    'apps.user',    
     'apps.user_profile',
     'apps.permission',
     'apps.privilege',

@@ -1,0 +1,15 @@
+version: "3.8"
+
+services:
+  # Django app
+  main:
+    container_name: backoffice
+    labels:
+      svc: backoffice
+    restart: always
+    build:
+      dockerfile: ./Dockerfile
+    volumes:
+      - .:/app
+    ports:
+      - 8000:8000

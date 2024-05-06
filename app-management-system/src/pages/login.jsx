@@ -1,56 +1,98 @@
 import { useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import styled from "styled-components";
-import { Opulento } from "uvcanvas";
-import { login } from "../api/auth";
+import { login } from "../services/auth";
 
 const LoginContainer = styled.div`
   position: relative;
-  min-height: 99.8vh;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const OpulentoBackground = styled(Opulento)`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-size: cover;
-  background-position: center;
+  height: 100vh;
+  width: 100vw;
+  background: linear-gradient(#888888, #000000);
 `;
 
 const LoginFormContainer = styled.div`
-  position: relative;
-  background-color: white;
-  padding: 3.1rem;
-  border-radius: 5%;
+  position: absolute;
+  width: 400px;
+  height: 80vh;
+  min-width: 400px;
   max-width: 400px;
-  width: 100%;
+  min-height: 75vh;
+  max-height: 80vh;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: linear-gradient(to bottom right, #b0b0b0 50%, #3d3d3d 100%);
+  padding: 50px;
+  border-radius: 1rem;
+  padding-top: 100px; /* Ajustamos el espacio superior del contenedor del formulario */
+  padding-bottom: 200px; /* Ajustamos el espacio inferior del contenedor del formulario */
+  h1 {
+    margin-bottom: 50px;
+    fontsize: 25px;
+    textalign: center;
+    fontfamily: "Inter";
+    fontweight: 700;
+  }
+`;
+
+const Logocontent = styled.div`
+  display: flex;
+  margin-bottom: 20px;
+  margin-top: -60px;
+  width: 200px;
+  height: 200px;
+  justify-content: center;
+  align-items: center;
+  img {
+    width: 90%;
+    height: 90%;
+  }
 `;
 
 const LoginForm = styled.form`
-  width: 100%;
+  width: 300px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  .notification {
+    position: relative;
+    color: #000;
+    bottom: 80px;
+  }
 `;
 
 const InputContainer = styled.div`
+  display: flex;
+  line-height: 30px;
   margin-bottom: 20px;
-  width: 100%;
+  align-items: center;
   position: relative;
+  width: 100%;
 `;
 
 const LoginInput = styled.input`
   width: 100%;
-  padding: 15px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
+  height: 45px;
+  line-height: 30px;
   font-size: 16px;
+  padding: 0 1rem;
+  border: 2px solid transparent;
+  border-radius: 10px;
+  outline: none;
+  background-color: #f8fafc;
+  color: #0d0c22;
+  transition: 0.5s ease;
+  &::placeholder {
+    color: #94a3b8;
+  }
+  &:focus,
+  &:hover {
+    outline: none;
+    border-color: rgb(85 79 79);
+    background-color: #fff;
+    box-shadow: 0 0 0 5px rgb(85 79 79 / 30%);
+  }
 `;
 
 const ToggleButton = styled.button`
@@ -65,15 +107,20 @@ const ToggleButton = styled.button`
 
 const LoginButton = styled.button`
   width: 100%;
-  margin-top: 50px;
-  padding: 15px;
-  border: 1px solid #000;
-  border-radius: 8px;
+  margin-top: 50px; /* Aumentamos el espacio entre el último contenedor de entrada y el botón */
+  padding: 15px; /* Aumentamos el padding */
+  border: none;
+  border-radius: 8px; /* Aumentamos el border-radius */
   background-color: #000;
   color: #fff;
-  font-size: 18px;
-  font-weight: bold;
+  font-size: 18px; /* Aumentamos el tamaño del texto */
+  font-weight: bold; /* Hacemos el texto en negrita */
   cursor: pointer;
+  &:hover {
+    background-color: #fff;
+    color: #000;
+    transition: 0.5s ease;
+  }
 `;
 
 export function Login({ onLoginSuccess }) {
@@ -83,31 +130,42 @@ export function Login({ onLoginSuccess }) {
 
   const enviarPeticion = async () => {
     const data = {
-      username: username,
+      email: username,
       password: password,
     };
 
     try {
       const response = await login(data);
+
       const {
         success,
-        data: { privileges },
-        message,
+        data: { user, privileges },
       } = response.data;
-      if (!success) console.log(message);
 
-      const Privileges = [...privileges];
-      localStorage.setItem("user", JSON.stringify(Privileges));
+      if (!success) {
+        throw new Error("Credenciales incorrectas");
+      }
+
+      const items = JSON.stringify({ privileges: [...privileges], user });
       onLoginSuccess();
+      localStorage.setItem("user", items);
     } catch (error) {
-      console.error("Error al realizar la petición:", error);
-      alert("Credenciales incorrectas"); // Muestra una alerta si hay un error en la solicitud
+      const message =
+        error?.response?.data?.message ||
+        "An unexpected error occurred. Please try again later.";
+
+      toast.error(message);
     }
   };
 
   const handleLogin = (e) => {
-    e.preventDefault(); // Evita que el formulario se envíe al hacer clic en el botón
-    enviarPeticion(); // Llama a la función para enviar la petición POST
+    e.preventDefault();
+    if (!username || !password) {
+      toast.error("Todos los campos son obligatorios");
+      return;
+    }
+
+    enviarPeticion();
   };
 
   const togglePasswordVisibility = () => {
@@ -116,24 +174,27 @@ export function Login({ onLoginSuccess }) {
 
   return (
     <LoginContainer>
-      <OpulentoBackground />
       <LoginFormContainer>
         <LoginForm onSubmit={handleLogin}>
-          {" "}
-          {/* Agregamos el controlador de envío al formulario */}
-          <h1
-            style={{
-              marginBottom: "100px",
-              fontSize: "40px",
-              textAlign: "center",
-              fontFamily: "",
-              fontWeight: "700",
-              fontStyle: "normal",
+          <Logocontent>
+            <img src="./src/assets/logo.webp" alt="Logo" />
+          </Logocontent>
+          <h1 className="text-3xl font-bold">Inicio de Sesión</h1>
+          <Toaster
+            toastOptions={{
+              className: "notification",
+              position: "bottom-center",
+              duration: 3000,
+              iconTheme: {
+                primary: "#000",
+              },
+              style: {
+                fontSize: "1rem",
+                fontWeight: 500,
+                borderRadius: "1rem",
+              },
             }}
-          >
-            Inicio de Sesión
-          </h1>{" "}
-          {/* Ajustamos el espacio alrededor del texto de inicio de sesión */}
+          />
           <InputContainer>
             <LoginInput
               type="text"
@@ -146,24 +207,16 @@ export function Login({ onLoginSuccess }) {
           <InputContainer>
             <LoginInput
               type={showPassword ? "text" : "password"}
-              placeholder="Contraseña"
+              placeholder="Password"
               autoComplete="current-password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
             <ToggleButton type="button" onClick={togglePasswordVisibility}>
-              {" "}
-              {/* Cambiamos el tipo de botón a "button" */}
-              {showPassword ? (
-                <FaEyeSlash size={20} />
-              ) : (
-                <FaEye size={20} />
-              )}{" "}
-              {/* Usamos íconos de React Icons */}
+              {showPassword ? <FaEyeSlash size={20} /> : <FaEye size={20} />}
             </ToggleButton>
           </InputContainer>
-          <LoginButton type="submit">Iniciar sesión</LoginButton>{" "}
-          {/* Cambiamos el tipo de botón a "submit" para enviar el formulario */}
+          <LoginButton type="submit">Iniciar sesión</LoginButton>
         </LoginForm>
       </LoginFormContainer>
     </LoginContainer>

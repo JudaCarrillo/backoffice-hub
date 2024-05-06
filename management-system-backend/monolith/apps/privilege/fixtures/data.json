@@ -1,0 +1,134 @@
+[
+    {
+        "model": "privilege.privilege",
+        "pk": 1,
+        "fields": {
+            "name": "Products Reader",
+            "description": "Read access to Products",
+            "title": "Products",
+            "route": "products",
+            "icon": "product",
+            "created_at": "2024-04-09 04:46:46"
+        }
+    },
+    {
+        "model": "privilege.privilege",
+        "pk": 2,
+        "fields": {
+            "name": "Categories Reader",
+            "description": "Read access to Categories",
+            "title": "Categories",
+            "route": "categories",
+            "icon": "category",
+            "created_at": "2024-04-09 04:46:46"
+        }
+    },
+    {
+        "model": "privilege.privilege",
+        "pk": 3,
+        "fields": {
+            "name": "Vendors Reader",
+            "description": "Read access to Vendors",
+            "title": "Vendors",
+            "route": "vendors",
+            "icon": "vendor",
+            "created_at": "2024-04-09 04:46:46"
+        }
+    },
+    {
+        "model": "privilege.privilege",
+        "pk": 4,
+        "fields": {
+            "name": "Users Reader",
+            "description": "Read access to Users",
+            "title": "Users",
+            "route": "users",
+            "icon": "user",
+            "created_at": "2024-04-09 04:46:46"
+        }
+    },
+    {
+        "model": "privilege.privilege",
+        "pk": 5,
+        "fields": {
+            "name": "Products Writer",
+            "description": "Write access to Products",
+            "title": null,
+            "route": null,
+            "icon": null,
+            "created_at": "2024-04-09 04:46:46"
+        }
+    },
+    {
+        "model": "privilege.privilege",
+        "pk": 6,
+        "fields": {
+            "name": "Categories Writer",
+            "description": "Write access to Categories",
+            "title": null,
+            "route": null,
+            "icon": null,
+            "created_at": "2024-04-09 04:46:46"
+        }
+    },
+    {
+        "model": "privilege.privilege",
+        "pk": 7,
+        "fields": {
+            "name": "Vendors Writer",
+            "description": "Write access to Vendors",
+            "title": null,
+            "route": null,
+            "icon": null,
+            "created_at": "2024-04-09 04:46:46"
+        }
+    },
+    {
+        "model": "privilege.privilege",
+        "pk": 8,
+        "fields": {
+            "name": "Users Writer",
+            "description": "Write access to Users",
+            "title": null,
+            "route": null,
+            "icon": null,
+            "created_at": "2024-04-09 04:46:46"
+        }
+    },
+    {
+        "model": "privilege.privilege",
+        "pk": 9,
+        "fields": {
+            "name": "Products Report",
+            "description": "Generate report for Products",
+            "title": null,
+            "route": null,
+            "icon": null,
+            "created_at": "2024-04-09 04:46:46"
+        }
+    },
+    {
+        "model": "privilege.privilege",
+        "pk": 10,
+        "fields": {
+            "name": "Categories Report",
+            "description": "Generate report for Categories",
+            "title": null,
+            "route": null,
+            "icon": null,
+            "created_at": "2024-04-09 04:46:46"
+        }
+    },
+    {
+        "model": "privilege.privilege",
+        "pk": 11,
+        "fields": {
+            "name": "Vendors Report",
+            "description": "Generate report for Vendors",
+            "title": null,
+            "route": null,
+            "icon": null,
+            "created_at": "2024-04-09 04:46:46"
+        }
+    }
+]

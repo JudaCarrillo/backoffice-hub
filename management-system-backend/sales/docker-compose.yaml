@@ -1,0 +1,22 @@
+version: "3.8"
+
+services:
+  # Django app
+  main:
+    container_name: backoffice_sales
+    labels:
+      svc: backoffice_sales
+    restart: always
+    build:
+      dockerfile: ./Dockerfile
+    volumes:
+      - .:/app
+    ports:
+      - 8400:8000
+    # command: bash -c "python producer.py"
+    networks:
+      - live_backend
+
+networks:
+  live_backend:
+    external: true

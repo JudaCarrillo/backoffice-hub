@@ -1,0 +1,212 @@
+[
+    {
+        "model": "permission.permission",
+        "pk": 1,
+        "fields": {
+            "name": "Profile administrator - products reader",
+            "id_profile": 1,
+            "id_privilege": 1
+        }
+    },
+    {
+        "model": "permission.permission",
+        "pk": 2,
+        "fields": {
+            "name": "Profile administrator - categories reader",
+            "id_profile": 1,
+            "id_privilege": 2
+        }
+    },
+    {
+        "model": "permission.permission",
+        "pk": 3,
+        "fields": {
+            "name": "Profile administrator - vendors reader",
+            "id_profile": 1,
+            "id_privilege": 3
+        }
+    },
+    {
+        "model": "permission.permission",
+        "pk": 4,
+        "fields": {
+            "name": "Profile administrator - users reader",
+            "id_profile": 1,
+            "id_privilege": 4
+        }
+    },
+    {
+        "model": "permission.permission",
+        "pk": 5,
+        "fields": {
+            "name": "Profile administrator - products writer",
+            "id_profile": 1,
+            "id_privilege": 5
+        }
+    },
+    {
+        "model": "permission.permission",
+        "pk": 6,
+        "fields": {
+            "name": "Profile administrator - categories writer",
+            "id_profile": 1,
+            "id_privilege": 6
+        }
+    },
+    {
+        "model": "permission.permission",
+        "pk": 7,
+        "fields": {
+            "name": "Profile administrator - vendors writer",
+            "id_profile": 1,
+            "id_privilege": 7
+        }
+    },
+    {
+        "model": "permission.permission",
+        "pk": 8,
+        "fields": {
+            "name": "Profile administrator - users writer",
+            "id_profile": 1,
+            "id_privilege": 8
+        }
+    },
+    {
+        "model": "permission.permission",
+        "pk": 9,
+        "fields": {
+            "name": "Profile administrator - products report",
+            "id_profile": 1,
+            "id_privilege": 9
+        }
+    },
+    {
+        "model": "permission.permission",
+        "pk": 10,
+        "fields": {
+            "name": "Profile administrator - categories report",
+            "id_profile": 1,
+            "id_privilege": 10
+        }
+    },
+    {
+        "model": "permission.permission",
+        "pk": 11,
+        "fields": {
+            "name": "Profile administrator - vendors report",
+            "id_profile": 1,
+            "id_privilege": 11
+        }
+    },
+
+    {
+        "model": "permission.permission",
+        "pk": 12,
+        "fields": {
+            "name": "Profile operator - products reader",
+            "id_profile": 2,
+            "id_privilege": 1
+        }
+    },
+    {
+        "model": "permission.permission",
+        "pk": 13,
+        "fields": {
+            "name": "Profile operator - categories reader",
+            "id_profile": 2,
+            "id_privilege": 2
+        }
+    },
+    {
+        "model": "permission.permission",
+        "pk": 14,
+        "fields": {
+            "name": "Profile operator - vendors reader",
+            "id_profile": 2,
+            "id_privilege": 3
+        }
+    }, {
+        "model": "permission.permission",
+        "pk": 15,
+        "fields": {
+            "name": "Profile operator - products writer",
+            "id_profile": 2,
+            "id_privilege": 5
+        }
+    },
+    {
+        "model": "permission.permission",
+        "pk": 16,
+        "fields": {
+            "name": "Profile operator - categories writer",
+            "id_profile": 2,
+            "id_privilege": 6
+        }
+    },
+    {
+        "model": "permission.permission",
+        "pk": 17,
+        "fields": {
+            "name": "Profile operator - vendors writer",
+            "id_profile": 2,
+            "id_privilege": 7
+        }
+    },
+
+    {
+        "model": "permission.permission",
+        "pk": 18,
+        "fields": {
+            "name": "Profile supervisor - products reader",
+            "id_profile": 3,
+            "id_privilege": 1
+        }
+    },
+    {
+        "model": "permission.permission",
+        "pk": 19,
+        "fields": {
+            "name": "Profile supervisor - categories reader",
+            "id_profile": 3,
+            "id_privilege": 2
+        }
+    },
+    {
+        "model": "permission.permission",
+        "pk": 20,
+        "fields": {
+            "name": "Profile supervisor - vendors reader",
+            "id_profile": 3,
+            "id_privilege": 3
+        }
+    },
+    {
+        "model": "permission.permission",
+        "pk": 21,
+        "fields": {
+            "name": "Profile supervisor - products report",
+            "id_profile": 3,
+            "id_privilege": 9
+        }
+    },
+    {
+        "model": "permission.permission",
+        "pk": 22,
+        "fields": {
+            "name": "Profile supervisor - categories report",
+            "id_profile": 3,
+            "id_privilege": 10
+        }
+    },
+    {
+        "model": "permission.permission",
+        "pk": 23,
+        "fields": {
+            "name": "Profile supervisor - vendors report",
+            "id_profile": 3,
+            "id_privilege": 11
+        }
+    }
+
+
+]

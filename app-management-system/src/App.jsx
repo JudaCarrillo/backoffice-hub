@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { BrowserRouter } from "react-router-dom";
 import styled, { ThemeProvider } from "styled-components";
-import { Sidebar } from "./components/sidebar";
+import { Sidebar } from "./components/organisms/sidebar/sidebar";
 import { Login } from "./pages/login";
 import { MyRoutes } from "./routers/routes";
 import { Dark, Light } from "./styles/theme";
@@ -14,6 +14,7 @@ function App() {
 
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [forgotPassword, setIsForgotPassword] = useState(false);
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(max-width: 1300px)");
@@ -38,6 +39,10 @@ function App() {
     localStorage.setItem("isLoggedIn", "true");
   };
 
+  const setIsForgotPasswordFnc = () => {
+    setIsForgotPassword(true);
+  };
+
   return (
     <>
       <ThemeContext.Provider value={{ setTheme, theme }}>
@@ -54,6 +59,7 @@ function App() {
               </Container>
             ) : (
               <Login
+                setIsForgotPassword={setIsForgotPasswordFnc}
                 setIsLoggedIn={setIsLoggedIn}
                 onLoginSuccess={handleLoginSuccess}
               />
