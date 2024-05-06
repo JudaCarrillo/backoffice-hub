@@ -249,6 +249,7 @@ const Container = styled.div`
   }
   .ThemeContent {
     padding: ${({ isopen }) => (isopen ? "1% 15%" : "10%")};
+    margin-top: ${({ isopen }) => (isopen ? "-10px" : "")};
     display: flex;
     align-items: center;
     justify-content: space-between;

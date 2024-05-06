@@ -2,15 +2,12 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Cabecera } from "../components/organisms/headers/cabecera";
 import { Cuerpo } from "../components/organisms/body/cuerpo";
-// import { UpdateProductModal } from "../components/templates/updateModals/updateProducts";
-// import { ModalCreateProducts } from "../components/templates/createModals/ModalCreateProducts";
-// import {
-//   desabiledProduct,
-//   exportProductsToCsv,
-//   getProducts,
-// } from "../services/products";
+import { UpdateProductModal } from "../components/templates/updateModals/updateProducts";
+import { ModalCreateProducts } from "../components/templates/createModals/ModalCreateProducts";
+
 import { getCsv, getPrivileges, hasPrivileges } from "../utils/logic";
 import { Preloader } from "./preloader";
+import { deleteOrder, getOrders, exportOrdersToCsv } from "../services/orders";
 
 export function Orders() {
   const [orders, setOrders] = useState([]);
@@ -25,7 +22,7 @@ export function Orders() {
   useEffect(() => {
     const cargartabla = async () => {
       try {
-        const respuesta = await getProducts();
+        const respuesta = await getOrders();
         const { success, data, message } = respuesta.data;
         if (success) {
           data.sort((a, b) => a.id - b.id);
@@ -60,7 +57,7 @@ export function Orders() {
   // Función de eliminación
   const handleDelete = async (id) => {
     try {
-      const respuesta = await desabiledProduct(id);
+      const respuesta = await deleteOrder(id);
       const { success, message } = respuesta.data;
       if (success) {
         setOrders(orders.filter((Orders) => Orders.id !== id));
@@ -102,14 +99,14 @@ export function Orders() {
             showActionForDownload={hasPrivileges(privilegesReport)}
             handleDownload={() =>
               getCsv({
-                callback: exportProductsToCsv,
+                callback: exportOrdersToCsv,
                 name: "Orders_data",
               })
             }
           />
           <UpdateProductModal
             title="Edit Order"
-            productId={editProductId}
+            productId={editOrdersId}
             onReceiveRows={handleReceiveRows}
             onClose={handleCloseEditModal}
             open={isEditModalOpen}
