@@ -3,11 +3,13 @@ import { Cabecera } from "../components/organisms/headers/cabecera";
 import { Cuerpo } from "../components/organisms/body/cuerpo";
 import { UpdateCustomerModal } from "../components/templates/updateModals/updateCustomers";
 import { ModalCreateCustomers } from "../components/templates/createModals/ModalCreateCustomers";
-import { deleteCustomer, getCustomers } from "../services/customers";
+import {
+  deleteCustomer,
+  getCustomers,
+  getCsvCustomers,
+} from "../services/customers";
 import { Preloader } from "./preloader";
-import { exportCategoriesToCsv } from "../services/categories";
 import { getCsv, getPrivileges, hasPrivileges } from "../utils/logic";
-
 
 export function Customers() {
   const [Customers, setCustomers] = useState([]);
@@ -102,7 +104,7 @@ export function Customers() {
             showActionForDownload={hasPrivileges(privilegesReport)}
             handleDownload={() =>
               getCsv({
-                callback: exportCategoriesToCsv,
+                callback: getCsvCustomers,
                 name: "Customers_data",
               })
             }

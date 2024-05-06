@@ -137,7 +137,7 @@ class ProductService():
 
     def export_to_csv(self, response):
         products = Products.objects.all()
-        serializer = Products(products, many=True)
+        serializer = ProductSerializer(products, many=True)
         headers = ['name', 'quantity_per_unit', 'unit_price', 'units_in_stock',
                    'units_on_order', 'reorder_level', 'discontinued', 'id_category',
                    'id_supplier']
