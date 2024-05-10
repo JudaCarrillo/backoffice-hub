@@ -34,8 +34,7 @@ SECRET_KEY = F'django-insecure-{KEY}'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG')
 
-HOST_DEV = os.environ.get('HOST_DEV')
-ALLOWED_HOSTS = [HOST_DEV, 'backoffice_auth']
+ALLOWED_HOSTS = ['backoffice_auth', 'localhost', '0.0.0.0']
 
 # Application definition
 
@@ -50,7 +49,7 @@ DJANGO_APPS = [
 ]
 
 PROJECT_APPS = [
-    'apps.user',    
+    'apps.user',
     'apps.user_profile',
     'apps.permission',
     'apps.privilege',
@@ -101,13 +100,12 @@ ASGI_APPLICATION = 'core.asgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'ENGINE': 'django.db.backends.mysql',
         'NAME': os.environ.get('DB_DATABASE'),
         'USER': os.environ.get('DB_USER'),
         'PASSWORD': os.environ.get('DB_PASSWORD'),
         'HOST': os.environ.get('DB_HOST'),
         'PORT': os.environ.get('DB_PORT'),
-        'OPTIONS': {'sslmode': 'require'},
     }
 }
 

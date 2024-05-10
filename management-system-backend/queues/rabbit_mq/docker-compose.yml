@@ -1,4 +1,4 @@
-version: "3.8"
+version: "2.1"
 
 services:
   main:
@@ -16,5 +16,5 @@ services:
 
 networks:
   live_backend:
+    name: "live_backend"
     driver: bridge
-    external: true

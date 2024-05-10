@@ -37,11 +37,3 @@ class User(models.Model):
     def __str__(self) -> str:
         label = f'{self.first_name} {self.last_name}'
         return label
-
-    class Meta:
-        constraints = [
-            models.CheckConstraint(
-                check=~models.Q(reports_to=models.F('id')),
-                name='reports_to_not_self'
-            )
-        ]

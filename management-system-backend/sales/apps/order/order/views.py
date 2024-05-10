@@ -99,7 +99,7 @@ def create(request):
 
     except Exception as e:
         print(e)
-        return Response({'success': False, 'data': None, 'message': 'Internal Server Error'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        return Response({'success': False, 'data': None, 'message': f'Internal Server Error: {e}'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 @swagger_auto_schema(

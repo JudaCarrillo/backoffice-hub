@@ -88,49 +88,13 @@ class OrderService:
         if not (email and customer_id and ship_via):
             return {'success': False, 'data': None, 'message': 'Missing required fields'}
 
-        shipper = self._shipper_exists(ship_via)
+        """ shipper = self._shipper_exists(ship_via)
         if not shipper:
-            return {'success': False, 'data': None, 'message': 'Shipper not found'}
+            return {'success': False, 'data': None, 'message': 'Shipper not found'} """
 
         try:
-            user_validation = self._validate_user(email)
+            user = self._validate_user(email)
+
+            return user
         except Exception as e:
-            return {'success': False, 'data': None, 'message': 'Error user. ' + str(e)}
-
-        if not user_validation['success']:
-            return {'success': False, 'data': None, 'message': user_validation['message']}
-
-        return {'success': True, 'data': user_validation, 'message': 'Order created'}
-
-        try:
-            customer_validation = self._validate_user(customer_id)
-        except Exception as e:
-            return {'success': False, 'data': None, 'message': 'Error creating order. ' + str(e)}
-
-        if not customer_validation['success']:
-            return {'success': False, 'data': None, 'message': customer_validation['message']}
-
-        """ Orders.objects.create(
-            order_date=request_data.get('order_date'),
-            required_date=request_data.get('required_date'),
-            shipped_date=request_data.get('shipped_date'),
-            freight=request_data.get('freight'),
-            ship_name=request_data.get('ship_name'),
-            ship_address=request_data.get('ship_address'),
-            ship_city=request_data.get('ship_city'),
-            ship_region=request_data.get('ship_region'),
-            ship_postal_code=request_data.get('ship_postal_code'),
-            ship_country=request_data.get('ship_country'),
-            employee_id=user_validation['data']['id'],
-            customer_id=customer_validation['data']['id'],
-            ship_via=shipper
-        )
- """
-        return {'success': True, 'data': None, 'message': 'Order created'}
-
-    def _shipper_exists(self, id):
-        try:
-            shipper = Shippers.objects.get(id=id)
-            return shipper
-        except Shippers.DoesNotExist:
-            return None
+            return {'success': False, 'data': None, 'message': f'{e}'}

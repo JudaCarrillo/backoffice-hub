@@ -1,4 +1,4 @@
-version: "3.8"
+version: "2.1"
 
 services:
   # Django app
@@ -13,7 +13,7 @@ services:
       - .:/app
     ports:
       - 8400:8000
-    # command: bash -c "python producer.py"
+    command: bash -c "python producer.py"
     networks:
       - live_backend
 
